@@ -1,7 +1,7 @@
 import Express from 'express';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import createLocation from 'history/lib/createLocation';
+import createHistory from 'history/lib/createHistory';
 import config from './config';
 import favicon from 'serve-favicon';
 import compression from 'compression';
@@ -53,11 +53,11 @@ app.use((req, res) => {
   }
   const client = new ApiClient(req);
   const store = createStore(client);
-  const location = createLocation(req.path, req.query);
+  const location = createHistory().createLocation(req.originalUrl);
 
   function hydrateOnClient() {
     res.send('<!doctype html>\n' +
-      ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={<div/>} store={store}/>));
+      ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store}/>));
   }
 
   if (__DISABLE_SSR__) {
