@@ -1,20 +1,46 @@
-import React, { Component } from 'react';
-import { HomeJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection } from 'components';
+import React, {Component, PropTypes} from 'react';
+import { TrackJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection } from 'components';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { load } from 'redux/modules/track';
 
-export default class Home extends Component {
+@connect(
+  store => ({
+    track: store.track.data
+  }),
+  dispatch => bindActionCreators({ load }, dispatch)
+)
+export default class Track extends Component
+{
+  static propTypes = {
+    params: PropTypes.object,
+    track: PropTypes.object
+  }
+
+  static contextTypes = {
+    store: PropTypes.object.isRequired
+  }
+
+  componentDidMount() {
+    // to do: remove second loading here for client-side navigation
+    // to do: remove loading here for server-side rendered page
+    this.constructor.preload(this.context.store, this.props.params.id);
+  }
+
+  static preload(store, id) {
+    const promises = [];
+    // if (!are_settings_loaded(store.getState()))
+    // {
+    promises.push(store.dispatch(load(id)));
+    // }
+    return Promise.all(promises);
+  }
+
   render() {
+    const { track } = this.props;
     return (
-       <div>
-        <HomeJumbotron
-          miniHeaders={[{
-            image: 'https://pmcvariety.files.wordpress.com/2015/06/taylor-swift-apple-streaming.jpg?w=670&h=377&crop=1',
-            author: 'author 1',
-            title: 'This is title 1',
-          }, {
-            image: 'http://s3.amazonaws.com/bounceboat-corporate-site-staging-media/2015/07/chromeo-color.jpg',
-            author: 'author 2',
-            title: 'This is title 2',
-          }]} />
+      <div>
+        <TrackJumbotron {...this.props} />
          <div className="container-fluid">
           <div className="row margin-bottom">
             <ReleaseSection title="Release Session" releases={[
@@ -167,6 +193,7 @@ export default class Home extends Component {
               }
             ]}/>
           </div>
+          {track ? track.cover : ''}
           <div className="row margin-bottom">
             <ReleaseSection title="New Tracks" releases={[
               {

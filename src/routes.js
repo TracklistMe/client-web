@@ -6,6 +6,7 @@ import {
     Home,
     Widgets,
     About,
+    Track,
     Login,
     RequireLogin,
     LoginSuccess,
@@ -20,6 +21,7 @@ export default function(history) {
       <Route path="/widgets" component={Widgets}/>
       <Route path="/about" component={About}/>
       <Route path="/login" component={Login}/>
+      <Route path="/track/:id" component={Track}/>
       <Route component={RequireLogin}>
         <Route path="/chat" component={Chat}/>
         <Route path="/loginSuccess" component={LoginSuccess}/>
