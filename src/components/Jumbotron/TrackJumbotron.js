@@ -22,15 +22,17 @@ export default class TrackJumbotron extends Component {
             <div className="col-sub-xs-14 col-sub-sm-14 col-sub-md-14 col-sub-lg-14">
               <div className="row">
                 <div className="col-lg-6 text-left trackDescriptionSpace">
-                {track ? this.props.track.Genres.map((genre) =>
-                   <CustomButton {...genre}/>
-                ) : ''}
+                <CustomButton name={'test'} />
                 <h1>{track ? track.title + ' (' + track.version + ')' : ''} </h1>
                 </div>
                 <div className="col-lg-6 text-right"> sharing Stats </div>
               </div>
               <div className="row">
                 <div className="col-lg-12 waveForm text-left">
+                {JSON.stringify(track.Genres)}
+                {track.Genres.map((genre) =>
+                  <span>{genre.name}</span>
+                )}
                 </div>
                 <div className="col-lg-3 text-left">
                   Released: <strong>20/12/2014</strong>

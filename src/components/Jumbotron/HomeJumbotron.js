@@ -13,9 +13,9 @@ export default class HomeJumbotron extends Component {
             <div className="col-sub-xs-18 col-sub-sm-18 col-sub-md-12 col-sub-lg-12">
               <MainHeader />
             </div>
-             {this.props.miniHeaders.map((miniHeader) =>
+             {this.props.miniHeaders.map((miniHeader, index) =>
                 <div className="col-sub-xs-9 col-sub-sm-9 col-sub-md-6 col-sub-lg-6">
-                  <MiniHeader {...miniHeader}/>
+                  <MiniHeader key={index} {...miniHeader}/>
                 </div>
              )}
           </div>
