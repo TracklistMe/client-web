@@ -27,6 +27,12 @@ export default class Track extends Component
     this.constructor.preload(this.context.store, this.props.params.id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(this.context.store.getState().track.data.id != nextProps.params.id){
+      this.constructor.preload(this.context.store, nextProps.params.id);
+    }
+  }
+
   static preload(store, id) {
     const promises = [];
     // if (!are_settings_loaded(store.getState()))

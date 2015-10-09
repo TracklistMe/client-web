@@ -24,7 +24,7 @@ export default class TrackJumbotron extends Component {
             <div className="col-sub-xs-14 col-sub-sm-14 col-sub-md-14 col-sub-lg-14">
               <div className="row">
                 <div className="col-lg-6 text-left trackDescriptionSpace">
-                {this.props.track.Genres.map((genre, index) =>
+                {track.Genres.map((genre, index) =>
                   <CustomButton key={index} {...genre} />
                 )}
                 <h1>{track ? track.title + ' (' + track.version + ')' : ''} </h1>
@@ -34,7 +34,7 @@ export default class TrackJumbotron extends Component {
               <div className="row">
                 <div className="col-lg-12 waveForm text-left">
                 {JSON.stringify(track.Genres)}
-                {this.props.track.Genres.map((genre, index) =>
+                {track.Genres.map((genre, index) =>
                   <div key={index} className="col-sub-xs-4 col-sub-sm-4 col-sub-md-4 col-sub-lg-4">
                     {genre.name}
                   </div>
