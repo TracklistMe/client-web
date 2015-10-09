@@ -6,7 +6,7 @@ import DocumentMeta from 'react-document-meta';
 import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
 import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
 
-const title = 'React Redux Example';
+const title = 'TracklistMe';
 const description = 'All the modern best practices in one example.';
 const image = 'https://react-redux.herokuapp.com/logo.jpg';
 const logo = require('./../../img/logoAphextwin.png');
@@ -34,6 +34,14 @@ const meta = {
     }
   }
 };
+
+const NavbarLink = ({to, children}) => (
+  <Link to={to} activeStyle={{
+    color: 'red'
+  }}>
+    {children}
+  </Link>
+);
 
 @connect(
     state => ({user: state.auth.user}),
@@ -95,8 +103,8 @@ export default class App extends Component {
               <li className="dropdownBackground dropdownBorder">
                 <Link to="/"> <img src={logo} /></Link>
                 <ul>
-                  <li><Link to="/track/77"> Artists &amp; bands </Link></li>
-                  <li><Link to="/track/80"> Genres </Link></li>
+                  <li><NavbarLink to="/track/77">Go to release 77</NavbarLink></li>
+                  <li><NavbarLink to="/track/80">Go to release 80</NavbarLink></li>
                   <li><a href="#">Labels</a></li>
                 </ul>
               </li>

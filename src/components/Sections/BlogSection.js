@@ -5,8 +5,8 @@ export default class BlogSection extends Component {
   render() {
     return (
       <div>
-        {this.props.posts.map((post) =>
-          <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        {this.props.posts.map((post, index) =>
+          <div key={index} className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
             <MiniHeader {...post}/>
           </div>
         )}

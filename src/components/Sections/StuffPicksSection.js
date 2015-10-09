@@ -11,8 +11,8 @@ export default class StuffPicksSection extends Component {
             <more>view more</more>
           </section_title_component>
         </div>
-        {this.props.picks.map((pick) =>
-          <div className="col-sub-xs-4 col-sub-sm-4 col-sub-md-4 col-sub-lg-4">
+        {this.props.picks.map((pick, index) =>
+          <div key={index} className="col-sub-xs-4 col-sub-sm-4 col-sub-md-4 col-sub-lg-4">
             <MiniHeader {...pick}/>
           </div>
         )}
