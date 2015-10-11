@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
 import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
+import { pushState } from 'redux-router';
 
 const title = 'TracklistMe';
 const description = 'All the modern best practices in one example.';
@@ -45,13 +46,13 @@ const NavbarLink = ({to, children}) => (
 
 @connect(
     state => ({user: state.auth.user}),
-    dispatch => bindActionCreators({logout}, dispatch))
+    dispatch => bindActionCreators({logout, pushState}, dispatch))
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
     logout: PropTypes.func.isRequired,
-    history: PropTypes.object
+    pushState: PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -61,20 +62,20 @@ export default class App extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
       // login
-      this.props.history.pushState(null, '/loginSuccess');
+      this.props.pushState(null, '/loginSuccess');
     } else if (this.props.user && !nextProps.user) {
       // logout
-      this.props.history.pushState(null, '/');
+      this.props.pushState(null, '/');
     }
   }
 
-  static fetchData(store) {
+  static fetchData(getState, dispatch) {
     const promises = [];
-    if (!isInfoLoaded(store.getState())) {
-      promises.push(store.dispatch(loadInfo()));
+    if (!isInfoLoaded(getState())) {
+      promises.push(dispatch(loadInfo()));
     }
-    if (!isAuthLoaded(store.getState())) {
-      promises.push(store.dispatch(loadAuth()));
+    if (!isAuthLoaded(getState())) {
+      promises.push(dispatch(loadAuth()));
     }
     return Promise.all(promises);
   }

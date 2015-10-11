@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import multireducer from 'multireducer';
+import { routerStateReducer } from 'redux-router';
 
 import auth from './auth';
 import counter from './counter';
@@ -9,6 +10,7 @@ import widgets from './widgets';
 import track from './track';
 
 export default combineReducers({
+  router: routerStateReducer,
   auth,
   form,
   multireducer: multireducer({
