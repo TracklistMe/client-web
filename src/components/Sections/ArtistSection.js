@@ -1,5 +1,5 @@
 import React, {Component, PropTypes } from 'react';
-import ArtistComponent from '../ArtistComponent/ArtistComponent';
+import ArtistBlock from '../Artist/ArtistBlock';
 import Headline from '../Headline/Headline';
 
 export default class ArtistSection extends Component {
@@ -11,7 +11,7 @@ export default class ArtistSection extends Component {
       </div>
         {this.props.artists.map((artist) =>
           <div className="col-xs-12 col-sm-4 col-md-3 col-lg-2 ">
-          <ArtistComponent {...artist}/>
+          <ArtistBlock {...artist}/>
           </div>
         )}
     </div>

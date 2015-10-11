@@ -28,7 +28,7 @@ export default class Track extends Component
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.context.store.getState().track.data.id != nextProps.params.id){
+    if (this.context.store.getState().track.data.id !== parseInt(nextProps.params.id, 10)) {
       this.constructor.preload(this.context.store, nextProps.params.id);
     }
   }

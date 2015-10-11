@@ -1,11 +1,12 @@
 import React, {Component, PropTypes } from 'react';
 import MainHeaderBackground from '../MainHeader/MainHeaderBackground';
+import ArtistComponent from '../Artist/ArtistComponent';
 import CustomButton from '../Buttons/CustomButton';
 
 export default class TrackJumbotron extends Component {
   static propTypes = {
     track: PropTypes.shape({
-      Genres: PropTypes.object
+      Genres: PropTypes.array
     })
   }
   render() {
@@ -24,21 +25,25 @@ export default class TrackJumbotron extends Component {
             <div className="col-sub-xs-14 col-sub-sm-14 col-sub-md-14 col-sub-lg-14">
               <div className="row">
                 <div className="col-lg-6 text-left trackDescriptionSpace">
-                {track.Genres.map((genre, index) =>
-                  <CustomButton key={index} {...genre} />
-                )}
-                <h1>{track ? track.title + ' (' + track.version + ')' : ''} </h1>
+                  <div className="genreContainer">
+                      {track.Genres.map((genre, index) =>
+                        <CustomButton key={index} {...genre} />
+                      )}
+                  </div>
+                  <div>
+                      {track.Producer.map((producer, index) =>
+                       <ArtistComponent key={index} {...producer}/>
+                      )}
+                  </div>
+                  <div className="titleContainer">
+                      <h1>{track ? track.title + ' (' + track.version + ')' : ''} </h1>
+                  </div>
                 </div>
                 <div className="col-lg-6 text-right"> sharing Stats </div>
               </div>
               <div className="row">
-                <div className="col-lg-12 waveForm text-left">
-                {JSON.stringify(track.Genres)}
-                {track.Genres.map((genre, index) =>
-                  <div key={index} className="col-sub-xs-4 col-sub-sm-4 col-sub-md-4 col-sub-lg-4">
-                    {genre.name}
-                  </div>
-                )}
+                <div className="col-lg-12 text-left">
+                    <div className="waveForm" />
                 </div>
                 <div className="col-lg-3 text-left">
                   Released: <strong>20/12/2014</strong>

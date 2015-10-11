@@ -1,9 +1,9 @@
 import React, {Component, PropTypes } from 'react';
 
-export default class ArtistComponent extends Component {
+export default class ArtistBlock extends Component {
   render() {
     return (
-        <artist_component>
+        <artist_block>
           <artist_image>
             <img src={this.props.artistPicture} />
             <description>
@@ -11,12 +11,12 @@ export default class ArtistComponent extends Component {
               <artist_details>Paris, France</artist_details>
             </description>
           </artist_image>
-        </artist_component>
+        </artist_block>
     );
   }
 }
 
-ArtistComponent.propTypes = {
+ArtistBlock.propTypes = {
   onClick: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   artistPicture: PropTypes.string.isRequired,

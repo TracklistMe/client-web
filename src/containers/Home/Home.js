@@ -303,7 +303,7 @@ export default class Home extends Component {
               author: 'Test 1234',
               title: 'Inside our Office'
             }]}/>
-          </div> 
+          </div>
         </div>
       </div>
     );

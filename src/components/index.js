@@ -21,6 +21,7 @@ export ReleaseComponent from './ReleaseComponent/ReleaseComponent';
 export Headline from './Headline/Headline';
 export ReleaseSection from './Sections/ReleaseSection';
 export ArtistSection from './Sections/ArtistSection';
-export ArtistComponent from './ArtistComponent/ArtistComponent';
+export ArtistComponent from './Artist/ArtistComponent';
+export ArtistComponent from './Artist/ArtistBlock';
 export StuffPicksSection from './Sections/StuffPicksSection';
 export BlogSection from './Sections/BlogSection';
