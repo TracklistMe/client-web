@@ -1,13 +1,11 @@
 import React, {Component, PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {isLoaded as isAuthLoaded, load as loadAuth} from 'redux/modules/auth';
 import * as authActions from 'redux/modules/auth';
 
 @connect(
     state => ({user: state.auth.user}),
-    dispatch => bindActionCreators(authActions, dispatch)
-)
+    authActions)
 export default
 class LoginSuccess extends Component {
   static propTypes = {
@@ -15,9 +13,9 @@ class LoginSuccess extends Component {
     logout: PropTypes.func
   }
 
-  static fetchData(store) {
-    if (!isAuthLoaded(store.getState())) {
-      return store.dispatch(loadAuth());
+  static fetchData(getState, dispatch) {
+    if (!isAuthLoaded(getState())) {
+      return dispatch(loadAuth());
     }
   }
 
