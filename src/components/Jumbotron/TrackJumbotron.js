@@ -19,10 +19,10 @@ export default class TrackJumbotron extends Component {
         <MainHeaderBackground image={track ? track.cover : ''} />
         <div className="headerContent">
           <div className="row trackJumbotronContainer">
-            <div className="col-sub-xs-5 col-sub-sm-5 col-sub-md-4 col-sub-lg-4 overflowHidden">
+            <div className="hidden-xs hidden-sm col-sub-xs-5 col-sub-sm-6 col-sub-md-5 col-sub-lg-4 overflowHidden">
               <img className="cover" src={track ? track.cover : ''} />
             </div>
-            <div className="col-sub-xs-14 col-sub-sm-14 col-sub-md-14 col-sub-lg-14">
+            <div className="col-sub-xs-18 col-sub-sm-18 col-sub-md-13 col-sub-lg-14">
               <div className="row">
                 <div className="col-lg-6 text-left trackDescriptionSpace">
                   <div className="genreContainer">
@@ -35,26 +35,28 @@ export default class TrackJumbotron extends Component {
                        <ArtistComponent key={index} {...producer}/>
                       )}
                   </div>
-                  <div className="titleContainer">
-                      <h1>{track ? track.title + ' (' + track.version + ')' : ''} </h1>
-                  </div>
                 </div>
-                <div className="col-lg-6 text-right"> sharing Stats </div>
+                <div className="col-lg-6 text-right">
+                  sharing Stats
+                </div>
+                <div className="col-lg-12 titleContainer">
+                      <h1>{track ? track.title + ' (' + track.version + ')' : ''} </h1>
+                </div>
               </div>
               <div className="row">
-                <div className="col-lg-12 text-left">
+                <div className="col-sm-12 text-left">
                     <div className="waveForm" />
                 </div>
-                <div className="col-lg-3 text-left">
+                <div className="col-xs-6 col-lg-3 text-left">
                   Released: <strong>20/12/2014</strong>
                 </div>
-                <div className="col-lg-3 text-left">
+                <div className="col-xs-6 col-lg-3 text-left">
                   BPM: <strong>134</strong>
                 </div>
-                <div className="col-lg-3 text-left">
+                <div className="col-xs-6 col-lg-3 text-left">
                   Key: <strong>F#</strong>
                 </div>
-                <div className="col-lg-3 text-left">
+                <div className="col-xs-6 col-lg-3 text-left">
                   Label: <strong>Label Woop Woop</strong>
                 </div>
               </div>

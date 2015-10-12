@@ -1,12 +1,12 @@
 import React, {Component, PropTypes } from 'react';
+import {ArtistAvatarComponent} from 'components';
 
 export default class ArtistComponent extends Component {
   render() {
     return (
         <artist_component>
           <artist_name>{this.props.displayName}</artist_name>
-          <artist_image style={{backgroundImage: 'url(' + this.props.avatar + ')'}}>
-          </artist_image>
+          <ArtistAvatarComponent avatar={this.props.avatar}/>
         </artist_component>
     );
   }

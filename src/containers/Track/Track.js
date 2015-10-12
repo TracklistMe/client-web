@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import { TrackJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection } from 'components';
+import { TrackJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection, PlayedBySection } from 'components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { load } from 'redux/modules/track';
@@ -47,7 +47,10 @@ export default class Track extends Component
     return (
       <div>
         <TrackJumbotron {...this.props} />
-         <div className="container-fluid">
+          <div className="row darkestrow margin-bottom">
+            <PlayedBySection />
+          </div>
+          <div className="container-fluid">
           <div className="row margin-bottom">
             <ReleaseSection title="Release Session" releases={[
               {
