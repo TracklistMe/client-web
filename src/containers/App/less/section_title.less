@@ -1,0 +1,46 @@
+section_title{
+  padding-top: 20px;
+  padding-bottom: 20px !important; 
+  display: block;
+  .fontTitle();
+  font-weight: 600;
+  color: @brand-darkest;
+}
+
+section_title hr {
+	margin-top: 8px;
+	border: 0px solid;
+	border-top: 1px solid @brand-lighter;
+}
+section_title hr:before { 
+  content: ''; 
+  display: inline-block; 
+  position: relative; 
+  top: -9px; 
+  left: 0px; 
+  width: 40px;
+  height: 5px;
+  padding: 0 3px; 
+  .gradient(); 
+  color: #8c8b8b;  
+}
+section_title headline{
+	 
+}
+section_title > headline > text {
+	padding-right: 25px; 
+  	font-size: @font-size-h3;
+}
+section_title > headline > button_space{
+ 
+}
+.darkestrow hr {
+	border-top: 1px solid @brand-darker;
+}
+.darkestrow section_title{
+  color: @brand-lightest;
+}
+.darkestrow section_title{
+ 
+  font-weight: 500;
+}

@@ -6,6 +6,7 @@ import {
     Home,
     Widgets,
     About,
+    Track,
     Login,
     LoginSuccess,
     Survey,
@@ -27,6 +28,7 @@ export default (store) => {
       <Route path="/widgets" component={Widgets}/>
       <Route path="/about" component={About}/>
       <Route path="/login" component={Login}/>
+      <Route path="/track/:id" component={Track}/>
       <Route onEnter={requireLogin}>
         <Route path="/chat" component={Chat}/>
         <Route path="/loginSuccess" component={LoginSuccess}/>
