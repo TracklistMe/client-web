@@ -18,7 +18,7 @@ export default class ArtistBlock extends Component {
 
 ArtistBlock.propTypes = {
   onClick: PropTypes.func,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   artistPicture: PropTypes.string.isRequired,
   artistName: PropTypes.string.isRequired,
 };
