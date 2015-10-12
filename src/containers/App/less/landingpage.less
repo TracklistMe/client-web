@@ -1,0 +1,198 @@
+body {
+ 
+}
+.landingPage { 
+	  background-color: @brand-darker !important;
+	opacity: .2;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	  background: url('./../../../img/landing_page/main_background.jpg') no-repeat 50% 50% fixed; 
+	  background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  -webkit-background-size: cover;
+ 
+}
+
+register_panel {
+	display: block;
+	position: absolute;
+	right: 20%; 
+	top: 50%;
+	height: 300px;
+	margin-top: -300px; 
+}
+
+#landingPage h2{
+	font-size: 48px;
+	line-height: 55px;
+	font-weight: 300;
+	color: @brand-lightest;
+	.fontTitle();
+	margin-top: 60px;
+	margin-bottom: 0px;
+}
+
+#landingPage h3{
+	margin: 0px;
+	line-height: 35px;
+	font-size: 24px;
+	font-weight: 300;
+	color: @brand-lightest;
+	.fontTitle();
+
+}
+
+#landingPage p{
+	margin-top: 20px;
+	.fontSubtitle();
+	font-weight: 400;
+	color: @brand-lightest;
+
+}
+
+
+.container-4{
+margin-top: 80px;
+	display: block;
+	height: 50px;
+  	overflow: hidden;
+  width: 300px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+   background-color: fade(@brand-lighter, 15);
+
+   -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+.container-4 input#email, input#friendEmail{
+  width: 300px;
+  height: 50px;
+  background-color: transparent;
+  border: none;
+  font-size: 10pt;
+  color: #fff;
+  position: relative;
+  
+  padding-left: 15px;
+}
+
+.container-4 input#email::-webkit-input-placeholder, input#friendEmail::-webkit-input-placeholder{
+   color: #fff;
+}
+ 
+.container-4 input#email:-moz-placeholder, input#friendEmail:-moz-placeholder { /* Firefox 18- */
+   color: #fff;  
+}
+ 
+.container-4 input#email::-moz-placeholder,input#friendEmail::-moz-placeholder {  /* Firefox 19+ */
+   color: #fff;  
+}
+ 
+.container-4 input#email:-ms-input-placeholder, input#friendEmail:-ms-input-placeholder {  
+   color: #fff;  
+}
+#artistBlock, #labelBlock{
+	display:none;
+}
+
+.question{
+	color: #fff;
+	line-height: 50px;
+	padding-left: 15px;
+} 
+.spacer{
+	padding-top: 20px;
+}
+.container-4 button.icon, #yesArtist, #noArtist, #yesLabel, #noLabel{
+	position: absolute;
+	right: 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+   outline: none;
+  opacity: 1;
+  line-height: 38px;
+  border: none; 
+  height: 40px;
+  margin-top: 5px;
+  width: 40px;
+  color: @brand-lighter;
+  opacity: 1;
+  font-size: 13pt;
+  .gradient(45deg);
+}
+
+#noArtist, #noLabel{
+.gradient(-45deg);
+	right: 50px !important;
+}
+.container-4:hover button.icon, .container-4:active button.icon, .container-4:focus button.icon{
+  outline: none;
+  opacity: 1;
+  margin-left: -50px;
+}
+ 
+.container-4:hover button.icon{
+	font-weight: 500;
+  color: @brand-lightest;
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+#position, #positionFriend{
+	display: none;
+	padding-top: 105px;
+	width: 340px;
+	font-size: 16px;
+	color: white;
+}
+#inviteFriendBlock{
+	display: none;
+}
+#inviteFriend , #inviteMoreFriend{
+	color: @brand-primary;
+}
+.iconSpin{
+	display: none;
+	-webkit-animation-name: spin;
+    -webkit-animation-duration: 1000ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spin;
+    -moz-animation-duration: 1000ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: spin;
+    -ms-animation-duration: 1000ms;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+    
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+.highlight{
+	color: @brand-primary;
+	font-size: 22px;
+}
+#validationError{
+	margin-top: 10px;
+	display: none;
+	color: @brand-primary;
+}
