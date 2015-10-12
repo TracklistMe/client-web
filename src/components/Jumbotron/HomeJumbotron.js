@@ -20,6 +20,7 @@ export default class HomeJumbotron extends Component {
              )}
           </div>
         </div>
+        <div className="mainHeaderSpace"></div>
       </div>
     );
   }
