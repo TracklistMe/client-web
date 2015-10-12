@@ -26,10 +26,10 @@ export default class ReleaseComponent extends Component {
 }
 
 ReleaseComponent.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired,
-  cover: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired
+  onClick: PropTypes.func,
+  id: PropTypes.number,
+  cover: PropTypes.string,
+  price: PropTypes.number,
+  title: PropTypes.string,
+  label: PropTypes.string
 };

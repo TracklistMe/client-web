@@ -9,8 +9,8 @@ export default class ReleaseSection extends Component {
       <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <Headline title={this.props.title} playAllVisible />
       </div>
-        {this.props.releases.map((release) =>
-          <div className="col-sub-xs-4 col-sub-sm-4 col-sub-md-3 col-sub-lg-2">
+        {this.props.releases.map((release,index) =>
+          <div key={index} className="col-sub-xs-4 col-sub-sm-4 col-sub-md-3 col-sub-lg-2">
           <ReleaseComponent {...release}/>
           </div>
         )}

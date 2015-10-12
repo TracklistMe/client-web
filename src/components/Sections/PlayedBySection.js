@@ -27,9 +27,9 @@ export default class PlayedBySection extends Component {
 }
 
 PlayedBySection.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   artists: PropTypes.arrayOf(PropTypes.shape({
     artistPicture: PropTypes.string.isRequired,
     artistName: PropTypes.string.isRequired
-  }).isRequired).isRequired
+  }))
 };

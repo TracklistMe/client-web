@@ -17,7 +17,7 @@ export default class MiniHeader extends Component {
 }
 
 MiniHeader.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   image: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
