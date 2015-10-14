@@ -2,6 +2,7 @@ import React, {Component, PropTypes } from 'react';
 import MainHeaderBackground from '../MainHeader/MainHeaderBackground';
 import ArtistComponent from '../Artist/ArtistComponent';
 import CustomButton from '../Buttons/CustomButton';
+import { Waveform } from 'react-d3-components/dist/react-d3-components';
 
 export default class TrackJumbotron extends Component {
   static propTypes = {
@@ -10,6 +11,14 @@ export default class TrackJumbotron extends Component {
     })
   }
   render() {
+    const data = [{
+      label: 'somethingA',
+      values: []
+    }];
+    /* Absolute values of a sin waveform. We do expect only values within [0,1] */
+    for (let index = 0; index < 620; index++) {
+      data[0].values.push({x: '' + index, y: Math.abs(Math.sin(index / 20) + Math.cos(index/4))});
+    }
     const {track} = this.props; // eslint-disable-line no-shadow
     if (!track || !track.Genres) {
       return (<div> not loaded</div>);
@@ -45,7 +54,13 @@ export default class TrackJumbotron extends Component {
               </div>
               <div className="row">
                 <div className="col-sm-12 text-left">
-                    <div className="waveForm" />
+                     <Waveform
+                       data={data}
+                       width={1400}
+                       height={200}
+                       colorScale={ d3.scale.linear()
+                                    .domain([0, 1400])
+                                    .range(['#eb1785', '#ff7b16'])} />
                 </div>
                 <div className="col-xs-6 col-lg-3 text-left">
                   Released: <strong>20/12/2014</strong>
