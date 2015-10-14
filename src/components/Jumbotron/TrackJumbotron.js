@@ -10,6 +10,10 @@ export default class TrackJumbotron extends Component {
     })
   }
   render() {
+    const {track} = this.props; // eslint-disable-line no-shadow
+    if (!track || !track.Genres) {
+      return (<div> Loading track</div>);
+    }
     return (
       <div className="trackJumbotron">
         <MainHeaderBackground image={track ? track.cover : ''} />
