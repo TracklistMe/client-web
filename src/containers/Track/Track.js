@@ -24,13 +24,23 @@ export default class Track extends Component
   componentDidMount() {
     // to do: remove second loading here for client-side navigation
     // to do: remove loading here for server-side rendered page
+    console.log('++++');
+    console.log(this.context.store);
+    console.log(this.props.params.id);
+    console.log('++++');
     this.constructor.preload(this.context.store, this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.context.store.getState().track.data.id !== parseInt(nextProps.params.id, 10)) {
+    console.log('----');
+    console.log(this.context.store.getState().track.data.id);
+    console.log(nextProps.params.id);
+    if (parseInt(this.context.store.getState().track.data.id, 10) !== parseInt(nextProps.params.id, 10)) {
       this.constructor.preload(this.context.store, nextProps.params.id);
+    } else {
+      console.log('do not render');
     }
+    console.log('----');
   }
 
   static preload(store, id) {

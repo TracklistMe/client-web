@@ -2,6 +2,7 @@ import React, {Component, PropTypes } from 'react';
 import MainHeaderBackground from '../MainHeader/MainHeaderBackground';
 import ArtistComponent from '../Artist/ArtistComponent';
 import CustomButton from '../Buttons/CustomButton';
+import { Waveform, d3 } from 'react-d3-components/dist/react-d3-components';
 
 export default class TrackJumbotron extends Component {
   static propTypes = {
@@ -10,9 +11,17 @@ export default class TrackJumbotron extends Component {
     })
   }
   render() {
+    const data = [{
+      label: 'somethingA',
+      values: []
+    }];
+    /* Absolute values of a sin waveform. We do expect only values within [0,1] */
+    for (let index = 0; index < 720; index++) {
+      data[0].values.push({x: '' + index, y: Math.abs(Math.sin(index / 18) + Math.cos(index / 10))});
+    }
     const {track} = this.props; // eslint-disable-line no-shadow
     if (!track || !track.Genres) {
-      return (<div> Loading track</div>);
+      return (<div> not loaded</div>);
     }
     return (
       <div className="trackJumbotron">
@@ -45,6 +54,13 @@ export default class TrackJumbotron extends Component {
               </div>
               <div className="row">
                 <div className="col-sm-12 text-left">
+                     <Waveform
+                       data={data}
+                       width={1400}
+                       height={200}
+                       colorScale={ d3.scale.linear()
+                                    .domain([0, 1400])
+                                    .range(['#' + Math.floor(Math.random() * 16777215).toString(16), '#ff7b16'])} />
                 </div>
                 <div className="col-xs-6 col-lg-3 text-left">
                   Released: <strong>20/12/2014</strong>
@@ -53,7 +69,9 @@ export default class TrackJumbotron extends Component {
                   BPM: <strong>134</strong>
                 </div>
                 <div className="col-xs-6 col-lg-3 text-left">
-                  Key: <strong>F#</strong>
+                  Key: <strong>{ d3.scale.linear()
+                                    .domain([0, 1400])
+                                    .range(['#eb1785', '#ff7b16'])}</strong>
                 </div>
                 <div className="col-xs-6 col-lg-3 text-left">
                   Label: <strong>Label Woop Woop</strong>
