@@ -26,10 +26,10 @@ export default (store) => {
   return (
     <Route>
       <Route>
-        <Route path="/landing" component={Landing}/>
+        <Route path="/" component={Landing}/>
       </Route>
       <Route component={App}>
-        <Route path="/" component={Home}/>
+        <Route path="/beta" component={Home}/>
         <Route path="/widgets" component={Widgets}/>
         <Route path="/about" component={About}/>
         <Route path="/login" component={Login}/>
