@@ -8,9 +8,7 @@ import { pushState } from 'redux-router';
 
 const title = 'TracklistMe';
 const description = 'Fair for the artists, fair for you.';
-const image = 'https://react-redux.herokuapp.com/logo.jpg';
 const logo = require('./../../img/logoAphextwin.png');
-
 
 const meta = {
   title,
@@ -19,7 +17,7 @@ const meta = {
     charSet: 'utf-8',
     property: {
       'og:site_name': title,
-      'og:image': image,
+      'og:image': logo,
       'og:locale': 'en_US',
       'og:title': title,
       'og:description': description,
@@ -28,20 +26,12 @@ const meta = {
       'twitter:creator': '@tracklistme',
       'twitter:title': title,
       'twitter:description': description,
-      'twitter:image': image,
+      'twitter:image': logo,
       'twitter:image:width': '200',
       'twitter:image:height': '200'
     }
   }
 };
-
-const NavbarLink = ({to, children}) => (
-  <Link to={to} activeStyle={{
-    color: 'red'
-  }}>
-    {children}
-  </Link>
-);
 
 @connect(
   state => ({user: state.auth.user}),
@@ -93,7 +83,7 @@ export default class App extends Component {
         <DocumentMeta {...meta}/>
         <div id="landingPage">
           <div className="landingPage">
-          </div> 
+          </div>
           <register_panel>
             <h1><a href="/"><img src={logoImage} alt="Tracklist.me" /></a></h1>
             <h2> Your Music Hub </h2>
