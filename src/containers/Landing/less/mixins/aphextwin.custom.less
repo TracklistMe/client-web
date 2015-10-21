@@ -1,0 +1,65 @@
+/* fonts */
+
+.font (@font-family: @font-family-primary, @weight: undefined) {
+  .test-args () when not(@weight =undefined) {
+    font-weight: @weight;
+  }
+  font-family: @font-family;
+}
+
+.fontSocialIcons () {
+  .font (@font-family-social-icons);
+}
+
+.fontAppIcons () {
+  .font (@font-family-app-icons);
+}
+
+.fontTitle () {
+  .font (@font-family-primary, 700);
+}
+
+.fontSubtitle () {
+  .font ( @font-family-primary, 500);
+}
+
+.fontText () {
+  .font (@font-family-secondary);
+}
+
+
+/* gradient */
+
+.gradient (@origin: left, @start: @brand-primary, @stop: @brand-secondary) {
+  background-color: @start;
+  background-image: -webkit-linear-gradient(@origin, @start, @stop);
+  background-image: -moz-linear-gradient(@origin, @start, @stop);
+  background-image: -o-linear-gradient(@origin, @start, @stop);
+  background-image: -ms-linear-gradient(@origin, @start, @stop);
+  background-image: linear-gradient(@origin, @start, @stop);
+}
+
+.box-shadow (@x: 0px, @y: 3px, @blur: 5px, @alpha: 0.5) {
+  -webkit-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+  -moz-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+  box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+}
+
+
+/* focus */
+
+.tab-focus() {
+  // Default
+  outline: thin dotted;
+  // WebKit
+  outline: 5px auto @brand-secondary;
+  outline-offset: -2px;
+}
+
+
+/* Gradient text */
+
+.textGradient() {}
+
+
+/* gradient text */

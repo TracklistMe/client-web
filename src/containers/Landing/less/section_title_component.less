@@ -1,0 +1,34 @@
+section_title_component {
+	display: block;
+	padding: @mini_header_overlay_margin;
+	background-color: @brand-lightest;
+	width: 100%;	
+	max-height: @mini_header_height;
+	min-height: @mini_header_height;
+}
+
+ 
+ 
+section_title_component more{
+	position: absolute;
+	bottom: @mini_header_overlay_margin;
+	color: @brand-neutral;
+	.fontTitle();
+	text-transform: lowercase;
+	font-weight: 400;
+	margin-left: 4px; 
+}
+section_title_component title{
+	text-transform: uppercase;
+	font-size: @font-size-h3;
+	line-height: @font-size-h3;
+	.fontTitle();
+	font-weight: 700;
+	color: @brand-darkest; 
+	display: block;
+ }
+
+section_title_component  img{ 
+	-webkit-backface-visibility: hidden;
+	transition: all .2s ease-out; }
+section_title_component:hover > img{ transform: scale(1.05); }

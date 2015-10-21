@@ -1,4 +1,5 @@
 export App from './App/App';
+export Landing from './Landing/Landing';
 export Chat from './Chat/Chat';
 export Home from './Home/Home';
 export Widgets from './Widgets/Widgets';
