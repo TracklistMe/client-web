@@ -36,9 +36,8 @@ const meta = {
 @connect(
   state => ({user: state.auth.user}),
   {logout, pushState})
-export default class App extends Component {
+export default class Landing extends Component {
   static propTypes = {
-    children: PropTypes.object.isRequired,
     user: PropTypes.object,
     logout: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired
