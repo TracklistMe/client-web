@@ -86,6 +86,7 @@ export default class App extends Component {
 
   render() {
     const {user} = this.props;
+    const styles = require('./less/aphextwin.less');
     const logoImage = require('./logo_big.png');
     return (
       <div className={styles.app}>
