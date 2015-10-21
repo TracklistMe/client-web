@@ -60,7 +60,7 @@ export default class TrackJumbotron extends Component {
                        height={200}
                        colorScale={ d3.scale.linear()
                                     .domain([0, 1400])
-                                    .range(['#' + Math.floor(Math.random() * 16777215).toString(16), '#ff7b16'])} />
+                                    .range(['#eb1785', '#ff7b16'])} />
                 </div>
                 <div className="col-xs-6 col-lg-3 text-left">
                   Released: <strong>20/12/2014</strong>
@@ -69,9 +69,7 @@ export default class TrackJumbotron extends Component {
                   BPM: <strong>134</strong>
                 </div>
                 <div className="col-xs-6 col-lg-3 text-left">
-                  Key: <strong>{ d3.scale.linear()
-                                    .domain([0, 1400])
-                                    .range(['#eb1785', '#ff7b16'])}</strong>
+                  Key: <strong>Amin</strong>
                 </div>
                 <div className="col-xs-6 col-lg-3 text-left">
                   Label: <strong>Label Woop Woop</strong>
