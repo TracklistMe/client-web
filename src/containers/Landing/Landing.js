@@ -87,9 +87,11 @@ export default class App extends Component {
           <register_panel>
             <h1><a href="/"><img src={logoImage} alt="Tracklist.me" /></a></h1>
             <h2> Your Music Hub </h2>
-            <h3> fair for the artists, fair for you </h3>
-            <p id="registerMessage"> Register now and get early beta access </p>
-            <div className="box">
+            <h3> fair for the artists, fair for you. </h3>
+            <p> Buy, Sell and Stream Music. Find out who plays it. <br />
+              <span id="registerMessage"> Register now and get early beta access </span>
+            </p>
+            <div className="box"> 
               <div id="position">In queue at position <span className="highlight">1234</span>.
                 <br />Thank you, an email has been sent. Please confirm it.
                 <br /> Want to skip the queue?
