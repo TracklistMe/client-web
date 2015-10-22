@@ -88,7 +88,7 @@ export default class App extends Component {
     const {user} = this.props;
     const styles = require('./less/aphextwin.less');
     return (
-      <div className={styles.app}>
+      <div className={styles}>
         <DocumentMeta {...meta}/>
         <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
           <div className="navbar-background"> </div>

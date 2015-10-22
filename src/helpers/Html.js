@@ -32,6 +32,12 @@ export default class Html extends Component {
           <link rel="shortcut icon" href="/favicon.ico" />
           <link href={cdn + 'font-awesome/4.3.0/css/font-awesome.min.css'}
                 media="screen, projection" rel="stylesheet" type="text/css" />
+          <link href={'//motifcdn2.doubleclick.net/EMEA/fonts/SocialNetworks/style.css'}
+                media="screen, projection" rel="stylesheet" type="text/css" />
+          <link href={'//motifcdn2.doubleclick.net/EMEA/fonts/Basic-picto/style.css'}
+                media="screen, projection" rel="stylesheet" type="text/css" />
+
+
 
           {/* styles (will be present only in production with webpack extract text plugin) */}
           {Object.keys(assets.styles).map((style, key) =>
