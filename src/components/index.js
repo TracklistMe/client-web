@@ -27,3 +27,4 @@ export ArtistAvatarComponent from './Artist/ArtistAvatarComponent';
 export PlayedBySection from './Sections/PlayedBySection';
 export StuffPicksSection from './Sections/StuffPicksSection';
 export BlogSection from './Sections/BlogSection';
+export BetaOnboardingForm from './Onboarding/BetaOnboardingForm';

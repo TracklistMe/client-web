@@ -5,10 +5,14 @@ import DocumentMeta from 'react-document-meta';
 import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
 import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
 import { pushState } from 'redux-router';
+import BetaOnboardingForm from './../../components/Onboarding/BetaOnboardingForm';
+import {initialize} from 'redux-form';
 
 const title = 'TracklistMe';
 const description = 'Fair for the artists, fair for you.';
 const logo = require('./../../img/logoAphextwin.png');
+
+ 
 
 const meta = {
   title,
@@ -33,14 +37,10 @@ const meta = {
   }
 };
 
-@connect(
-  state => ({user: state.auth.user}),
-  {logout, pushState})
+
 export default class Landing extends Component {
   static propTypes = {
-    user: PropTypes.object,
-    logout: PropTypes.func.isRequired,
-    pushState: PropTypes.func.isRequired
+    user: PropTypes.object, 
   };
 
   static contextTypes = {
@@ -68,9 +68,16 @@ export default class Landing extends Component {
     return Promise.all(promises);
   }
 
-  sendEmail(event) {
-    event.preventDefault();
-    console.log(event);
+  
+  handleSubmit(data) {
+    console.log('Data submitted! ' + JSON.stringify(data));
+    this.props.initialize('survey', {});
+  }
+
+  handleInitialize() {
+    this.props.initialize('survey', {
+      email: 'test@gmail.com'
+    });
   }
 
   render() {
@@ -92,55 +99,11 @@ export default class Landing extends Component {
               <span id="registerMessage"> Register now and get early beta access </span>
             </p>
             <div className="box"> 
-              <div id="position">In queue at position <span className="highlight">1234</span>.
-                <br />Thank you, an email has been sent. Please confirm it.
-                <br /> Want to skip the queue?
-                <br /><span id="inviteFriend"> Invite your friends! </span>
-              </div>
-              <div id="positionFriend">An email has been sent to your friend.
-                <br />Once confirmed, you will notified and your beta will be closer!
-                <br />For now you are still in position <span className="highlight">1234</span>.
-                <br /><span id="inviteMoreFriend"> Invite more friends! </span>
-              </div>
-              <div id="registration" className="container-4">
-                <div id="emailBlock">
-                  <input type="email" id="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" placeholder="Email" />
-                  <button id="sendButton" className="icon"  onClick={this.sendEmail}>
-                    <span id="send" className="basic-pictosimply-right"></span>
-                    <span id="loading" className="basic-pictoloader iconSpin"></span>
-                  </button>
-                </div>
-                <div id="inviteFriendBlock">
-                  <input type="email" id="friendEmail" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Friend\'s Email'" placeholder="Friend's Email" />
-                  <button id="sendFriendButton" className="icon">
-                    <span id="sendFriend" className="basic-pictosimply-right"></span>
-                    <span id="loadingFriend" className="basic-pictoloader iconSpin"></span>
-                  </button>
-                </div>
-                <div id="artistBlock">
-                  <span className="question"> Are you an Artist? </span>
-                  <button id="yesArtist" className="icon">
-                    <span id="send" className="basic-pictocheck"></span>
-                  </button>
-                  <button id="noArtist" className="icon">
-                    <span id="send" className=" basic-pictocross"></span>
-                  </button>
-                </div>
-                <div id="labelBlock">
-                  <span className="question"> Are you a Label? </span>
-                  <button id="yesLabel" className="icon">
-                    <span id="send" className="basic-pictocheck"></span>
-                  </button>
-                  <button id="noLabel" className="icon">
-                    <span id="send" className=" basic-pictocross"></span>
-                  </button>
-                </div>
-              </div>
-              <div id="validationError"> Invalid email address </div>
+              <BetaOnboardingForm currentState={'1'} />
             </div>
           </register_panel>
         </div>
       </div>
-    );
+    )
   }
 }
