@@ -99,7 +99,7 @@ export default class Landing extends Component {
               <span id="registerMessage"> Register now and get early beta access </span>
             </p>
             <div className="box"> 
-              <BetaOnboardingForm currentState={'1'} />
+              <BetaOnboardingForm step={'1'} onSubmit={::this.handleSubmit} />
             </div>
           </register_panel>
         </div>
