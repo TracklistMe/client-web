@@ -68,15 +68,16 @@ export default class Landing extends Component {
     return Promise.all(promises);
   }
 
-  handleLogout(event) {
+  sendEmail(event) {
     event.preventDefault();
-    this.props.logout();
+    console.log(event);
   }
 
   render() {
     const {user} = this.props;
     const styles = require('./../App/less/aphextwin.less');
     const logoImage = require('./logo_big.png');
+
     return (
       <div className={styles.app}>
         <DocumentMeta {...meta}/>
@@ -104,7 +105,7 @@ export default class Landing extends Component {
               <div id="registration" className="container-4">
                 <div id="emailBlock">
                   <input type="email" id="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" placeholder="Email" />
-                  <button id="sendButton" className="icon">
+                  <button id="sendButton" className="icon"  onClick={this.sendEmail}>
                     <span id="send" className="basic-pictosimply-right"></span>
                     <span id="loading" className="basic-pictoloader iconSpin"></span>
                   </button>
