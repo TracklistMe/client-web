@@ -1,6 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
-
 // const ENTER_EMAIL = 'Enter Email step';
 const IS_ARTIST = 'Answer yes or no If you are an artist';
 const IS_LABEL = 'Answer yes or no if you are a label';
@@ -8,12 +6,9 @@ const SHOW_CURRENT_POSITION = 'Show the current position';
 const INVITE_FRIEND = 'Enter friend\'s email';
 const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend show position';
 
-@connect(
-  // state => ({email: ''})
-)
-
 export default class BetaOnboardingForm extends Component {
   static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
     currentState: PropTypes.string,
     step: PropTypes.string
   }
@@ -40,6 +35,7 @@ export default class BetaOnboardingForm extends Component {
     if (this.validateEmail(this.state.email)) {
       this.setState({step: IS_ARTIST});
     }
+    console.log(this.props.onSubmit(this.state));
     console.log(event);
   }
 

@@ -3,6 +3,9 @@ import DocumentMeta from 'react-document-meta';
 import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
 import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
 import BetaOnboardingForm from './../../components/Onboarding/BetaOnboardingForm';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { save } from 'redux/modules/earlyUser';
 
 const title = 'TracklistMe';
 const description = 'Fair for the artists, fair for you.';
@@ -32,8 +35,15 @@ const meta = {
 };
 
 
+@connect(
+  store => ({
+    status: store.earlyUser.data
+  }),
+  dispatch => bindActionCreators({ save }, dispatch)
+)
 export default class Landing extends Component {
   static propTypes = {
+    save: PropTypes.func.isRequired,
     user: PropTypes.object
   };
 
@@ -54,6 +64,8 @@ export default class Landing extends Component {
 
   handleSubmit(data) {
     console.log('Data submitted! ' + JSON.stringify(data));
+    console.log(this.props.save);
+    this.props.save(data);
   }
 
   render() {
