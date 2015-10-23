@@ -57,7 +57,7 @@ margin-top: 80px;
 	display: block;
 	height: 50px;
   	overflow: hidden;
-  width: 300px;
+  width: 360px;
   vertical-align: middle;
   white-space: nowrap;
   position: relative;
@@ -76,9 +76,12 @@ margin-top: 80px;
   font-size: 10pt;
   color: #fff;
   position: relative;
-  
-  padding-left: 15px;
+ 
+  padding-left: 15px; 
 }
+
+ 
+
 
 .container-4 input#email::-webkit-input-placeholder, input#friendEmail::-webkit-input-placeholder{
    color: #fff;
@@ -95,10 +98,7 @@ margin-top: 80px;
 .container-4 input#email:-ms-input-placeholder, input#friendEmail:-ms-input-placeholder {  
    color: #fff;  
 }
-#artistBlock, #labelBlock{
-	display:none;
-}
-
+ 
 .question{
 	color: #fff;
 	line-height: 50px;
@@ -107,7 +107,7 @@ margin-top: 80px;
 .spacer{
 	padding-top: 20px;
 }
-.container-4 button.icon, #yesArtist, #noArtist, #yesLabel, #noLabel{
+.container-4 #yesArtist, #noArtist, #yesLabel, #noLabel{
 	position: absolute;
 	right: 5px;
   -webkit-border-radius: 3px;
@@ -135,6 +135,31 @@ margin-top: 80px;
   opacity: 1;
   margin-left: -50px;
 }
+.container-4 button.icon{
+    position: absolute;
+  right: 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+   outline: none;
+  opacity: 1;
+  line-height: 38px;
+  border: none; 
+  height: 40px;
+  margin-top: 5px;
+  width: 40px;
+  color: @brand-lighter;
+  opacity: 1;
+  font-size: 13pt;
+  background-color: darken(@brand-neutral, 10%);
+}
+.activeSubmitEmailButton{
+
+  .gradient(45deg);
+}
+.container-4:hover button.icon{
+  background-color: @brand-neutral;
+}
  
 .container-4:hover button.icon{
 	font-weight: 500;
@@ -154,15 +179,13 @@ margin-top: 80px;
     to {transform:rotate(360deg);}
 }
 #position, #positionFriend{
-	display: none;
-	padding-top: 105px;
-	width: 340px;
-	font-size: 16px;
+
+	padding-top: 45px;
+	width: 360px;
+	font-size: 15px;
 	color: white;
 }
-#inviteFriendBlock{
-	display: none;
-}
+ 
 #inviteFriend , #inviteMoreFriend{
 	color: @brand-primary;
 }
