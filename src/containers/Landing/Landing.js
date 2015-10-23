@@ -1,18 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
-import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
-import { pushState } from 'redux-router';
+import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
 import BetaOnboardingForm from './../../components/Onboarding/BetaOnboardingForm';
-import {initialize} from 'redux-form';
 
 const title = 'TracklistMe';
 const description = 'Fair for the artists, fair for you.';
 const logo = require('./../../img/logoAphextwin.png');
-
- 
 
 const meta = {
   title,
@@ -40,22 +34,12 @@ const meta = {
 
 export default class Landing extends Component {
   static propTypes = {
-    user: PropTypes.object, 
+    user: PropTypes.object
   };
 
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
-
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.user && nextProps.user) {
-      // login
-      this.props.pushState(null, '/loginSuccess');
-    } else if (this.props.user && !nextProps.user) {
-      // logout
-      this.props.pushState(null, '/');
-    }
-  }
 
   static fetchData(getState, dispatch) {
     const promises = [];
@@ -68,20 +52,11 @@ export default class Landing extends Component {
     return Promise.all(promises);
   }
 
-  
   handleSubmit(data) {
     console.log('Data submitted! ' + JSON.stringify(data));
-    this.props.initialize('survey', {});
-  }
-
-  handleInitialize() {
-    this.props.initialize('survey', {
-      email: 'test@gmail.com'
-    });
   }
 
   render() {
-    const {user} = this.props;
     const styles = require('./../App/less/aphextwin.less');
     const logoImage = require('./logo_big.png');
 
@@ -98,12 +73,12 @@ export default class Landing extends Component {
             <p> Buy, Sell and Stream Music. Find out who plays it. <br />
               <span id="registerMessage"> Register now and get early beta access </span>
             </p>
-            <div className="box"> 
+            <div className="box">
               <BetaOnboardingForm step={'1'} onSubmit={::this.handleSubmit} />
             </div>
           </register_panel>
         </div>
       </div>
-    )
+    );
   }
 }
