@@ -5,7 +5,7 @@ import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
 import BetaOnboardingForm from './../../components/Onboarding/BetaOnboardingForm';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { save } from 'redux/modules/earlyUser';
+import { registerEmail } from 'redux/modules/earlyUser';
 
 const title = 'TracklistMe';
 const description = 'Fair for the artists, fair for you.';
@@ -39,11 +39,11 @@ const meta = {
   store => ({
     status: store.earlyUser.data
   }),
-  dispatch => bindActionCreators({ save }, dispatch)
+  dispatch => bindActionCreators({ registerEmail }, dispatch)
 )
 export default class Landing extends Component {
   static propTypes = {
-    save: PropTypes.func.isRequired,
+    registerEmail: PropTypes.func.isRequired,
     user: PropTypes.object
   };
 
@@ -62,10 +62,13 @@ export default class Landing extends Component {
     return Promise.all(promises);
   }
 
-  handleSubmit(data) {
+  submitEmailHandler(data) {
     console.log('Data submitted! ' + JSON.stringify(data));
-    console.log(this.props.save);
-    this.props.save(data);
+    this.props.registerEmail(data).then(function correctCallbak(value) {
+      console.log('value' + value);
+    }).catch(function errorHandler(eventError) {
+      console.log('ERROR' + eventError); // "oh, no!"
+    });
   }
 
   render() {
@@ -86,7 +89,7 @@ export default class Landing extends Component {
               <span id="registerMessage"> Register now and get early beta access </span>
             </p>
             <div className="box">
-                <BetaOnboardingForm step={'1'} onSubmit={::this.handleSubmit} />
+                <BetaOnboardingForm step={'1'} submitEmailHandler={::this.submitEmailHandler} />
             </div>
           </register_panel>
         </div>

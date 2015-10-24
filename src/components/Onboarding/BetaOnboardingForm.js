@@ -8,7 +8,7 @@ const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend 
 
 export default class BetaOnboardingForm extends Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
+    submitEmailHandler: PropTypes.func.isRequired,
     currentState: PropTypes.string,
     step: PropTypes.string
   }
@@ -31,12 +31,11 @@ export default class BetaOnboardingForm extends Component {
     this.submitEmail = this.submitEmail.bind(this);
   }
 
-  submitEmail(event) {
+  submitEmail() {
     if (this.validateEmail(this.state.email)) {
-      this.setState({step: IS_ARTIST});
+      // this.setState({step: IS_ARTIST});
+      this.props.submitEmailHandler(this.state);
     }
-    console.log(this.props.onSubmit(this.state));
-    console.log(event);
   }
 
   submitFriendEmail(event) {

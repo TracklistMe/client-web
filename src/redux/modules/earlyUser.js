@@ -93,12 +93,11 @@ export function load() {
   };
 }
 
-export function save(user) {
+export function registerEmail(registrationObject) {
   return {
     types: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
-    id: user.id,
     promise: (client) => client.post('/earlyUser/', {
-      data: user
+      data: registrationObject
     })
   };
 }
