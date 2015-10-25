@@ -1,19 +1,19 @@
 import React, {Component, PropTypes} from 'react';
-import { registerEmail } from 'redux/modules/earlyUser';
+import { lookupEmail, setIsArtist, setIsLabel, registerUser } from 'redux/modules/earlyUser';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 const ENTER_EMAIL = 0; // Enter Email step
 const IS_ARTIST = 1; // Answer yes or no If you are an artist
-const IS_LABEL = 'Answer yes or no if you are a label';
-const SHOW_CURRENT_POSITION = 'Show the current position';
+const IS_LABEL = 2; // 'Answer yes or no if you are a label';
+const SHOW_CURRENT_POSITION = 3; // 'Show the current position';
 const INVITE_FRIEND = 'Enter friend\'s email';
 const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend show position';
 
 
 @connect(
   state => ({earlyUser: state.earlyUser}),
-  dispatch => bindActionCreators({ registerEmail }, dispatch)
+  dispatch => bindActionCreators({ lookupEmail, setIsArtist, setIsLabel, registerUser }, dispatch)
 )
 export default class BetaOnboardingForm extends Component {
   static propTypes = {
@@ -21,9 +21,13 @@ export default class BetaOnboardingForm extends Component {
     step: PropTypes.string,
     earlyUser: React.PropTypes.shape({
       phase: React.PropTypes.number,
-      user: React.PropTypes.object
+      user: React.PropTypes.object,
+      registering: React.PropTypes.bool
     }),
-    registerEmail: React.PropTypes.func
+    lookupEmail: React.PropTypes.func,
+    setIsArtist: React.PropTypes.func,
+    setIsLabel: React.PropTypes.func,
+    registerUser: React.PropTypes.func
   }
 
   constructor(props) {
@@ -41,11 +45,13 @@ export default class BetaOnboardingForm extends Component {
     this.submitFriendEmail = this.submitFriendEmail.bind(this);
     this.handleChangeFriendEmail = this.handleChangeFriendEmail.bind(this);
     this.submitEmail = this.submitEmail.bind(this);
+    this.isAnArtistHandler = this.isAnArtistHandler.bind(this);
+    this.isALabelHandler = this.isALabelHandler.bind(this);
   }
 
   submitEmail() {
     if (this.validateEmail(this.state.email)) {
-      this.props.registerEmail(this.state);
+      this.props.lookupEmail(this.state);
     }
   }
 
@@ -74,11 +80,12 @@ export default class BetaOnboardingForm extends Component {
   }
 
   isAnArtistHandler(isArtist) {
-    this.setState({isArtist: isArtist, step: IS_LABEL});
+    console.log('IS ARTIST');
+    this.props.setIsArtist(isArtist);
   }
   isALabelHandler(isLabel) {
-    this.setState({isLabel: isLabel, step: SHOW_CURRENT_POSITION});
-    console.log(this.state);
+    this.props.setIsLabel(isLabel);
+    this.props.registerUser(this.earlyUser);
   }
 
   inviteMoreFriendHandler() {
@@ -99,8 +106,8 @@ export default class BetaOnboardingForm extends Component {
             <div id="emailBlock">
               <input type="email" id="email" value={this.state.email} onChange={this.handleChangeEmail} ref="email" placeholder="Email" />
               <button className={activeSubmitEmailButton} id="sendButton" onClick={this.submitEmail}>
-                <span id="send" className="basic-pictosimply-right"></span>
-                <span id="loading" className="basic-pictoloader iconSpin"></span>
+                {!earlyUser.registering && <span id="send" className="basic-pictosimply-right"></span>}
+                {earlyUser.registering && <span id="loading" className="basic-pictoloader iconSpin"></span>}
               </button>
             </div>
           </div>
