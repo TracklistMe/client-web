@@ -1,107 +1,49 @@
-const LOAD = 'redux-example/widgets/LOAD';
-const LOAD_SUCCESS = 'redux-example/widgets/LOAD_SUCCESS';
-const LOAD_FAIL = 'redux-example/widgets/LOAD_FAIL';
-const EDIT_START = 'redux-example/widgets/EDIT_START';
-const EDIT_STOP = 'redux-example/widgets/EDIT_STOP';
-const SAVE = 'redux-example/widgets/SAVE';
-const SAVE_SUCCESS = 'redux-example/widgets/SAVE_SUCCESS';
-const SAVE_FAIL = 'redux-example/widgets/SAVE_FAIL';
+const EMAIL_REGISTRATION = 'EMAIL_REGISTRATION';
+const EMAIL_REGISTRATION_SUCCESS = 'EMAIL_REGISTRATION_SUCCESS';
+const EMAIL_REGISTRATION_FAILURE = 'EMAIL_REGISTRATION_FAILURE';
 
 const initialState = {
-  loaded: false,
-  editing: {},
-  saveError: {}
+  phase: 0,   // I would just make this what "page" you are on in the multistep process
+  user: null  // Better null or undefined than {} if no data
 };
 
+// you didn't name this reducer like the spec says!!
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case LOAD:
+    case EMAIL_REGISTRATION:
+      console.log('registering');
+      return {
+        ...state, // destructuring is AWESOME. Learn it. I much prefer it to
+                  // Object.assign, which babel transpiles it down to.
+        registering: true // I prefer booleans to keeping action types in state.
+                          // booleans also make it easy to do
+                          // {registering && <div className="indicator"/>} in jsx
+      };
+    case EMAIL_REGISTRATION_SUCCESS:
+      console.log('success');
       return {
         ...state,
-        loading: true
+        user: action.result, // result is set by client middleware
+        phase: 1,            // shows this step is done and ready for next step
+        registering: false   // hide indicator
       };
-    case LOAD_SUCCESS:
+    case EMAIL_REGISTRATION_FAILURE:
+      console.log('fail');
       return {
         ...state,
-        loading: false,
-        loaded: true,
-        data: action.result,
-        error: null
+        registering: false,             // hide indicator
+        registrationError: action.error // error is set by client middleware
       };
-    case LOAD_FAIL:
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-        data: null,
-        error: action.error
-      };
-    case EDIT_START:
-      return {
-        ...state,
-        editing: {
-          ...state.editing,
-          [action.id]: true
-        }
-      };
-    case EDIT_STOP:
-      return {
-        ...state,
-        editing: {
-          ...state.editing,
-          [action.id]: false
-        }
-      };
-    case SAVE:
-      return state; // 'saving' flag handled by redux-form
-    case SAVE_SUCCESS:
-      const data = [...state.data];
-      data[action.result.id - 1] = action.result;
-      return {
-        ...state,
-        data: data,
-        editing: {
-          ...state.editing,
-          [action.id]: false
-        },
-        saveError: {
-          ...state.saveError,
-          [action.id]: null
-        }
-      };
-    case SAVE_FAIL:
-      return typeof action.error === 'string' ? {
-        ...state,
-        saveError: {
-          ...state.saveError,
-          [action.id]: action.error
-        }
-      } : state;
     default:
       return state;
   }
 }
 
-export function isLoaded(globalState) {
-  return globalState.widgets && globalState.widgets.loaded;
-}
-
-export function load() {
+export function registerEmail(data) {
+  console.log('redux called ');
+  console.log(data);
   return {
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/widget/load/param1/param2') // params not used, just shown as demonstration
+    types: [EMAIL_REGISTRATION, EMAIL_REGISTRATION_SUCCESS, EMAIL_REGISTRATION_FAILURE],
+    promise: client => client.post('/earlyUsers/', {data})
   };
-}
-
-export function registerEmail(registrationObject) {
-  return {
-    types: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
-    promise: (client) => client.post('/earlyUsers/', {
-      data: registrationObject
-    })
-  };
-}
-
-export function updateInformation(registraionObject) {
-  console.log(registraionObject);
 }

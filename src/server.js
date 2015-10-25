@@ -36,7 +36,6 @@ app.use(favicon(path.join(__dirname, '..', 'static', 'favicon/favicon.ico')));
 
 app.use(require('serve-static')(path.join(__dirname, '..', 'static')));
 
-console.log(proxy.target);
 // Proxy to API server
 if (__DEVELOPMENT__) {
   console.log('is a dev ')

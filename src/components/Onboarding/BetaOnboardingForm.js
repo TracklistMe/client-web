@@ -1,22 +1,35 @@
 import React, {Component, PropTypes} from 'react';
-// const ENTER_EMAIL = 'Enter Email step';
-const IS_ARTIST = 'Answer yes or no If you are an artist';
+import { registerEmail } from 'redux/modules/earlyUser';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+const ENTER_EMAIL = 0; // Enter Email step
+const IS_ARTIST = 1; // Answer yes or no If you are an artist
 const IS_LABEL = 'Answer yes or no if you are a label';
 const SHOW_CURRENT_POSITION = 'Show the current position';
 const INVITE_FRIEND = 'Enter friend\'s email';
 const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend show position';
 
+
+@connect(
+  state => ({earlyUser: state.earlyUser}),
+  dispatch => bindActionCreators({ registerEmail }, dispatch)
+)
 export default class BetaOnboardingForm extends Component {
   static propTypes = {
-    submitEmailHandler: PropTypes.func.isRequired,
     currentState: PropTypes.string,
-    step: PropTypes.string
+    step: PropTypes.string,
+    earlyUser: React.PropTypes.shape({
+      phase: React.PropTypes.number,
+      user: React.PropTypes.object
+    }),
+    registerEmail: React.PropTypes.func
   }
 
   constructor(props) {
     super(props);
+    // Bind callback methods to make `this` the correct context.
     this.state = {
-      step: props.step,
       email: '',
       emailIsValid: false,
       friendEmail: '',
@@ -24,7 +37,6 @@ export default class BetaOnboardingForm extends Component {
       isArtist: false,
       isLabel: false
     };
-    // Bind callback methods to make `this` the correct context.
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.submitFriendEmail = this.submitFriendEmail.bind(this);
     this.handleChangeFriendEmail = this.handleChangeFriendEmail.bind(this);
@@ -33,14 +45,7 @@ export default class BetaOnboardingForm extends Component {
 
   submitEmail() {
     if (this.validateEmail(this.state.email)) {
-      // this.setState({step: IS_ARTIST});
-      this.props.submitEmailHandler(this.state).then(
-        function submitEmailCallback(data) {
-          console.log(data);
-        }
-      ).catch( function errorHandler(error) {
-        console.log(error);
-      });
+      this.props.registerEmail(this.state);
     }
   }
 
@@ -84,10 +89,11 @@ export default class BetaOnboardingForm extends Component {
     return re.test(email);
   }
   render() {
+    const {earlyUser} = this.props;
     const activeSubmitEmailButton = 'icon' + (this.state.emailIsValid ? ' activeSubmitEmailButton' : '');
     const activeSubmitFriendEmailButton = 'icon' + (this.state.friendEmailIsValid ? ' activeSubmitEmailButton' : '');
-    switch (this.state.step) {
-      case '1':
+    switch (earlyUser.phase) {
+      case ENTER_EMAIL:
         return (
           <div id="registration" className="container-4">
             <div id="emailBlock">
@@ -156,6 +162,6 @@ export default class BetaOnboardingForm extends Component {
 
       default:
     }
-    return ( <div> a {this.state.step} b </div> );
+    return ( <div></div> );
   }
 }

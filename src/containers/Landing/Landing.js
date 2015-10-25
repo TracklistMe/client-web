@@ -1,11 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import DocumentMeta from 'react-document-meta';
-import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
-import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
 import BetaOnboardingForm from './../../components/Onboarding/BetaOnboardingForm';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { registerEmail } from 'redux/modules/earlyUser';
 
 const title = 'TracklistMe';
 const description = 'Fair for the artists, fair for you.';
@@ -34,47 +29,11 @@ const meta = {
   }
 };
 
-
-@connect(
-  store => ({
-    status: store.earlyUser.data
-  }),
-  dispatch => bindActionCreators({ registerEmail }, dispatch)
-)
 export default class Landing extends Component {
-  static propTypes = {
-    registerEmail: PropTypes.func.isRequired,
-    user: PropTypes.object
-  };
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired
-  };
-
-  static fetchData(getState, dispatch) {
-    const promises = [];
-    if (!isInfoLoaded(getState())) {
-      promises.push(dispatch(loadInfo()));
-    }
-    if (!isAuthLoaded(getState())) {
-      promises.push(dispatch(loadAuth()));
-    }
-    return Promise.all(promises);
-  }
-
-  submitEmailHandler(data) {
-    console.log('Data submitted! ' + JSON.stringify(data));
-    this.props.registerEmail(data).then(function correctCallbak(value) {
-      console.log('value' + value);
-    }).catch(function errorHandler(eventError) {
-      console.log('ERROR' + eventError); // "oh, no!"
-    });
-  }
 
   render() {
     const styles = require('./../App/less/aphextwin.less');
     const logoImage = require('./logo_big.png');
-
     return (
       <div className={styles.app}>
         <DocumentMeta {...meta}/>
@@ -84,12 +43,12 @@ export default class Landing extends Component {
           <register_panel>
             <h1><a href="/"><img src={logoImage} alt="Tracklist.me" /></a></h1>
             <h2> Your Music Hub </h2>
-            <h3> fair for the artists, fair for you. </h3>
+            <h3> fair for the artists, fair for you.</h3>
             <p> Buy, Sell and Stream Music. Find out who plays it. <br />
-              <span id="registerMessage"> Register now and get early beta access </span>
+              <span id="registerMessage">Register now and get early beta access </span>
             </p>
             <div className="box">
-                <BetaOnboardingForm step={'1'} submitEmailHandler={::this.submitEmailHandler} />
+                <BetaOnboardingForm />
             </div>
           </register_panel>
         </div>
