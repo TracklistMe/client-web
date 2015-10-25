@@ -36,10 +36,18 @@ app.use(favicon(path.join(__dirname, '..', 'static', 'favicon/favicon.ico')));
 
 app.use(require('serve-static')(path.join(__dirname, '..', 'static')));
 
+console.log(proxy.target);
 // Proxy to API server
-app.use('/api', (req, res) => {
-  proxy.web(req, res);
-});
+if (__DEVELOPMENT__) {
+  console.log('is a dev ')
+  app.use('http://localhost:' + config.apiPort, (req, res) => {
+    proxy.web(req, res);
+  });
+} else {
+  app.use('/api', (req, res) => {
+    proxy.web(req, res);
+  });
+}
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {

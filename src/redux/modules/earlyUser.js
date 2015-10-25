@@ -96,16 +96,12 @@ export function load() {
 export function registerEmail(registrationObject) {
   return {
     types: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
-    promise: (client) => client.post('/earlyUser/', {
+    promise: (client) => client.post('/earlyUsers/', {
       data: registrationObject
     })
   };
 }
 
-export function editStart(id) {
-  return { type: EDIT_START, id };
-}
-
-export function editStop(id) {
-  return { type: EDIT_STOP, id };
+export function updateInformation(registraionObject) {
+  console.log(registraionObject);
 }

@@ -34,7 +34,13 @@ export default class BetaOnboardingForm extends Component {
   submitEmail() {
     if (this.validateEmail(this.state.email)) {
       // this.setState({step: IS_ARTIST});
-      this.props.submitEmailHandler(this.state);
+      this.props.submitEmailHandler(this.state).then(
+        function submitEmailCallback(data) {
+          console.log(data);
+        }
+      ).catch( function errorHandler(error) {
+        console.log(error);
+      });
     }
   }
 

@@ -44,6 +44,9 @@ class ApiClient_ {
       // Prepend host and port of the API server to the path.
       return 'http://localhost:' + config.apiPort + adjustedPath;
     }
+    if (__DEVELOPMENT__) {
+      return 'http://localhost:3000' + adjustedPath;
+    }
     // Prepend `/api` to relative URL, to proxy to API server.
     return '/api' + adjustedPath;
   }
