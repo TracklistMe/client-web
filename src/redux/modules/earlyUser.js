@@ -67,7 +67,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         earlyUser: action.result, // result is set by client middleware
-        phase: 4,            // shows this step is done and ready for next step
+        phase: 3,            // shows this step is done and ready for next step
         registering: false   // hide indicator
       };
     case EMAIL_REGISTRATION_FAILURE:
@@ -88,6 +88,7 @@ export default function reducer(state = initialState, action = {}) {
         }
       };
     case IS_LABEL:
+      console.log('updating label');
       return {
         ...state,
         earlyUser: {
@@ -117,7 +118,11 @@ export function registerUser(earlyUser) {
   console.log(earlyUser);
   return {
     types: [EMAIL_REGISTRATION, EMAIL_REGISTRATION_SUCCESS, EMAIL_REGISTRATION_FAILURE],
-    promise: client => client.post('/earlyUsers/', {earlyUser})
+    promise: (client) => client.post('/earlyUsers', {
+      data: earlyUser
+    })
+
+
   };
 }
 

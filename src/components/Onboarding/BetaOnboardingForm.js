@@ -7,7 +7,7 @@ const ENTER_EMAIL = 0; // Enter Email step
 const IS_ARTIST = 1; // Answer yes or no If you are an artist
 const IS_LABEL = 2; // 'Answer yes or no if you are a label';
 const SHOW_CURRENT_POSITION = 3; // 'Show the current position';
-const INVITE_FRIEND = 'Enter friend\'s email';
+const INVITE_FRIEND = 4; // Enter friend\'s email';
 const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend show position';
 
 
@@ -21,7 +21,7 @@ export default class BetaOnboardingForm extends Component {
     step: PropTypes.string,
     earlyUser: React.PropTypes.shape({
       phase: React.PropTypes.number,
-      user: React.PropTypes.object,
+      earlyUser: React.PropTypes.object,
       registering: React.PropTypes.bool
     }),
     lookupEmail: React.PropTypes.func,
@@ -32,7 +32,7 @@ export default class BetaOnboardingForm extends Component {
 
   constructor(props) {
     super(props);
-    // Bind callback methods to make `this` the correct context.
+
     this.state = {
       email: '',
       emailIsValid: false,
@@ -41,6 +41,8 @@ export default class BetaOnboardingForm extends Component {
       isArtist: false,
       isLabel: false
     };
+
+    // Bind callback methods to make `this` the correct context.
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.submitFriendEmail = this.submitFriendEmail.bind(this);
     this.handleChangeFriendEmail = this.handleChangeFriendEmail.bind(this);
@@ -85,7 +87,10 @@ export default class BetaOnboardingForm extends Component {
   }
   isALabelHandler(isLabel) {
     this.props.setIsLabel(isLabel);
-    this.props.registerUser(this.earlyUser);
+    // todo(bortignon@): the update of the state is async
+    // the value of earlyUser.isLabel will not be up to date when hitting the
+    // next line.
+    this.props.registerUser(this.props.earlyUser.earlyUser);
   }
 
   inviteMoreFriendHandler() {
