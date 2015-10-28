@@ -154,7 +154,7 @@ export default class BetaOnboardingForm extends Component {
           </div>
         );
       case SHOW_CREATING_ACCOUNT_ANIMATION:
-        return (<div id="registration" className="container-4"> Registering </div>);
+        return (<div> </div>);
       case SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED:
         return (
           <div id="positionFriend">An email has been sent to your friend.
