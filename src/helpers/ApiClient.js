@@ -25,13 +25,11 @@ class ApiClient_ {
             if (options && options.data) {
               request.send(options.data);
             }
-            request.end((err, res) => {
-              if (err) {
-                reject((res && res.body) || err);
-              } else {
-                resolve(res.body);
-              }
-            });
+            request.end((err, {body, status} = {}) =>
+              err ? reject({
+                error: body || err,
+                status
+              }) : resolve(body));
           });
         };
       });

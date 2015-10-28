@@ -35,14 +35,14 @@ export default function reducer(state = initialState, action = {}) {
       };
     case EMAIL_LOOKUP_SUCCESS:
       console.log('email exists ');
+      console.log(action);
       return {
         // at the moment i'm not using this for anything
         ...state,
         registering: false
       };
     case EMAIL_LOOKUP_FAILURE:
-      // TODO(bortignon): have a better semanting handling of the code error
-      // for now we assueme that it always return a 404 when a error is detected
+      // action.error.status contains the error type.
       return {
         ...state,
         registering: false, // hide indicator
@@ -67,7 +67,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         earlyUser: action.result, // result is set by client middleware
-        phase: 3,            // shows this step is done and ready for next step
+        phase: 4,            // shows this step is done and ready for next step
         registering: false   // hide indicator
       };
     case EMAIL_REGISTRATION_FAILURE:
@@ -88,9 +88,9 @@ export default function reducer(state = initialState, action = {}) {
         }
       };
     case IS_LABEL:
-      console.log('updating label');
       return {
         ...state,
+        phase: 3,
         earlyUser: {
           ...state.earlyUser,
           isLabel: action.isLabel
@@ -114,15 +114,11 @@ export function lookupEmail(data) {
 
 // API calls
 export function registerUser(earlyUser) {
-  console.log('ok lets register this user ');
-  console.log(earlyUser);
   return {
     types: [EMAIL_REGISTRATION, EMAIL_REGISTRATION_SUCCESS, EMAIL_REGISTRATION_FAILURE],
     promise: (client) => client.post('/earlyUsers', {
       data: earlyUser
     })
-
-
   };
 }
 

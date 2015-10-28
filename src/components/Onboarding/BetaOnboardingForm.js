@@ -6,8 +6,9 @@ import { connect } from 'react-redux';
 const ENTER_EMAIL = 0; // Enter Email step
 const IS_ARTIST = 1; // Answer yes or no If you are an artist
 const IS_LABEL = 2; // 'Answer yes or no if you are a label';
-const SHOW_CURRENT_POSITION = 3; // 'Show the current position';
-const INVITE_FRIEND = 4; // Enter friend\'s email';
+const SHOW_CREATING_ACCOUNT_ANIMATION = 3;
+const SHOW_CURRENT_POSITION = 4; // 'Show the current position';
+const INVITE_FRIEND = 5; // Enter friend\'s email';
 const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend show position';
 
 
@@ -49,6 +50,14 @@ export default class BetaOnboardingForm extends Component {
     this.submitEmail = this.submitEmail.bind(this);
     this.isAnArtistHandler = this.isAnArtistHandler.bind(this);
     this.isALabelHandler = this.isALabelHandler.bind(this);
+    this.registerUserHandler = this.registerUserHandler.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.earlyUser.phase === IS_LABEL) {
+      // You are now in the registration email phase.
+      this.registerUserHandler();
+    }
   }
 
   submitEmail() {
@@ -87,12 +96,11 @@ export default class BetaOnboardingForm extends Component {
   }
   isALabelHandler(isLabel) {
     this.props.setIsLabel(isLabel);
-    // todo(bortignon@): the update of the state is async
-    // the value of earlyUser.isLabel will not be up to date when hitting the
-    // next line.
+  }
+  registerUserHandler() {
+    console.log('Register user handler');
     this.props.registerUser(this.props.earlyUser.earlyUser);
   }
-
   inviteMoreFriendHandler() {
     this.setState({step: INVITE_FRIEND});
   }
@@ -145,6 +153,8 @@ export default class BetaOnboardingForm extends Component {
             </div>
           </div>
         );
+      case SHOW_CREATING_ACCOUNT_ANIMATION:
+        return (<div id="registration" className="container-4"> Registering </div>);
       case SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED:
         return (
           <div id="positionFriend">An email has been sent to your friend.
