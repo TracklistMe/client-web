@@ -159,7 +159,7 @@ export default class BetaOnboardingForm extends Component {
                 </button>
               </div>
             </div>
-            (this.state.emailAlreadyExists && <div id="validationError"> Email already exists </div>)
+            {this.state.emailAlreadyExists && <div id="validationError"> Email already exists </div>}
           </div>
         );
       case IS_ARTIST:
