@@ -9,7 +9,7 @@ const IS_LABEL = 2; // 'Answer yes or no if you are a label';
 const SHOW_CREATING_ACCOUNT_ANIMATION = 3;
 const SHOW_CURRENT_POSITION = 4; // 'Show the current position';
 const INVITE_FRIEND = 5; // Enter friend\'s email';
-const SHOW_AUTENTICATION_LANDING = 6;
+const SHOW_CONFIRMATION_LANDING = 6;
 const ACCOUNT_CONFIRMATION_COMPLETED = 7;
 const ACCOUNT_CONFIRMATION_FAILED = 8;
 const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend show position';
@@ -64,7 +64,7 @@ export default class BetaOnboardingForm extends Component {
   componentDidMount() {
     console.log(this.props);
     if (this.props.auth) {
-      this.props.earlyUser.phase = SHOW_AUTENTICATION_LANDING;
+      this.props.earlyUser.phase = SHOW_CONFIRMATION_LANDING;
       this.state.passwordIsValid = false;
     }
     console.log('Component did mount' + this.props.earlyUser.phase);
@@ -218,15 +218,15 @@ export default class BetaOnboardingForm extends Component {
               </button>
             </div>
           </div>);
-      case SHOW_AUTENTICATION_LANDING:
+      case SHOW_CONFIRMATION_LANDING:
         return (
           <div>
             <div id="registration" className="container-4">
               <div id="emailBlock">
                 <input type="password" id="email" value={this.state.password} onChange={this.handlePasswordChange} ref="password" placeholder="Password" />
                 <button id="sendFriendButton" className={activeSubmitPasswordButton} onClick={this.submitPassword.bind(this)}>
-                  {!this.state.passwordIsValid && <span id="send" className="basic-pictosimply-right"></span>}
-                  {this.state.passwordIsValid && <span id="loading" className="basic-pictoloader iconSpin"></span>}
+                  {!earlyUser.registering && <span id="send" className="basic-pictosimply-right"></span>}
+                  {earlyUser.registering && <span id="loading" className="basic-pictoloader iconSpin"></span>}
                 </button>
               </div>
             </div>
