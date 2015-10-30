@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import DocumentMeta from 'react-document-meta';
 import BetaOnboardingForm from './../../components/Onboarding/BetaOnboardingForm';
 
@@ -30,8 +30,11 @@ const meta = {
 };
 
 export default class Landing extends Component {
-
+  static propTypes = {
+    params: PropTypes.object
+  }
   render() {
+    const {auth, id} = this.props.params;
     const styles = require('./../App/less/aphextwin.less');
     const logoImage = require('./logo_big.png');
     return (
@@ -48,7 +51,7 @@ export default class Landing extends Component {
               <span id="registerMessage">Register now and get early beta access </span>
             </p>
             <div className="box">
-                <BetaOnboardingForm />
+               <BetaOnboardingForm auth={auth} id={id}/>
             </div>
           </register_panel>
         </div>

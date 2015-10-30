@@ -122,6 +122,17 @@ export function registerUser(earlyUser) {
   };
 }
 
+export function confirmUser(authCode, id) {
+  return {
+    types: [EMAIL_CONFIRMATION, EMAIL_CONFIRMATION_SUCCESS, EMAIL_CONFIRMATION_FAILURE],
+    promise: (client) => client.post('/earlyUsers' + id + '/verify/ ' + '123', {
+      data: authCode
+    })
+  };
+
+  console.log(authCode + 'redux');
+}
+
 // Simple changes in status
 export function setIsArtist(isArtist) {
   return { type: IS_ARTIST, isArtist };

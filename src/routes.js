@@ -27,6 +27,7 @@ export default (store) => {
     <Route>
       <Route>
         <Route path="/" component={Landing}/>
+        <Route path="/verifyAccount/:id/:auth" component={Landing}/>
       </Route>
       <Route component={App}>
         <Route path="/beta" component={Home}/>
