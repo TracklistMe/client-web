@@ -65,8 +65,7 @@ export default class BetaOnboardingForm extends Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
 
-  componentDidMount() {
-    console.log(this.props);
+  componentWillMount() {
     if (this.props.auth) {
       this.props.earlyUser.phase = SHOW_CONFIRMATION_LANDING;
       this.state.passwordIsValid = false;
