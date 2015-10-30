@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import { lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser } from 'redux/modules/earlyUser';
+import { lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail} from 'redux/modules/earlyUser';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -12,12 +12,15 @@ const INVITE_FRIEND = 5; // Enter friend\'s email';
 const SHOW_CONFIRMATION_LANDING = 6;
 const ACCOUNT_CONFIRMATION_COMPLETED = 7;
 const ACCOUNT_CONFIRMATION_FAILED = 8;
+const EMAIL_ALREADY_EXIST = 9;
+const CONFIRMATION_EMAIL_REQUESTED_SUCCESSFULLY = 10;
+const SOMETHING_WENT_WRONG = -1;
 const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend show position';
 
 
 @connect(
   state => ({earlyUser: state.earlyUser}),
-  dispatch => bindActionCreators({ lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser}, dispatch)
+  dispatch => bindActionCreators({ lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail}, dispatch)
 )
 export default class BetaOnboardingForm extends Component {
   static propTypes = {
@@ -32,6 +35,7 @@ export default class BetaOnboardingForm extends Component {
     setIsArtist: PropTypes.func,
     setIsLabel: PropTypes.func,
     registerUser: PropTypes.func,
+    requestConfirmationEmail: PropTypes.func,
     confirmUser: PropTypes.func,
     auth: PropTypes.string,
     id: PropTypes.string
@@ -77,6 +81,10 @@ export default class BetaOnboardingForm extends Component {
     }
   }
 
+  requestConfirmationEmailHandler() {
+    this.props.requestConfirmationEmail(this.state.email);
+  }
+
   submitEmail() {
     if (this.validateEmail(this.state.email)) {
       this.props.lookupEmail(this.state);
@@ -94,12 +102,9 @@ export default class BetaOnboardingForm extends Component {
   }
 
   handleChangeEmail(event) {
-    console.log(event.target.value);
     this.setState({email: event.target.value,
       emailIsValid: this.validateEmail(event.target.value)});
-    console.log(this.validateEmail(event.target.value));
   }
-
 
   /*
    * Validate password length
@@ -162,6 +167,12 @@ export default class BetaOnboardingForm extends Component {
             {this.state.emailAlreadyExists && <div id="validationError"> Email already exists </div>}
           </div>
         );
+      case EMAIL_ALREADY_EXIST:
+        return (
+          <div id="position">
+            We already have this email! <br /> You can <a className="smallHighlightedText" onClick={this.requestConfirmationEmailHandler.bind(this)}>Request the confirmation email again</a>
+              <br />or <span className="smallHighlightedTextnotActiveYet">Login with your password</span>
+          </div>);
       case IS_ARTIST:
         return (
           <div id="registration" className="container-4">
@@ -249,6 +260,21 @@ export default class BetaOnboardingForm extends Component {
             {earlyUser.confirmationError.error.message}
             </div>
           );
+      case CONFIRMATION_EMAIL_REQUESTED_SUCCESSFULLY:
+        return (
+            <div id="position">
+            <br />We just sent the confirmation email. <br />
+            You are currently in queue at position <span className="highlight">1234</span>.
+            <br /> Want to skip the queue?
+            <br /><span id="inviteFriend" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite your friends! </span>
+            </div>
+          );
+      case SOMETHING_WENT_WRONG:
+        return (
+            <div id="position">
+            Something went wrong, please email us.<br />
+            </div>
+        );
       default:
         return ( <div></div> );
     }

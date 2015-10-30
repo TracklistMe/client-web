@@ -14,6 +14,7 @@ import md5 from 'md5';
 const EMAIL_REGISTRATION = 'EMAIL_REGISTRATION';
 const EMAIL_REGISTRATION_SUCCESS = 'EMAIL_REGISTRATION_SUCCESS';
 const EMAIL_REGISTRATION_FAILURE = 'EMAIL_REGISTRATION_FAILURE';
+
 const EMAIL_LOOKUP = 'EMAIL_LOOKUP';
 const EMAIL_LOOKUP_SUCCESS = 'EMAIL_LOOKUP_SUCCESS';
 const EMAIL_LOOKUP_FAILURE = 'EMAIL_LOOKUP_FAILURE';
@@ -21,6 +22,11 @@ const EMAIL_LOOKUP_FAILURE = 'EMAIL_LOOKUP_FAILURE';
 const EMAIL_CONFIRMATION = 'EMAIL_CONFIRMATION';
 const EMAIL_CONFIRMATION_SUCCESS = 'EMAIL_CONFIRMATION_SUCCESS';
 const EMAIL_CONFIRMATION_FAILURE = 'EMAIL_CONFIRMATION_FAILURE';
+
+const REQUEST_CONFIRMATION_EMAIL = 'REQUEST_CONFIRMATION_EMAIL';
+const REQUEST_CONFIRMATION_EMAIL_SUCCESS = 'REQUEST_CONFIRMATION_EMAIL_SUCCESS';
+const REQUEST_CONFIRMATION_EMAIL_FAILURE = 'REQUEST_CONFIRMATION_EMAIL_FAILURE';
+
 
 const IS_ARTIST = 'IS_ARTIST';
 const IS_LABEL = 'IS_LABEL';
@@ -44,15 +50,15 @@ export default function reducer(state = initialState, action = {}) {
       return {
         // at the moment i'm not using this for anything
         ...state,
+        phase: 9,
         registering: false
       };
     case EMAIL_LOOKUP_FAILURE:
-      // action.error.status contains the error type.
       return {
         ...state,
-        registering: false, // hide indicator
-        registrationError: action.error, // error is set by client middleware
-        phase: 1, // shows this step is done and ready for next step
+        registering: false,
+        registrationError: action.error,
+        phase: 1,
         earlyUser: {
           ...state.earlyUser,
           email: action.email
@@ -61,25 +67,22 @@ export default function reducer(state = initialState, action = {}) {
     case EMAIL_REGISTRATION:
       console.log('registering');
       return {
-        ...state, // destructuring is AWESOME. Learn it. I much prefer it to
-                  // Object.assign, which babel transpiles it down to.
-        registering: true // I prefer booleans to keeping action types in state.
-                          // booleans also make it easy to do
-                          // {registering && <div className="indicator"/>} in jsx
+        ...state,
+        registering: true
       };
     case EMAIL_REGISTRATION_SUCCESS:
       console.log('success');
       return {
         ...state,
-        earlyUser: action.result, // result is set by client middleware
-        phase: 4,            // shows this step is done and ready for next step
-        registering: false   // hide indicator
+        earlyUser: action.result,
+        phase: 4,
+        registering: false
       };
     case EMAIL_REGISTRATION_FAILURE:
       return {
         ...state,
-        registering: false,             // hide indicator
-        registrationError: action.error // error is set by client middleware
+        registering: false,
+        registrationError: action.error
       };
     case EMAIL_CONFIRMATION:
       return {
@@ -97,6 +100,18 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         phase: 8,
         confirmationError: action.error
+      };
+    case REQUEST_CONFIRMATION_EMAIL:
+      return {...state};
+    case REQUEST_CONFIRMATION_EMAIL_SUCCESS:
+      return {
+        ...state,
+        phase: 10
+      };
+    case REQUEST_CONFIRMATION_EMAIL_FAILURE:
+      return {
+        ...state,
+        phase: -1
       };
     case IS_ARTIST:
       return {
@@ -149,6 +164,15 @@ export function confirmUser(verificationCode, id, password) {
     promise: client => client.put('/earlyUsers/' + id + '/verify/', {
       data: {verificationCode, password: md5(password)}
     })
+  };
+}
+
+
+export function requestConfirmationEmail(email) {
+  console.log('received confirm element infos ');
+  return {
+    types: [REQUEST_CONFIRMATION_EMAIL, REQUEST_CONFIRMATION_EMAIL_SUCCESS, REQUEST_CONFIRMATION_EMAIL_FAILURE],
+    promise: client => client.post('/earlyUsers/' + email + '/requestVerificationEmail')
   };
 }
 
