@@ -9,6 +9,7 @@ Ducks for User onboarding
 
  */
 
+import md5 from 'md5';
 
 const EMAIL_REGISTRATION = 'EMAIL_REGISTRATION';
 const EMAIL_REGISTRATION_SUCCESS = 'EMAIL_REGISTRATION_SUCCESS';
@@ -16,6 +17,10 @@ const EMAIL_REGISTRATION_FAILURE = 'EMAIL_REGISTRATION_FAILURE';
 const EMAIL_LOOKUP = 'EMAIL_LOOKUP';
 const EMAIL_LOOKUP_SUCCESS = 'EMAIL_LOOKUP_SUCCESS';
 const EMAIL_LOOKUP_FAILURE = 'EMAIL_LOOKUP_FAILURE';
+
+const EMAIL_CONFIRMATION = 'EMAIL_CONFIRMATION';
+const EMAIL_CONFIRMATION_SUCCESS = 'EMAIL_CONFIRMATION_SUCCESS';
+const EMAIL_CONFIRMATION_FAILURE = 'EMAIL_CONFIRMATION_FAILURE';
 
 const IS_ARTIST = 'IS_ARTIST';
 const IS_LABEL = 'IS_LABEL';
@@ -71,14 +76,29 @@ export default function reducer(state = initialState, action = {}) {
         registering: false   // hide indicator
       };
     case EMAIL_REGISTRATION_FAILURE:
-      console.log('fail');
       return {
         ...state,
         registering: false,             // hide indicator
         registrationError: action.error // error is set by client middleware
       };
+    case EMAIL_CONFIRMATION:
+      return {
+        ...state,
+        registering: false
+      };
+    case EMAIL_CONFIRMATION_SUCCESS:
+      console.log('receive fetching');
+      return {
+        ...state,
+        phase: 7
+      };
+    case EMAIL_CONFIRMATION_FAILURE:
+      return {
+        ...state,
+        phase: 8,
+        confirmationError: action.error
+      };
     case IS_ARTIST:
-      console.log('set is Artist');
       return {
         ...state,
         phase: 2,
@@ -112,7 +132,7 @@ export function lookupEmail(data) {
   };
 }
 
-// API calls
+
 export function registerUser(earlyUser) {
   return {
     types: [EMAIL_REGISTRATION, EMAIL_REGISTRATION_SUCCESS, EMAIL_REGISTRATION_FAILURE],
@@ -122,15 +142,14 @@ export function registerUser(earlyUser) {
   };
 }
 
-export function confirmUser(authCode, id) {
+export function confirmUser(verificationCode, id, password) {
+  console.log('received confirm element infos ');
   return {
     types: [EMAIL_CONFIRMATION, EMAIL_CONFIRMATION_SUCCESS, EMAIL_CONFIRMATION_FAILURE],
-    promise: (client) => client.post('/earlyUsers' + id + '/verify/ ' + '123', {
-      data: authCode
+    promise: client => client.put('/earlyUsers/' + id + '/verify/', {
+      data: {verificationCode, password: md5(password)}
     })
   };
-
-  console.log(authCode + 'redux');
 }
 
 // Simple changes in status

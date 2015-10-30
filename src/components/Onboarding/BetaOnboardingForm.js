@@ -10,6 +10,8 @@ const SHOW_CREATING_ACCOUNT_ANIMATION = 3;
 const SHOW_CURRENT_POSITION = 4; // 'Show the current position';
 const INVITE_FRIEND = 5; // Enter friend\'s email';
 const SHOW_AUTENTICATION_LANDING = 6;
+const ACCOUNT_CONFIRMATION_COMPLETED = 7;
+const ACCOUNT_CONFIRMATION_FAILED = 8;
 const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend show position';
 
 
@@ -110,7 +112,7 @@ export default class BetaOnboardingForm extends Component {
 
   submitPassword() {
     // Send authcode and user Id
-    confirmUser(this.props.auth, this.props.id);
+    this.props.confirmUser(this.props.auth, this.props.id, this.state.password);
   }
 
   handleChangeFriendEmail(event) {
@@ -231,6 +233,22 @@ export default class BetaOnboardingForm extends Component {
             {!this.state.passwordIsValid && <div id="validationError"> Password has to be at least 8 characters long. </div>}
           </div>
         );
+      case ACCOUNT_CONFIRMATION_COMPLETED:
+        return (
+          <div id="position">
+            You are all set!
+            <br />
+            You are waiting now in queue at position <span className="highlight">1234</span>
+             Want to skip the queue?
+            <br /><span id="inviteFriend" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite your friends! </span>
+          </div>);
+      case ACCOUNT_CONFIRMATION_FAILED:
+        return (
+            <div id="position">
+            There has been an error.. WOOOPS. <br />
+            {earlyUser.confirmationError.error.message}
+            </div>
+          );
       default:
         return ( <div></div> );
     }
