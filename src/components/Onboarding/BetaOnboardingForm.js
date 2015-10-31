@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import { lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail} from 'redux/modules/earlyUser';
+import { lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail, inviteMoreFriend, inviteFriendEmail} from 'redux/modules/earlyUser';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -9,18 +9,19 @@ const IS_LABEL = 2; // 'Answer yes or no if you are a label';
 const SHOW_CREATING_ACCOUNT_ANIMATION = 3;
 const SHOW_CURRENT_POSITION = 4; // 'Show the current position';
 const INVITE_FRIEND = 5; // Enter friend\'s email';
-const SHOW_CONFIRMATION_LANDING = 6;
-const ACCOUNT_CONFIRMATION_COMPLETED = 7;
-const ACCOUNT_CONFIRMATION_FAILED = 8;
-const EMAIL_ALREADY_EXIST = 9;
-const CONFIRMATION_EMAIL_REQUESTED_SUCCESSFULLY = 10;
-const SOMETHING_WENT_WRONG = -1;
+const SHOW_CONFIRMATION_LANDING = 6;  // when the user open the email link
+const ACCOUNT_CONFIRMATION_COMPLETED = 7; // after entering the password
+const ACCOUNT_CONFIRMATION_FAILED = 8; // if something went wrong when sending the confirmation email
+const EMAIL_ALREADY_EXIST = 9; // When trying to register an already existing email
+const CONFIRMATION_EMAIL_REQUESTED_SUCCESSFULLY = 10; // when re requesting an auth code.
+const FRIEND_INVITATION_SENT = 11; // when re requesting an auth code.
+const SOMETHING_WENT_WRONG = -1; // a really big error happend.
 const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend show position';
 
 
 @connect(
   state => ({earlyUser: state.earlyUser}),
-  dispatch => bindActionCreators({ lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail}, dispatch)
+  dispatch => bindActionCreators({ lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail, inviteMoreFriend, inviteFriendEmail}, dispatch)
 )
 export default class BetaOnboardingForm extends Component {
   static propTypes = {
@@ -36,7 +37,9 @@ export default class BetaOnboardingForm extends Component {
     setIsLabel: PropTypes.func,
     registerUser: PropTypes.func,
     requestConfirmationEmail: PropTypes.func,
+    inviteFriendEmail: PropTypes.func,
     confirmUser: PropTypes.func,
+    inviteMoreFriend: PropTypes.func,
     auth: PropTypes.string,
     id: PropTypes.string
   }
@@ -63,6 +66,7 @@ export default class BetaOnboardingForm extends Component {
     this.isALabelHandler = this.isALabelHandler.bind(this);
     this.registerUserHandler = this.registerUserHandler.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.inviteMoreFriendHandler = this.inviteMoreFriendHandler.bind(this);
   }
 
   componentWillMount() {
@@ -70,7 +74,6 @@ export default class BetaOnboardingForm extends Component {
       this.props.earlyUser.phase = SHOW_CONFIRMATION_LANDING;
       this.state.passwordIsValid = false;
     }
-    console.log('Component did mount' + this.props.earlyUser.phase);
   }
 
   componentDidUpdate(prevProps) {
@@ -90,14 +93,10 @@ export default class BetaOnboardingForm extends Component {
     }
   }
 
-  submitFriendEmail(event) {
+  submitFriendEmail() {
     if (this.validateEmail(this.state.friendEmail)) {
-      this.setState({step: SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED});
+      this.props.inviteFriendEmail(this.props.earlyUser.earlyUser.id, this.state.friendEmail);
     }
-    // SUBMIT REDUX
-    this.state.friendEmail = '';
-    this.state.friendEmailIsValid = false;
-    console.log(event);
   }
 
   handleChangeEmail(event) {
@@ -109,9 +108,8 @@ export default class BetaOnboardingForm extends Component {
    * Validate password length
    */
   handlePasswordChange(event) {
-    console.log(event.target.value);
     this.setState({password: event.target.value,
-      passwordIsValid: (event.target.value.length >= 8)});
+      passwordIsValid: (event.target.value.length >= 6)});
   }
 
   submitPassword() {
@@ -120,25 +118,23 @@ export default class BetaOnboardingForm extends Component {
   }
 
   handleChangeFriendEmail(event) {
-    console.log('friend: ' + event.target.value);
     this.setState({friendEmail: event.target.value,
       friendEmailIsValid: this.validateEmail(event.target.value)});
-    console.log(this.validateEmail(event.target.value));
   }
 
   isAnArtistHandler(isArtist) {
-    console.log('IS ARTIST');
     this.props.setIsArtist(isArtist);
   }
   isALabelHandler(isLabel) {
     this.props.setIsLabel(isLabel);
   }
   registerUserHandler() {
-    console.log('Register user handler');
     this.props.registerUser(this.props.earlyUser.earlyUser);
   }
   inviteMoreFriendHandler() {
-    this.setState({step: INVITE_FRIEND});
+    this.setState({friendEmail: '',
+      friendEmailIsValid: false});
+    this.props.inviteMoreFriend();
   }
   validateEmail(email) {
     const re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -149,7 +145,6 @@ export default class BetaOnboardingForm extends Component {
     const activeSubmitEmailButton = 'icon' + (this.state.emailIsValid ? ' activeSubmitEmailButton' : '');
     const activeSubmitFriendEmailButton = 'icon' + (this.state.friendEmailIsValid ? ' activeSubmitEmailButton' : '');
     const activeSubmitPasswordButton = 'icon' + (this.state.passwordIsValid ? ' activeSubmitEmailButton' : '');
-    console.log(earlyUser.phase + ' phase in render');
     switch (earlyUser.phase) {
       case ENTER_EMAIL:
         return (
@@ -207,7 +202,7 @@ export default class BetaOnboardingForm extends Component {
           <div id="positionFriend">An email has been sent to your friend.
             <br />Once confirmed, your beta access will be closer!
             <br />For now you are still in position <span className="highlight">1234</span>.
-            <br /><span id="inviteMoreFriend" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite more friends! </span>
+            <br /><a className="smallHighlightedText" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite your friends!</a>
           </div>
         );
       case SHOW_CURRENT_POSITION:
@@ -215,17 +210,22 @@ export default class BetaOnboardingForm extends Component {
           <div id="position">You ve been added in queue at position <span className="highlight">1234</span>.
             <br />Thank you, an email has been sent. Please confirm it.
             <br /> Want to skip the queue?
-            <br /><span id="inviteFriend" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite your friends! </span>
+            <br /><a className="smallHighlightedText" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite your friends! </a>
           </div>);
       case INVITE_FRIEND:
         return (
-          <div id="registration" className="container-4">
-            <div id="inviteFriendBlock">
-              <input type="email" id="friendEmail" value={this.state.friendEmail} onChange={this.handleChangeFriendEmail} ref="friendEmail" placeholder="Friend's Email" />
-              <button id="sendFriendButton" className={activeSubmitFriendEmailButton} onClick={this.submitFriendEmail.bind(this)}>
-                <span id="sendFriend" className="basic-pictosimply-right"></span>
-                <span id="loadingFriend" className="basic-pictoloader iconSpin"></span>
-              </button>
+          <div>
+            <div id="registration" className="container-4">
+              <div id="inviteFriendBlock">
+                <input type="email" id="friendEmail" value={this.state.friendEmail} onChange={this.handleChangeFriendEmail} ref="friendEmail" placeholder="Friend's Email" />
+                <button id="sendFriendButton" className={activeSubmitFriendEmailButton} onClick={this.submitFriendEmail.bind(this)}>
+                    {!earlyUser.registering && <span id="send" className="basic-pictosimply-right"></span>}
+                    {earlyUser.registering && <span id="loading" className="basic-pictoloader iconSpin"></span>}
+                </button>
+              </div>
+            </div>
+            <div>
+              {earlyUser.confirmationError && <div id="validationError"> {earlyUser.confirmationError.error.message} </div>}
             </div>
           </div>);
       case SHOW_CONFIRMATION_LANDING:
@@ -240,7 +240,7 @@ export default class BetaOnboardingForm extends Component {
                 </button>
               </div>
             </div>
-            {!this.state.passwordIsValid && <div id="validationError"> Password has to be at least 8 characters long. </div>}
+            {!this.state.passwordIsValid && <div id="validationError"> Password has to be at least 6 characters long. </div>}
           </div>
         );
       case ACCOUNT_CONFIRMATION_COMPLETED:
@@ -249,7 +249,7 @@ export default class BetaOnboardingForm extends Component {
             You are all set!
             <br />
             You are waiting now in queue at position <span className="highlight">1234</span>
-             Want to skip the queue?
+            <br />Want to skip the queue?
             <br /><span id="inviteFriend" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite your friends! </span>
           </div>);
       case ACCOUNT_CONFIRMATION_FAILED:
@@ -266,6 +266,15 @@ export default class BetaOnboardingForm extends Component {
             You are currently in queue at position <span className="highlight">1234</span>.
             <br /> Want to skip the queue?
             <br /><span id="inviteFriend" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite your friends! </span>
+            </div>
+          );
+      case FRIEND_INVITATION_SENT:
+        return (
+            <div id="position">
+            <br />We just sent the invite to your friend.<br />
+            You are currently in queue at position <span className="highlight">1234</span>.
+            <br /> Want to get in faster?
+            <br /><span id="inviteFriend" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite more friends! </span>
             </div>
           );
       case SOMETHING_WENT_WRONG:

@@ -27,9 +27,14 @@ const REQUEST_CONFIRMATION_EMAIL = 'REQUEST_CONFIRMATION_EMAIL';
 const REQUEST_CONFIRMATION_EMAIL_SUCCESS = 'REQUEST_CONFIRMATION_EMAIL_SUCCESS';
 const REQUEST_CONFIRMATION_EMAIL_FAILURE = 'REQUEST_CONFIRMATION_EMAIL_FAILURE';
 
+const SEND_FRIEND_INVITATION = 'SEND_FRIEND_INVITATION';
+const SEND_FRIEND_INVITATION_SUCCESS = 'SEND_FRIEND_INVITATION_SUCCESS';
+const SEND_FRIEND_INVITATION_FAILURE = 'SEND_FRIEND_INVITATION_FAILURE';
 
 const IS_ARTIST = 'IS_ARTIST';
 const IS_LABEL = 'IS_LABEL';
+
+const INVITE_FRIEND = 'INVITE_FRIEND';
 
 const initialState = {
   phase: 0,   // I would just make this what "page" you are on in the multistep process
@@ -45,8 +50,6 @@ export default function reducer(state = initialState, action = {}) {
         registering: true
       };
     case EMAIL_LOOKUP_SUCCESS:
-      console.log('email exists ');
-      console.log(action);
       return {
         // at the moment i'm not using this for anything
         ...state,
@@ -101,6 +104,24 @@ export default function reducer(state = initialState, action = {}) {
         phase: 8,
         confirmationError: action.error
       };
+    case SEND_FRIEND_INVITATION:
+      return {
+        ...state,
+        registering: true,
+        confirmationError: null
+      };
+    case SEND_FRIEND_INVITATION_SUCCESS:
+      return {
+        ...state,
+        phase: 11,
+        registering: false
+      };
+    case SEND_FRIEND_INVITATION_FAILURE:
+      return {
+        ...state,
+        registering: false,
+        confirmationError: action.error
+      };
     case REQUEST_CONFIRMATION_EMAIL:
       return {...state};
     case REQUEST_CONFIRMATION_EMAIL_SUCCESS:
@@ -131,6 +152,12 @@ export default function reducer(state = initialState, action = {}) {
           isLabel: action.isLabel
         }
       };
+    case INVITE_FRIEND:
+      return {
+        ...state,
+        phase: 5,
+        confirmationError: null
+      };
     default:
       return state;
   }
@@ -138,8 +165,6 @@ export default function reducer(state = initialState, action = {}) {
 
 // API calls
 export function lookupEmail(data) {
-  console.log('redux called ');
-  console.log(data);
   return {
     types: [EMAIL_LOOKUP, EMAIL_LOOKUP_SUCCESS, EMAIL_LOOKUP_FAILURE],
     email: data.email,
@@ -158,7 +183,6 @@ export function registerUser(earlyUser) {
 }
 
 export function confirmUser(verificationCode, id, password) {
-  console.log('received confirm element infos ');
   return {
     types: [EMAIL_CONFIRMATION, EMAIL_CONFIRMATION_SUCCESS, EMAIL_CONFIRMATION_FAILURE],
     promise: client => client.put('/earlyUsers/' + id + '/verify/', {
@@ -169,10 +193,16 @@ export function confirmUser(verificationCode, id, password) {
 
 
 export function requestConfirmationEmail(email) {
-  console.log('received confirm element infos ');
   return {
     types: [REQUEST_CONFIRMATION_EMAIL, REQUEST_CONFIRMATION_EMAIL_SUCCESS, REQUEST_CONFIRMATION_EMAIL_FAILURE],
     promise: client => client.post('/earlyUsers/' + email + '/requestVerificationEmail')
+  };
+}
+
+export function inviteFriendEmail(inviterId, FriendEmail) {
+  return {
+    types: [SEND_FRIEND_INVITATION, SEND_FRIEND_INVITATION_SUCCESS, SEND_FRIEND_INVITATION_FAILURE],
+    promise: client => client.post('/earlyUsers/' + inviterId + '/inviteFriend/' + FriendEmail)
   };
 }
 
@@ -182,4 +212,8 @@ export function setIsArtist(isArtist) {
 }
 export function setIsLabel(isLabel) {
   return { type: IS_LABEL, isLabel };
+}
+
+export function inviteMoreFriend() {
+  return { type: INVITE_FRIEND };
 }
