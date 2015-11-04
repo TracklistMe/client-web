@@ -36,6 +36,8 @@ const IS_LABEL = 'IS_LABEL';
 
 const INVITE_FRIEND = 'INVITE_FRIEND';
 
+const LOGIN_WITH_PASSWORD = 'LOGIN_WITH_PASSWORD';
+
 const initialState = {
   phase: 0,   // I would just make this what "page" you are on in the multistep process
   earlyUser: {}  // Better null or undefined than {} if no data
@@ -158,6 +160,11 @@ export default function reducer(state = initialState, action = {}) {
         phase: 5,
         confirmationError: null
       };
+    case LOGIN_WITH_PASSWORD:
+      return {
+        ...state,
+        phase: 12
+      };
     default:
       return state;
   }
@@ -216,4 +223,8 @@ export function setIsLabel(isLabel) {
 
 export function inviteMoreFriend() {
   return { type: INVITE_FRIEND };
+}
+
+export function loginWithPassword() {
+  return { type: LOGIN_WITH_PASSWORD};
 }

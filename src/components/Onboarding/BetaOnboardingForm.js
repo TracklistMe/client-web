@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import { lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail, inviteMoreFriend, inviteFriendEmail} from 'redux/modules/earlyUser';
+import { lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail, inviteMoreFriend, inviteFriendEmail, loginWithPassword} from 'redux/modules/earlyUser';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -15,13 +15,15 @@ const ACCOUNT_CONFIRMATION_FAILED = 8; // if something went wrong when sending t
 const EMAIL_ALREADY_EXIST = 9; // When trying to register an already existing email
 const CONFIRMATION_EMAIL_REQUESTED_SUCCESSFULLY = 10; // when re requesting an auth code.
 const FRIEND_INVITATION_SENT = 11; // when re requesting an auth code.
+const LOGIN_WITH_PASSWORD = 12; // show login with password field.
 const SOMETHING_WENT_WRONG = -1; // a really big error happend.
 const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend show position';
 
 
 @connect(
   state => ({earlyUser: state.earlyUser}),
-  dispatch => bindActionCreators({ lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail, inviteMoreFriend, inviteFriendEmail}, dispatch)
+  dispatch => bindActionCreators({ lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail,
+    loginWithPassword, inviteMoreFriend, inviteFriendEmail}, dispatch)
 )
 export default class BetaOnboardingForm extends Component {
   static propTypes = {
@@ -40,6 +42,7 @@ export default class BetaOnboardingForm extends Component {
     inviteFriendEmail: PropTypes.func,
     confirmUser: PropTypes.func,
     inviteMoreFriend: PropTypes.func,
+    loginWithPassword: PropTypes.func,
     auth: PropTypes.string,
     id: PropTypes.string
   }
@@ -67,6 +70,7 @@ export default class BetaOnboardingForm extends Component {
     this.registerUserHandler = this.registerUserHandler.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.inviteMoreFriendHandler = this.inviteMoreFriendHandler.bind(this);
+    this.loginWithPasswordHandler = this.loginWithPasswordHandler.bind(this);
   }
 
   componentWillMount() {
@@ -122,6 +126,10 @@ export default class BetaOnboardingForm extends Component {
       friendEmailIsValid: this.validateEmail(event.target.value)});
   }
 
+  loginWithPasswordHandler() {
+    this.props.loginWithPassword();
+  }
+
   isAnArtistHandler(isArtist) {
     this.props.setIsArtist(isArtist);
   }
@@ -165,7 +173,7 @@ export default class BetaOnboardingForm extends Component {
         return (
           <div id="position">
             We already have this email! <br /> You can <a className="smallHighlightedText" onClick={this.requestConfirmationEmailHandler.bind(this)}>Request the confirmation email again</a>
-              <br />or <span className="smallHighlightedTextnotActiveYet">Login with your password</span>
+              <br />or <a className="smallHighlightedText" onClick={this.loginWithPasswordHandler.bind(this)}>Login with your password</a>
           </div>);
       case IS_ARTIST:
         return (
@@ -283,6 +291,28 @@ export default class BetaOnboardingForm extends Component {
             Something went wrong, please email us.<br />
             </div>
         );
+      case LOGIN_WITH_PASSWORD:
+        return (
+          <div>
+            <div id="registration">
+              <div className="container-4">
+                <div id="emailBlock">
+                  <input type="email" id="email" value={this.state.email} onChange={this.handleChangeEmail} ref="email" placeholder="Email" />
+                </div>
+              </div>
+              <div className="container-4 container-5">
+                <div id="emailBlock">
+                  <input type="password" id="email" value={this.state.password} onChange={this.handlePasswordChange} ref="password" placeholder="Password" />
+                  <button className={activeSubmitEmailButton} id="sendButton" onClick={this.submitEmail}>
+                    {!earlyUser.registering && <span id="send" className="basic-pictosimply-right"></span>}
+                    {earlyUser.registering && <span id="loading" className="basic-pictoloader iconSpin"></span>}
+                  </button>
+                </div>
+              </div>
+            </div>
+            {this.state.emailAlreadyExists && <div id="validationError"> Email already exists </div>}
+          </div>
+          );
       default:
         return ( <div></div> );
     }
