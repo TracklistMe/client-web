@@ -78,6 +78,8 @@ export default class BetaOnboardingForm extends Component {
       console.log('Detected Auth ' + this.props.auth);
       this.props.earlyUser.phase = SHOW_CONFIRMATION_LANDING;
       this.state.passwordIsValid = false;
+    } else {
+      this.props.earlyUser.phase = ENTER_EMAIL;
     }
   }
 
