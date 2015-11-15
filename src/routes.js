@@ -13,7 +13,8 @@ import {
     Survey,
     NotFound,
     Landing,
-    Genre
+    Genre,
+    Release
   } from 'containers';
 
 export default (store) => {
@@ -49,6 +50,7 @@ export default (store) => {
         <Route path="/widgets" component={Widgets}/>
         <Route path="/about" component={About}/>
         <Route path="/login" component={Login}/>
+        <Route path="/release/:id" component={Release}/>
         <Route path="/track/:id" component={Track}/>
         <Route onEnter={requireLogin}>
           <Route path="/chat" component={Chat}/>

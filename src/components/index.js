@@ -17,6 +17,7 @@ export MainHeaderBackground from './MainHeader/MainHeaderBackground';
 export MiniHeader from './MiniHeader/MiniHeader';
 export HomeJumbotron from './Jumbotron/HomeJumbotron';
 export TrackJumbotron from './Jumbotron/TrackJumbotron';
+export ReleaseJumbotron from './Jumbotron/ReleaseJumbotron';
 export ReleaseComponent from './ReleaseComponent/ReleaseComponent';
 export Headline from './Headline/Headline';
 export ReleaseSection from './Sections/ReleaseSection';
