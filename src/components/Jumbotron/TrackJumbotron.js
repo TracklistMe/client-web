@@ -54,13 +54,15 @@ export default class TrackJumbotron extends Component {
               </div>
               <div className="row">
                 <div className="col-sm-12 text-left">
+                  <div id="waveformchart">
                      <Waveform
                        data={data}
                        width={1400}
                        height={200}
                        colorScale={ d3.scale.linear()
                                     .domain([0, 1400])
-                                    .range(['#eb1785', '#ff7b16'])} />
+                                    .range(['#eb1785', '#ff7b16'])} style={{width: '100% !important'}}/>
+                  </div>
                 </div>
                 <div className="col-xs-6 col-lg-3 text-left">
                   Released: <strong>20/12/2014</strong>

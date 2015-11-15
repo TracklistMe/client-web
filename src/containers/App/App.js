@@ -103,8 +103,9 @@ export default class App extends Component {
               <li className="dropdownBackground dropdownBorder">
                 <Link to="/"> <img src={logo} /></Link>
                 <ul>
-                  <li><NavbarLink to="/track/77">Go to release 77</NavbarLink></li>
-                  <li><NavbarLink to="/track/80">Go to release 80</NavbarLink></li>
+                  <li><NavbarLink to="/track/77">Go to track 77</NavbarLink></li>
+                  <li><NavbarLink to="/track/80">Go to track 80</NavbarLink></li>
+                  <li><NavbarLink to="/release/257">Go to release 257</NavbarLink></li>
                   <li><a href="#">Labels</a></li>
                 </ul>
               </li>
