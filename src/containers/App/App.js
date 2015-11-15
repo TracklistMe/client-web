@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
-import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
-import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
+import { logout } from 'redux/modules/auth';
 import { pushState } from 'redux-router';
 
 const title = 'TracklistMe';
@@ -66,17 +65,6 @@ export default class App extends Component {
       // logout
       this.props.pushState(null, '/');
     }
-  }
-
-  static fetchData(getState, dispatch) {
-    const promises = [];
-    if (!isInfoLoaded(getState())) {
-      promises.push(dispatch(loadInfo()));
-    }
-    if (!isAuthLoaded(getState())) {
-      promises.push(dispatch(loadAuth()));
-    }
-    return Promise.all(promises);
   }
 
   handleLogout(event) {

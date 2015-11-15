@@ -4,8 +4,16 @@ import {connect} from 'react-redux';
 import * as widgetActions from 'redux/modules/widgets';
 import {isLoaded, load as loadWidgets} from 'redux/modules/widgets';
 import {initializeWithKey} from 'redux-form';
+import connectData from 'helpers/connectData';
 import { WidgetForm } from 'components';
 
+function fetchDataDeferred(getState, dispatch) {
+  if (!isLoaded(getState())) {
+    return dispatch(loadWidgets());
+  }
+}
+
+@connectData(null, fetchDataDeferred)
 @connect(
   state => ({
     widgets: state.widgets.data,
@@ -24,12 +32,6 @@ class Widgets extends Component {
     editing: PropTypes.object.isRequired,
     load: PropTypes.func.isRequired,
     editStart: PropTypes.func.isRequired
-  }
-
-  static fetchData(getState, dispatch) {
-    if (!isLoaded(getState())) {
-      return dispatch(loadWidgets());
-    }
   }
 
   handleEdit(widget) {
@@ -56,9 +58,10 @@ class Widgets extends Component {
         </h1>
         <DocumentMeta title="React Redux Example: Widgets"/>
         <p>
-          This data was loaded from the server before this route was rendered. If you hit refresh on your browser, the
-          data loading will take place on the server before the page is returned. If you navigated here from another
-          page, the data was fetched from the client.
+          If you hit refresh on your browser, the data loading will take place on the server before the page is returned.
+          If you navigated here from another page, the data was fetched from the client after the route transition.
+          This uses the static method <code>fetchDataDeferred</code>. To block a route transition until some data is loaded, use <code>fetchData</code>.
+          To always render before loading data, even on the server, use <code>componentDidMount</code>.
         </p>
         <p>
           This widgets are stored in your session, so feel free to edit it and refresh.

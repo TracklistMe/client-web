@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/server';
 import serialize from 'serialize-javascript';
 import DocumentMeta from 'react-document-meta';
 const cdn = '//cdnjs.cloudflare.com/ajax/libs/';
-
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
  * Used in server-side code only to wrap the string output of the
@@ -26,7 +25,6 @@ export default class Html extends Component {
     return (
       <html lang="en-us">
         <head>
-          <meta charSet="utf-8"/>
           {DocumentMeta.renderAsReact()}
 
           <link rel="shortcut icon" href="/favicon.ico" />
@@ -36,19 +34,22 @@ export default class Html extends Component {
                 media="screen, projection" rel="stylesheet" type="text/css" />
           <link href={'/fonts/Basic-picto/style.css'}
                 media="screen, projection" rel="stylesheet" type="text/css" />
-
-
-
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
           {/* styles (will be present only in production with webpack extract text plugin) */}
           {Object.keys(assets.styles).map((style, key) =>
             <link href={assets.styles[style]} key={key} media="screen, projection"
-                  rel="stylesheet" type="text/css"/>
+                  rel="stylesheet" type="text/css" charSet="UTF-8"/>
           )}
+
+          {/* (will be present only in development mode) */}
+          {/* outputs a <style/> tag with all bootstrap styles + App.scss + it could be CurrentPage.scss. */}
+          {/* can smoothen the initial style flash (flicker) on page load in development mode. */}
+          {/* ideally one could also include here the style for the current page (Home.scss, About.scss, etc) */}
         </head>
         <body>
           <div id="content" dangerouslySetInnerHTML={{__html: content}}/>
-          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} />
-          <script src={assets.javascript.main}/>
+          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
+          <script src={assets.javascript.main} charSet="UTF-8"/>
         </body>
       </html>
     );

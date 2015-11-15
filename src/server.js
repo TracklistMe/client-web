@@ -8,7 +8,6 @@ import httpProxy from 'http-proxy';
 import path from 'path';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
-import getDataDependencies from './helpers/getDataDependencies';
 import Html from './helpers/Html';
 import PrettyError from 'pretty-error';
 import http from 'http';
@@ -21,13 +20,12 @@ import {Provider} from 'react-redux';
 import qs from 'query-string';
 import getRoutes from './routes';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
-import { load as loadAuth } from './redux/modules/auth';
 
 const pretty = new PrettyError();
 const app = new Express();
 const server = new http.Server(app);
 const proxy = httpProxy.createProxyServer({
-  target: 'http://localhost:' + config.apiPort,
+  target: 'http://' + config.apiHost + ':' + config.apiPort,
   ws: true
 });
 
@@ -51,12 +49,14 @@ if (__DEVELOPMENT__) {
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
   let json;
-  console.log('proxy error', error);
+  if (error.code !== 'ECONNRESET') {
+    console.error('proxy error', error);
+  }
   if (!res.headersSent) {
     res.writeHead(500, {'content-type': 'application/json'});
   }
 
-  json = { error: 'proxy_error', reason: error.message };
+  json = {error: 'proxy_error', reason: error.message};
   res.end(JSON.stringify(json));
 });
 
@@ -80,49 +80,43 @@ app.use((req, res) => {
     return;
   }
 
-  const query = qs.stringify(req.query);
-  const url = req.path + (query.length ? '?' + query : '');
-
-  const afterAuth = () => {
-    store.dispatch(match(url, (error, redirectLocation, routerState) => {
-      if (redirectLocation) {
-        res.redirect(redirectLocation.pathname + redirectLocation.search);
-      } else if (error) {
-        console.error('ROUTER ERROR:', pretty.render(error));
-        res.status(500);
-        hydrateOnClient();
-      } else if (!routerState) {
-        res.status(500);
-        hydrateOnClient();
-      } else {
-        Promise.all(getDataDependencies(
-          routerState.components,
-          store.getState,
-          store.dispatch,
-          routerState.location,
-          routerState.params
-        )).then(() => {
-          const component = (
-            <Provider store={store} key="provider">
-              <ReduxRouter/>
-            </Provider>
-          );
-          const status = getStatusFromRoutes(store.getState().router.routes);
-          if (status) {
-            res.status(status);
-          }
-          res.send('<!doctype html>\n' +
-            ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
-        }).catch((err) => {
-          console.error('DATA FETCHING ERROR:', pretty.render(err));
-          res.status(500);
-          hydrateOnClient();
-        });
+  store.dispatch(match(req.originalUrl, (error, redirectLocation, routerState) => {
+    if (redirectLocation) {
+      res.redirect(redirectLocation.pathname + redirectLocation.search);
+    } else if (error) {
+      console.error('ROUTER ERROR:', pretty.render(error));
+      res.status(500);
+      hydrateOnClient();
+    } else if (!routerState) {
+      res.status(500);
+      hydrateOnClient();
+    } else {
+      // Workaround redux-router query string issue:
+      // https://github.com/rackt/redux-router/issues/106
+      if (routerState.location.search && !routerState.location.query) {
+        routerState.location.query = qs.parse(routerState.location.search);
       }
-    }));
-  };
 
-  store.dispatch(loadAuth()).then(afterAuth, afterAuth);
+      store.getState().router.then(() => {
+        const component = (
+          <Provider store={store} key="provider">
+            <ReduxRouter/>
+          </Provider>
+        );
+
+        const status = getStatusFromRoutes(routerState.routes);
+        if (status) {
+          res.status(status);
+        }
+        res.send('<!doctype html>\n' +
+          ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
+      }).catch((err) => {
+        console.error('DATA FETCHING ERROR:', pretty.render(err));
+        res.status(500);
+        hydrateOnClient();
+      });
+    }
+  }));
 });
 
 if (config.port) {
@@ -135,8 +129,8 @@ if (config.port) {
     if (err) {
       console.error(err);
     }
-    console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.name, config.apiPort);
-    console.info('==> 💻  Open http://localhost:%s in a browser to view the app.', config.port);
+    console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.apiPort);
+    console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, config.port);
   });
 } else {
   console.error('==>     ERROR: No PORT environment variable has been specified');

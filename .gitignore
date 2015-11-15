@@ -2,5 +2,10 @@
 node_modules/
 dist/
 *.iml
+webpack-assets.json
 webpack-stats.json
 npm-debug.log
+
+src/containers/Home/Home.scss
+
+src/containers/App/App.scss
