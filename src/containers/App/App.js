@@ -118,8 +118,8 @@ export default class App extends Component {
                 <a href="#">Genres
                 <span className="pull-right basic-pictosimply-down icon"></span></a>
                 <ul>
-                  <li><a href="#">Deep House</a></li>
-                  <li><a href="#">Progressive House</a></li>
+                  <li><NavbarLink to="/genre/5">Deep House</NavbarLink></li>
+                  <li><NavbarLink to="/genre/21">Progressive House</NavbarLink></li>
                   <li><a href="#">Techno</a></li>
                   <li><a href="#">House</a></li>
                   {user && <li><Link to="/chat">Chat</Link></li>}
