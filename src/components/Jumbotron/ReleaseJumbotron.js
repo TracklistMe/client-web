@@ -1,6 +1,6 @@
 import React, {Component, PropTypes } from 'react';
 import MainHeaderBackground from '../MainHeader/MainHeaderBackground';
-import {IntlProvider, FormattedTime} from 'react-intl';
+import TimeDuration from '../Utilities/TimeDuration';
 
 export default class ReleaseJumbotron extends Component {
   static propTypes = {
@@ -60,8 +60,7 @@ export default class ReleaseJumbotron extends Component {
                     </div>
                     <div className="col-sub-lg-3 col-sub-sm-3">
                       <span>{track.Price}$ </span>
-                      <FormattedTime value={track.lengthInSeconds} format="hhmm" />
-                      <span>{Math.random() * track.lengthInSeconds}</span>
+                      <TimeDuration length={track.lengthInSeconds} />
                     </div>
                   </div>
                 )}
