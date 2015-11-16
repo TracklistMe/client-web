@@ -8,6 +8,7 @@ import {reducer as form} from 'redux-form';
 import info from './info';
 import widgets from './widgets';
 import track from './track';
+import release from './release';
 import earlyUser from './earlyUser';
 
 export default combineReducers({
@@ -22,5 +23,6 @@ export default combineReducers({
   info,
   widgets,
   track,
+  release,
   earlyUser
 });

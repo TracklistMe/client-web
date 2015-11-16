@@ -2,11 +2,11 @@ import React, {Component, PropTypes} from 'react';
 import { ReleaseJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection, PlayedBySection } from 'components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { load } from 'redux/modules/track';
+import { load } from 'redux/modules/release';
 
 @connect(
   store => ({
-    track: store.track.data
+    release: store.release.data
   }),
   dispatch => bindActionCreators({ load }, dispatch)
 )
@@ -14,7 +14,7 @@ export default class Release extends Component
 {
   static propTypes = {
     params: PropTypes.object,
-    track: PropTypes.object
+    release: PropTypes.object
   }
 
   static contextTypes = {
@@ -28,7 +28,7 @@ export default class Release extends Component
   }
 
   componentWillReceiveProps(nextProps) {
-    if (parseInt(this.context.store.getState().track.data.id, 10) !== parseInt(nextProps.params.id, 10)) {
+    if (parseInt(this.context.store.getState().release.data.id, 10) !== parseInt(nextProps.params.id, 10)) {
       this.constructor.preload(this.context.store, nextProps.params.id);
     }
   }
@@ -43,7 +43,10 @@ export default class Release extends Component
   }
 
   render() {
-    const { track } = this.props;
+    const { release } = this.props;
+    if (!release || release.Label) {
+      return (<div> not loaded</div>);
+    }
     return (
       <div>
         <ReleaseJumbotron {...this.props} />
@@ -202,7 +205,6 @@ export default class Release extends Component
               }
             ]}/>
           </div>
-          {track ? track.cover : ''}
           <div className="row margin-bottom">
             <ReleaseSection title="New Tracks" releases={[
               {

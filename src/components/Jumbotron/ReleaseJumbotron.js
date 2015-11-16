@@ -1,77 +1,68 @@
 import React, {Component, PropTypes } from 'react';
 import MainHeaderBackground from '../MainHeader/MainHeaderBackground';
-import ArtistComponent from '../Artist/ArtistComponent';
-import { Waveform, d3 } from 'react-d3-components/dist/react-d3-components';
 
 export default class ReleaseJumbotron extends Component {
   static propTypes = {
-    track: PropTypes.shape({
-      Genres: PropTypes.array
-    })
+    release: PropTypes.object
   }
   render() {
-    const data = [{
-      label: 'somethingA',
-      values: []
-    }];
-    /* Absolute values of a sin waveform. We do expect only values within [0,1] */
-    for (let index = 0; index < 720; index++) {
-      data[0].values.push({x: '' + index, y: Math.abs(Math.sin(index / 18) + Math.cos(index / 10))});
-    }
-    const {track} = this.props; // eslint-disable-line no-shadow
-    if (!track || !track.Genres) {
-      return (<div> not loaded</div>);
-    }
+    const {release} = this.props; // eslint-disable-line no-shadow
     return (
-      <div className="trackJumbotron">
-        <MainHeaderBackground image={track ? track.cover : ''} />
+      <div className="releaseJumbotron">
+        <MainHeaderBackground image={release ? release.cover : ''} />
         <div className="headerContent">
           <div className="row trackJumbotronContainer">
-            <div className="hidden-xs hidden-sm col-sub-xs-5 col-sub-sm-6 col-sub-md-5 col-sub-lg-4 overflowHidden">
-              <img className="cover" src={track ? track.cover : ''} />
+            <div className="col-sub-xs-16 col-sub-xs-offset-1 col-sub-sm-offset-0 hidden-sm col-sub-sm-6 col-sub-md-5 col-sub-lg-4 overflowHidden">
+              <img className="cover" src={release ? release.cover : ''} />
             </div>
             <div className="col-sub-xs-18 col-sub-sm-18 col-sub-md-13 col-sub-lg-14">
-              <div className="row">
+              <div className="row hidden-xs">
                 <div className="col-lg-6 text-left trackDescriptionSpace">
-                  <div className="genreContainer">
-                    Label:
+                  <div className="labelContainer">
+                    Label: <strong>{release.Labels[0].displayName}</strong>
                   </div>
                   <div>
-                      {track.Producer.map((producer, index) =>
-                       <ArtistComponent key={index} {...producer}/>
-                      )}
+                    Artist position
                   </div>
                 </div>
                 <div className="col-lg-6 text-right">
                   Album
                 </div>
                 <div className="col-lg-12 titleContainer">
-                      <h1>{track ? track.title + ' (' + track.version + ')' : ''} </h1>
+                      <h1>{release ? release.title : ''} </h1>
                 </div>
               </div>
               <div className="row">
-                <div className="col-sm-12 text-left">
-                  <div id="waveformchart">
-                     <Waveform
-                       data={data}
-                       width={1400}
-                       height={200}
-                       colorScale={ d3.scale.linear()
-                                    .domain([0, 1400])
-                                    .range(['#eb1785', '#ff7b16'])} style={{width: '100% !important'}}/>
+                <div className="col-lg-12 hidden-xs">
+                  {release.Tracks.map((track, index) =>
+                  <div className="col-sub-lg-18 trackInPlaylist">
+                    <div className="col-sub-lg-1 hidden-sm hidden-md hidden-sm">
+                      {index + 1}
+                    </div>
+                    <div className="col-sub-lg-5 col-sub-sm-6">
+                      {track.title} ({track.version})
+                    </div>
+                    <div className="col-sub-lg-4 col-sub-sm-4">
+                    {track.Producer.map((producer) =>
+                      <span>{producer.displayName}</span>
+                    )}
+                    </div>
+                    <div className="col-sub-lg-3 col-sub-sm-3">
+                    {track.Remixer.map((remixer) =>
+                      <span>{remixer.displayName}</span>
+                    )}
+                    </div>
+                    <div className="col-sub-lg-2 col-sub-sm-2">
+                    {track.Genres.map((genre) =>
+                      <span>{genre.name}</span>
+                    )}
+                    </div>
+                    <div className="col-sub-lg-3 col-sub-sm-3">
+                      <span>{track.Price}$ </span>
+                      <span>{Math.random() * track.lengthInSeconds}</span>
+                    </div>
                   </div>
-                </div>
-                <div className="col-xs-6 col-lg-3 text-left">
-                  Released: <strong>20/12/2014</strong>
-                </div>
-                <div className="col-xs-6 col-lg-3 text-left">
-                  BPM: <strong>134</strong>
-                </div>
-                <div className="col-xs-6 col-lg-3 text-left">
-                  Key: <strong>Amin</strong>
-                </div>
-                <div className="col-xs-6 col-lg-3 text-left">
-                  Label: <strong>Label Woop Woop</strong>
+                )}
                 </div>
               </div>
             </div>
