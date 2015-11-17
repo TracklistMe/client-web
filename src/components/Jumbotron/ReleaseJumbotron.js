@@ -7,14 +7,17 @@ export default class ReleaseJumbotron extends Component {
     release: PropTypes.object
   }
   render() {
-    const {release} = this.props; // eslint-disable-line no-shadow
-    const height = Math.max(600, 400 + (release.Tracks.length * 40));
+    const release = this.props.release; // eslint-disable-line no-shadow
+    const height = Math.max(570, 400 + (release.Tracks.length * 40));
+    if (!release) {
+      return (<div></div>);
+    }
     return (
       <div className="releaseJumbotron">
         <MainHeaderBackground image={release ? release.cover : ''} height={height}/>
         <div className="headerContent" style={{height: height + 'px'}} >
           <div className="row trackJumbotronContainer">
-            <div className="col-sub-xs-12 col-sub-xs-offset-3 col-sub-sm-offset-0 hidden-sm col-sub-sm-6 col-sub-md-5 col-sub-lg-4 overflowHidden">
+            <div className="col-sub-xs-10 col-sub-xs-offset-4 col-sub-sm-offset-0 hidden-sm col-sub-sm-6 col-sub-md-5 col-sub-lg-4 overflowHidden">
               <img className="cover" src={release ? release.cover : ''} />
             </div>
             <div className="col-sub-xs-18 col-sub-sm-18 col-sub-md-13 col-sub-lg-14">
