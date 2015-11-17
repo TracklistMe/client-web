@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import moment from 'moment';
 
 export default class TimeDuration extends Component {
   static propTypes = {
@@ -9,10 +8,24 @@ export default class TimeDuration extends Component {
 
   static defaultProps = {
     length: 0,
-    format: 'h:mm:ss'
+    format: 'hh:mm:ss'
   }
   render() {
-    const time = moment.duration(100, 'seconds').format(this.props.format);
-    return (<span>{time}</span>);
+    const hours = Math.floor(this.props.length / (60 * 60));
+    const reminderFromHours = this.props.length % (60 * 60);
+    const minutes = Math.floor(reminderFromHours / 60);
+
+    const reminderFromMinutes = reminderFromHours % 60;
+    const seconds = Math.ceil(reminderFromMinutes);
+
+      // add leading zero and start concatenating the string
+    let timeString = (seconds < 10) ? ('0' + seconds) : seconds;
+    if (minutes > 0) {
+      timeString = ((minutes < 10) ? ('0' + minutes) : minutes) + ':' + timeString;
+    }
+    if (hours > 0) {
+      timeString = hours + ':' + timeString;
+    }
+    return (<span>{timeString}</span>);
   }
 }
