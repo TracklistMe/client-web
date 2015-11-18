@@ -31,3 +31,4 @@ export BlogSection from './Sections/BlogSection';
 export BetaOnboardingForm from './Onboarding/BetaOnboardingForm';
 export TimeDuration from './Utilities/TimeDuration';
 export BuyFromJumbotronPlaylist from './Buttons/BuyFromJumbotronPlaylist';
+export Player from './Player/Player';

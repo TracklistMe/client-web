@@ -11,3 +11,4 @@ export NotFound from './NotFound/NotFound';
 export Track from './Track/Track';
 export Genre from './Genre/Genre';
 export Release from './Release/Release';
+export PlayerContainer from './PlayerContainer/PlayerContainer';
