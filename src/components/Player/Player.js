@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 // import {changeCurrentTime, changeSong, toggleIsPlaying} from '../actions/player';
-// import Playlist from '../components/Playlist';
-// import Popover from '../components/Popover';
+import Playlist from './Playlist';
+import Popover from './Popover';
 import SongDetails from './SongDetails';
 // import {CHANGE_TYPES} from '../constants/SongConstants';
 import {formatSeconds} from '../../utils/FormatUtils';
@@ -15,7 +15,8 @@ export default class Player extends Component {
     users: PropTypes.object,
     playingSongId: PropTypes.number,
     player: PropTypes.object,
-    playlist: PropTypes.object
+    playlists: PropTypes.object,
+    dispatch: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -43,6 +44,66 @@ export default class Player extends Component {
     audioElement.addEventListener('timeupdate', this.handleTimeUpdate, false);
     audioElement.addEventListener('volumechange', this.handleVolumeChange, false);
     audioElement.play();
+  }
+
+  renderVolumeIcon() {
+    const {muted, volume} = this.state;
+    if (muted) {
+      return <i className="pictoFont basic-pictomute"></i>;
+    }
+
+    if (volume === 0) {
+      return <i className="pictoFont basic-pictovolume"></i>;
+    } else if (volume === 1) {
+      return (
+        <div className="player-volume-button-wrap">
+          <i className="icon ion-android-volume-up"></i>
+          <i className="pictoFont basic-pictovolume"></i>
+        </div>
+      );
+    }
+    return (
+      <div className="player-volume-button-wrap">
+        <i className="icon ion-android-volume-down"></i>
+        <i className="pictoFont basic-pictovolume"></i>
+      </div>
+    );
+  }
+
+  renderVolumeBar() {
+    const {muted, volume} = this.state;
+    const width = muted ? 0 : volume * 100;
+    return (
+      <div className="player-seek-duration-bar" style={{width: `${width}%`}}>
+        <div className="player-seek-handle" onClick={this.handleMouseClick} onMouseDown={this.handleVolumeMouseDown}>
+        </div>
+      </div>
+    );
+  }
+
+  renderPlaylist() {
+    const {dispatch, player, playlists, songs} = this.props;
+
+    return (
+      <Playlist dispatch={dispatch}
+                player={player}
+                playlists={playlists}
+                songs={songs} />
+    );
+  }
+
+  renderDurationBar() {
+    const {duration, currentTime} = this.state;
+
+    if (duration !== 0) {
+      const width = currentTime / duration * 100;
+      return (
+        <div className="player-seek-duration-bar" style={{width: `${width}%`}} >
+          <div className="player-seek-handle" onClick={this.handleMouseClick} onMouseDown={this.handleSeekMouseDown}>
+          </div>
+        </div>
+      );
+    }
   }
 
   render() {
@@ -76,7 +137,7 @@ export default class Player extends Component {
             <div className="player-section player-seek">
               <div className="player-seek-bar-wrap">
                 <div className="player-seek-bar" ref="seekBar">
-                    duration bar
+                    {this.renderDurationBar()}
                 </div>
               </div>
               <div className="player-time">
@@ -96,15 +157,19 @@ export default class Player extends Component {
                 onClick={this.toggleShuffle}>
                 <icon className="basic-pictoshuffle pictoFont"></icon>
               </div>
+              <Popover className={'player-button top-right'}>
+                <i className="pictoFont basic-pictoalign-justify"></i>
+                {this.renderPlaylist()}
+              </Popover>
               <div
                 className={'player-button player-volume-button'}
                 onClick={this.toggleMute}>
-                volumeIcon
+                {this.renderVolumeIcon()}
               </div>
               <div className="player-volume">
-                <div className="player-seek-bar-wrap">
+                <div className="player-seek-bar-wrap" onClick={this.changeVolume}>
                   <div className="player-seek-bar" ref="volumeBar">
-                  bar
+                    {this.renderVolumeBar()}
                   </div>
                 </div>
               </div>
