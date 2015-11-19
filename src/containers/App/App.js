@@ -8,8 +8,8 @@ import PlayerContainer from '../PlayerContainer/PlayerContainer';
 
 
 const title = 'TracklistMe';
-const description = 'All the modern best practices in one example.';
-const image = 'https://react-redux.herokuapp.com/logo.jpg';
+const description = 'Your Music Hub.';
+const image = './../../img/logoAphextwin.png';
 const logo = require('./../../img/logoAphextwin.png');
 
 

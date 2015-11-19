@@ -1,13 +1,9 @@
 import React, {Component, PropTypes} from 'react';
-import {playSong} from '../../actions/player';
-import {getImageUrl} from '../../utils/SongUtils';
 
 export default class Playlist extends Component {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     player: PropTypes.object.isRequired,
-    songs: PropTypes.object,
-    playlists: PropTypes.object.isRequired
+    songs: PropTypes.object
   };
 
   constructor(props) {
@@ -47,75 +43,49 @@ export default class Playlist extends Component {
     document.body.style.overflow = 'auto';
   }
 
-  playSong(shownPlaylist, index) {
-    const {dispatch} = this.props;
-    dispatch(playSong(shownPlaylist, index));
+  playSong() {
+    // const {dispatch} = this.props;
+    // dispatch(playSong(shownPlaylist, index));
     this.setState({
       shownPlaylistIndex: null
     });
   }
 
   render() {
-    const { playlists, player, songs } = this.props;
+    const { player } = this.props;
     const { currentSongIndex, selectedPlaylists } = player;
     const currentPlaylist = selectedPlaylists[selectedPlaylists.length - 1];
     const shownPlaylistIndex = this.state.shownPlaylistIndex !== null ? this.state.shownPlaylistIndex : selectedPlaylists.length - 1;
     const shownPlaylist = selectedPlaylists[shownPlaylistIndex];
 
-    const items = playlists[shownPlaylist].items.map((songId, index) => {
-      const song = songs[songId];
-      return ( < li className = {
-          'playlist-song' + (currentPlaylist === shownPlaylist && index === currentSongIndex ? ' active' : '')
-        }
-        key = {
-          song.id + '-' + index
-        }
-        onClick = {
-          this.playSong.bind(this, shownPlaylist, index)
-        } >
-        < img className = "playlist-song-image"
-        src = {
-          getImageUrl(song.artwork_url)
-        }
-        /> < div className = "playlist-song-title" > {
-          song.title
-        } < /div> < /li>
-      );
-    });
-
-    return ( < div className = "popover-content playlist"
-      onClick = {
-        event => event.stopPropagation()
-      }
-      onMouseEnter = {
-        this.handleMouseEnter
-      }
-      onMouseLeave = {
-        this.handleMouseLeave
-      } >
-      < div className = "playlist-header" >
-      < a className = {
-        'playlist-header-button' + (shownPlaylistIndex === 0 ? ' disabled' : '')
-      }
-      href= "#"
-      onClick = {
-        this.changeShownPlaylistIndex.bind(this, shownPlaylistIndex - 1)
-      } >
-      < i className = "icon ion-ios-arrow-back" > < /i> < /a> < div className = "playlist-header-title" > {
-        shownPlaylist.split('|')[0]
-      } < /div> < a className = {
-        'playlist-header-button' + (shownPlaylistIndex === selectedPlaylists.length - 1 ? ' disabled' : '')
-      }
-      href = "#"
-      onClick = {
-        this.changeShownPlaylistIndex.bind(this, shownPlaylistIndex + 1)
-      } >
-      < i className = "icon ion-ios-arrow-forward" > </i> </a> </div> <div className = "playlist-body" >
-      < ul className = "playlist-songs" > {
-        items
-      } < /ul> < /div> < div className = "playlist-footer" > {
-        items.length + (items.length === 1 ? ' Song' : ' Songs')
-      } < /div> < /div>
+    const index = 1;
+    return (
+    <div className="popover-content playlist" onClick = {event => event.stopPropagation()}
+      onMouseEnter = {this.handleMouseEnter} onMouseLeave = {this.handleMouseLeave}>
+      <div className = "playlist-header" >
+        <a className = {'playlist-header-button' + (shownPlaylistIndex === 0 ? ' disabled' : '')}
+        href= "#" onClick = {this.changeShownPlaylistIndex.bind(this, shownPlaylistIndex - 1)}>
+          <i className = "icon ion-ios-arrow-back"> </i>
+        </a>
+        <div className="playlist-header-title">
+          Title
+        </div>
+        <a className = {'playlist-header-button' + (shownPlaylistIndex === selectedPlaylists.length - 1 ? ' disabled' : '')}
+        href = "#" onClick = {this.changeShownPlaylistIndex.bind(this, shownPlaylistIndex + 1)}>
+          <i className="icon ion-ios-arrow-forward"></i>
+        </a>
+      </div>
+      <div className="playlist-body">
+        <ul className="playlist-songs">
+          <li className = {'playlist-song' + (currentPlaylist === shownPlaylist && index === currentSongIndex ? ' active' : '')}
+           key="1" onClick = {this.playSong.bind(this, shownPlaylist, index)}>
+            <img className="playlist-song-image" src="http://is1.mzstatic.com/image/thumb/Music69/v4/95/94/35/959435fa-2068-f2bc-6e97-ab8c72008d25/source/1425x1425sr.jpg"/>
+            <div className="playlist-song-title">  SONG TITLE </div>
+          </li>
+        </ul>
+      </div>
+      <div className = "playlist-footer" > 10 Songs </div>
+    </div>
     );
   }
 }

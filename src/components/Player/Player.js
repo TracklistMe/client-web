@@ -326,12 +326,10 @@ export default class Player extends Component {
   }
 
   renderPlaylist() {
-    const {player, playlists, songs} = this.props;
-
+    const {player, songs} = this.props;
     return (
       <Playlist
-                player={player}
-                playlists={playlists}
+                player={player.player}
                 songs={songs} />
     );
   }
@@ -401,6 +399,10 @@ export default class Player extends Component {
                 onClick={this.toggleShuffle}>
                 <icon className="basic-pictoshuffle pictoFont"></icon>
               </div>
+              <Popover className={'player-button top-right'}>
+                  <i className="pictoFont basic-pictoalign-justify"></i>
+                  {this.renderPlaylist()}
+              </Popover>
               <div
                 className={'player-button player-volume-button'}
                 onClick={this.toggleMute}>
