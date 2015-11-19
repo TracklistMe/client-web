@@ -10,6 +10,7 @@ import widgets from './widgets';
 import track from './track';
 import release from './release';
 import earlyUser from './earlyUser';
+import player from './player';
 
 export default combineReducers({
   router: routerStateReducer,
@@ -24,5 +25,6 @@ export default combineReducers({
   widgets,
   track,
   release,
-  earlyUser
+  earlyUser,
+  player
 });

@@ -56,12 +56,8 @@ export default class Playlist extends Component {
   }
 
   render() {
-    const {
-      playlists, player, songs
-    } = this.props;
-    const {
-      currentSongIndex, selectedPlaylists
-    } = player;
+    const { playlists, player, songs } = this.props;
+    const { currentSongIndex, selectedPlaylists } = player;
     const currentPlaylist = selectedPlaylists[selectedPlaylists.length - 1];
     const shownPlaylistIndex = this.state.shownPlaylistIndex !== null ? this.state.shownPlaylistIndex : selectedPlaylists.length - 1;
     const shownPlaylist = selectedPlaylists[shownPlaylistIndex];
