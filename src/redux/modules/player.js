@@ -10,10 +10,10 @@ const initialState = {
 export default function player(state = initialState, action) {
   switch (action.type) {
     case types.CHANGE_CURRENT_TIME:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentTime: action.time
-      });
-
+      };
     case types.CHANGE_PLAYING_SONG:
       return Object.assign({}, state, {
         currentSongIndex: action.songIndex

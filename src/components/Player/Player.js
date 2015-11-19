@@ -3,20 +3,35 @@ import ReactDOM from 'react-dom';
 import {changeCurrentTime, changeSong, toggleIsPlaying} from '../../actions/player';
 import Playlist from './Playlist';
 import Popover from './Popover';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import SongDetails from './SongDetails';
 import {CHANGE_TYPES} from '../../constants/SongConstants';
 import {formatSeconds} from '../../utils/FormatUtils';
 import {offsetLeft} from '../../utils/MouseUtils';
 // import {getImageUrl} from '../utils/SongUtils';
 
+@connect(
+    state => ({player: state}),
+    dispatch => bindActionCreators({changeCurrentTime, changeSong, toggleIsPlaying}, dispatch))
 export default class Player extends Component {
   static propTypes = {
     songs: PropTypes.object,
     users: PropTypes.object,
     playingSongId: PropTypes.number,
-    player: PropTypes.object,
+    player: PropTypes.shape({
+      player: PropTypes.shape({
+        currentSongIndex: PropTypes.number,
+        currentTime: PropTypes.number,
+        isPlaying: PropTypes.bool,
+        selectedPlaylists: PropTypes.array
+      })
+    }),
     playlists: PropTypes.object,
-    dispatch: PropTypes.func.isRequired,
+    currentTime: PropTypes.number,
+    changeCurrentTime: PropTypes.func.isRequired,
+    changeSong: PropTypes.func.isRequired,
+    toggleIsPlaying: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -50,7 +65,7 @@ export default class Player extends Component {
       muted: false,
       repeat: false,
       shuffle: false,
-      volume: 1,
+      volume: 0.5,
     };
   }
 
@@ -96,10 +111,7 @@ export default class Player extends Component {
   }
 
   changeSong(changeType) {
-    const {
-      dispatch
-    } = this.props;
-    dispatch(changeSong(changeType));
+    this.props.changeSong(changeType);
   }
 
   changeVolume(event) {
@@ -126,10 +138,7 @@ export default class Player extends Component {
   }
 
   handleLoadStart() {
-    const {
-      dispatch
-    } = this.props;
-    dispatch(changeCurrentTime(0));
+    this.props.changeCurrentTime(0);
     this.setState({
       duration: 0
     });
@@ -141,17 +150,11 @@ export default class Player extends Component {
   }
 
   handlePause() {
-    const {
-      dispatch
-    } = this.props;
-    dispatch(toggleIsPlaying(false));
+    this.props.toggleIsPlaying(false);
   }
 
   handlePlay() {
-    const {
-      dispatch
-    } = this.props;
-    dispatch(toggleIsPlaying(true));
+    this.props.toggleIsPlaying(true);
   }
 
   handleSeekMouseDown() {
@@ -162,16 +165,13 @@ export default class Player extends Component {
   }
 
   handleSeekMouseMove(event) {
-    const {
-      dispatch
-    } = this.props;
     const seekBar = ReactDOM.findDOMNode(this.refs.seekBar);
     const diff = event.clientX - offsetLeft(seekBar);
     const pos = diff < 0 ? 0 : diff;
     let percent = pos / seekBar.offsetWidth;
     percent = percent > 1 ? 1 : percent;
 
-    dispatch(changeCurrentTime(Math.floor(percent * this.state.duration)));
+    this.props.changeCurrentTime(Math.floor(percent * this.state.duration));
   }
 
   handleSeekMouseUp() {
@@ -181,14 +181,10 @@ export default class Player extends Component {
 
     document.removeEventListener('mousemove', this.handleSeekMouseMove);
     document.removeEventListener('mouseup', this.handleSeekMouseUp);
-    const {
-      currentTime
-    } = this.props.player;
-
     this.setState({
       isSeeking: false,
     }, function() {
-      ReactDOM.findDOMNode(this.refs.audio).currentTime = currentTime;
+      ReactDOM.findDOMNode(this.refs.audio).currentTime = this.state.currentTime;
     });
   }
 
@@ -197,17 +193,10 @@ export default class Player extends Component {
       return;
     }
 
-    const {
-      dispatch, player
-    } = this.props;
     const audioElement = event.currentTarget;
     const currentTime = Math.floor(audioElement.currentTime);
 
-    if (currentTime === player.currentTime) {
-      return;
-    }
-
-    dispatch(changeCurrentTime(currentTime));
+    this.props.changeCurrentTime(currentTime);
   }
 
   handleVolumeChange(event) {
@@ -234,9 +223,7 @@ export default class Player extends Component {
     let percent = pos / volumeBar.offsetWidth;
     percent = percent > 1 ? 1 : percent;
 
-    this.setState({
-      volume: percent
-    });
+    this.setState({volume: percent});
     ReactDOM.findDOMNode(this.refs.audio).volume = percent;
   }
 
@@ -256,13 +243,9 @@ export default class Player extends Component {
   }
 
   seek(event) {
-    const {
-      dispatch
-    } = this.props;
     const audioElement = ReactDOM.findDOMNode(this.refs.audio);
     const currentTime = Math.floor(((event.clientX - offsetLeft(event.currentTarget)) / event.currentTarget.offsetWidth) * this.state.duration);
-
-    dispatch(changeCurrentTime(currentTime));
+    this.props.changeCurrentTime(currentTime);
     audioElement.currentTime = currentTime;
   }
 
@@ -282,7 +265,7 @@ export default class Player extends Component {
   togglePlay() {
     const {
       isPlaying
-    } = this.props.player;
+    } = this.props.player.player;
     const audioElement = ReactDOM.findDOMNode(this.refs.audio);
     if (isPlaying) {
       audioElement.pause();
@@ -339,10 +322,10 @@ export default class Player extends Component {
   }
 
   renderPlaylist() {
-    const {dispatch, player, playlists, songs} = this.props;
+    const {player, playlists, songs} = this.props;
 
     return (
-      <Playlist dispatch={dispatch}
+      <Playlist
                 player={player}
                 playlists={playlists}
                 songs={songs} />
@@ -350,8 +333,8 @@ export default class Player extends Component {
   }
 
   renderDurationBar() {
-    const {duration, currentTime} = this.state;
-
+    const {duration} = this.state;
+    const {currentTime} = this.props.player.player;
     if (duration !== 0) {
       const width = currentTime / duration * 100;
       return (
@@ -364,10 +347,10 @@ export default class Player extends Component {
   }
 
   render() {
-    const isPlaying = true;
+    const {currentTime, isPlaying} = this.props.player.player;
     return (
       <div className="player">
-        <audio id="audio" ref="audio"></audio>
+        <audio id="audio" src="https://api.soundcloud.com/tracks/191772228/stream?client_id=e582b63d83a5fb2997d1dbf2f62705da" ref="audio"></audio>
         <div className="container">
           <div className="player-main">
             <div className="player-section player-info">
@@ -398,9 +381,9 @@ export default class Player extends Component {
                 </div>
               </div>
               <div className="player-time">
-                <span>{formatSeconds(123)}</span>
+                <span>{formatSeconds(currentTime)}</span>
                 <span className="player-time-divider">/</span>
-                <span>{formatSeconds(155)}</span>
+                <span>{formatSeconds(this.state.duration)}</span>
               </div>
             </div>
             <div className="player-section">
