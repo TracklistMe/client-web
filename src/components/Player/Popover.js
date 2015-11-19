@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 export default class Popover extends Component {
   static propTypes = {
-    children: PropTypes.object,
+    children: PropTypes.array,
     className: PropTypes.string
   }
   constructor(props) {

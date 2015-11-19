@@ -132,9 +132,11 @@ export default class Player extends Component {
 
   handleLoadedMetadata() {
     const audioElement = ReactDOM.findDOMNode(this.refs.audio);
-    this.setState({
-      duration: Math.floor(audioElement.duration)
-    });
+    if (audioElement) {
+      this.setState({
+        duration: Math.floor(audioElement.duration)
+      });
+    }
   }
 
   handleLoadStart() {
@@ -175,6 +177,7 @@ export default class Player extends Component {
   }
 
   handleSeekMouseUp() {
+    console.log(this.props.player.player.currentTime);
     if (!this.state.isSeeking) {
       return;
     }
@@ -184,7 +187,7 @@ export default class Player extends Component {
     this.setState({
       isSeeking: false,
     }, function() {
-      ReactDOM.findDOMNode(this.refs.audio).currentTime = this.state.currentTime;
+      ReactDOM.findDOMNode(this.refs.audio).currentTime = this.props.player.player.currentTime;
     });
   }
 
@@ -246,6 +249,7 @@ export default class Player extends Component {
     const audioElement = ReactDOM.findDOMNode(this.refs.audio);
     const currentTime = Math.floor(((event.clientX - offsetLeft(event.currentTarget)) / event.currentTarget.offsetWidth) * this.state.duration);
     this.props.changeCurrentTime(currentTime);
+    console.log(this.props.player.player);
     audioElement.currentTime = currentTime;
   }
 
@@ -397,10 +401,6 @@ export default class Player extends Component {
                 onClick={this.toggleShuffle}>
                 <icon className="basic-pictoshuffle pictoFont"></icon>
               </div>
-              <Popover className={'player-button top-right'}>
-                <i className="pictoFont basic-pictoalign-justify"></i>
-                {this.renderPlaylist()}
-              </Popover>
               <div
                 className={'player-button player-volume-button'}
                 onClick={this.toggleMute}>

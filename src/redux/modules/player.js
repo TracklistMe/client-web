@@ -10,6 +10,7 @@ const initialState = {
 export default function player(state = initialState, action) {
   switch (action.type) {
     case types.CHANGE_CURRENT_TIME:
+      console.log(action.time);
       return {
         ...state,
         currentTime: action.time
