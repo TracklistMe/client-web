@@ -177,7 +177,6 @@ export default class Player extends Component {
   }
 
   handleSeekMouseUp() {
-    console.log(this.props.player.player.currentTime);
     if (!this.state.isSeeking) {
       return;
     }
@@ -249,7 +248,6 @@ export default class Player extends Component {
     const audioElement = ReactDOM.findDOMNode(this.refs.audio);
     const currentTime = Math.floor(((event.clientX - offsetLeft(event.currentTarget)) / event.currentTarget.offsetWidth) * this.state.duration);
     this.props.changeCurrentTime(currentTime);
-    console.log(this.props.player.player);
     audioElement.currentTime = currentTime;
   }
 
