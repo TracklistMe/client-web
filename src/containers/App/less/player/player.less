@@ -44,8 +44,8 @@
 }
 
 .player-button {
-    padding: 4px;
-
+    padding-left: 10px;
+    padding-right: 10px;
     & > i {
         color: #ccc;
     }
@@ -53,7 +53,7 @@
     &.active {
         &:hover {
             & i {
-                color: #86AB85;
+                color: #eb1781;
             }
         }
 
@@ -66,19 +66,19 @@
         cursor: pointer;
 
         & > i {
-            color: #222;
+            color: #eb1781;
         }
 
-        .ion-ios-pause {
+        .basic-pictopause {
             color: #86AB85;
         }
     }
 
-    & + .player-button {
+    & + .basic-pictoplay {
         margin-left: 30px;
     }
 
-    .ion-ios-pause {
+    .basic-pictopause {
         color: #eb1781;
     }
 }
