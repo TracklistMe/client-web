@@ -63,18 +63,19 @@ export default class Playlist extends Component {
     <div className="popover-content playlist" onClick = {event => event.stopPropagation()}
       onMouseEnter = {this.handleMouseEnter} onMouseLeave = {this.handleMouseLeave}>
       <div className = "playlist-header" >
+        <div className="playlist-header-title">
+          <h3>PLAYLIST</h3>
+        </div>
         <a className = {'playlist-header-button' + (shownPlaylistIndex === 0 ? ' disabled' : '')}
         href= "#" onClick = {this.changeShownPlaylistIndex.bind(this, shownPlaylistIndex - 1)}>
-          <i className = "icon ion-ios-arrow-back"> </i>
+          View All
         </a>
-        <div className="playlist-header-title">
-          Title
-        </div>
         <a className = {'playlist-header-button' + (shownPlaylistIndex === selectedPlaylists.length - 1 ? ' disabled' : '')}
         href = "#" onClick = {this.changeShownPlaylistIndex.bind(this, shownPlaylistIndex + 1)}>
           <i className="icon ion-ios-arrow-forward"></i>
         </a>
       </div>
+      <hr />
       <div className="playlist-body">
         <ul className="playlist-songs">
           <li className = {'playlist-song' + (currentPlaylist === shownPlaylist && index === currentSongIndex ? ' active' : '')}
@@ -82,6 +83,37 @@ export default class Playlist extends Component {
             <img className="playlist-song-image" src="http://is1.mzstatic.com/image/thumb/Music69/v4/95/94/35/959435fa-2068-f2bc-6e97-ab8c72008d25/source/1425x1425sr.jpg"/>
             <div className="playlist-song-title">  SONG TITLE </div>
           </li>
+          <li className = {'playlist-song' + (currentPlaylist === shownPlaylist && index === currentSongIndex ? ' active' : '')}
+           key="2" onClick = {this.playSong.bind(this, shownPlaylist, index)}>
+            <img className="playlist-song-image" src="http://is1.mzstatic.com/image/thumb/Music69/v4/95/94/35/959435fa-2068-f2bc-6e97-ab8c72008d25/source/1425x1425sr.jpg"/>
+            <div className="playlist-song-title">  SONG TITLE </div>
+          </li>
+          <li className = {'playlist-song' + (currentPlaylist === shownPlaylist && index === currentSongIndex ? ' active' : '')}
+           key="3" onClick = {this.playSong.bind(this, shownPlaylist, index)}>
+            <img className="playlist-song-image" src="http://is1.mzstatic.com/image/thumb/Music69/v4/95/94/35/959435fa-2068-f2bc-6e97-ab8c72008d25/source/1425x1425sr.jpg"/>
+            <div className="playlist-song-title">  SONG TITLE </div>
+          </li>
+          <li className = {'playlist-song' + (currentPlaylist === shownPlaylist && index === currentSongIndex ? ' active' : '')}
+           key="4" onClick = {this.playSong.bind(this, shownPlaylist, index)}>
+            <img className="playlist-song-image" src="http://is1.mzstatic.com/image/thumb/Music69/v4/95/94/35/959435fa-2068-f2bc-6e97-ab8c72008d25/source/1425x1425sr.jpg"/>
+            <div className="playlist-song-title">  SONG TITLE </div>
+          </li>
+          <li className = {'playlist-song' + (currentPlaylist === shownPlaylist && index === currentSongIndex ? ' active' : '')}
+           key="5" onClick = {this.playSong.bind(this, shownPlaylist, index)}>
+            <img className="playlist-song-image" src="http://is1.mzstatic.com/image/thumb/Music69/v4/95/94/35/959435fa-2068-f2bc-6e97-ab8c72008d25/source/1425x1425sr.jpg"/>
+            <div className="playlist-song-title">  SONG TITLE </div>
+          </li>
+          <li className = {'playlist-song' + (currentPlaylist === shownPlaylist && index === currentSongIndex ? ' active' : '')}
+           key="6" onClick = {this.playSong.bind(this, shownPlaylist, index)}>
+            <img className="playlist-song-image" src="http://is1.mzstatic.com/image/thumb/Music69/v4/95/94/35/959435fa-2068-f2bc-6e97-ab8c72008d25/source/1425x1425sr.jpg"/>
+            <div className="playlist-song-title">  SONG TITLE </div>
+          </li>
+          <li className = {'playlist-song' + (currentPlaylist === shownPlaylist && index === currentSongIndex ? ' active' : '')}
+           key="7" onClick = {this.playSong.bind(this, shownPlaylist, index)}>
+            <img className="playlist-song-image" src="http://is1.mzstatic.com/image/thumb/Music69/v4/95/94/35/959435fa-2068-f2bc-6e97-ab8c72008d25/source/1425x1425sr.jpg"/>
+            <div className="playlist-song-title">  SONG TITLE </div>
+          </li>
+
         </ul>
       </div>
       <div className = "playlist-footer" > 10 Songs </div>
