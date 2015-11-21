@@ -63,9 +63,7 @@
 	min-height: 40px;
 	line-height: 20px;
 }
-.releaseJumbotron .trackInPlaylist:first-of-type{
-	border-top: 1px solid fade(@brand-neutral, 20);
-}
+ 
 
 .releaseJumbotron .header { 
   height: 800px; 
@@ -85,3 +83,25 @@
 	margin-bottom: 20px;
 }
 
+.releaseJumbotron table{
+	width: 100%;
+}
+.releaseJumbotron tr:first-of-type{
+	border-top: 1px solid fade(@brand-neutral, 20);
+}
+
+.releaseJumbotron tr{
+		width: 100%;
+		border-bottom: 1px solid fade(@brand-neutral, 20);
+}
+
+.releaseJumbotron td{
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.releaseJumbotron .artistList span:after {
+	content: ", ";
+}
+.releaseJumbotron .artistList span:last-child:after {
+	content: "";
+}

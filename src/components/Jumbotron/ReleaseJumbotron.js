@@ -48,39 +48,33 @@ export default class ReleaseJumbotron extends Component {
           </div>
           </div>
           <div className="row">
-          <div className="col-lg-12 hidden-xs">
-            {release.Tracks.map((track, index) =>
-            <div className="col-sub-sm-18 trackInPlaylist">
-            <div className="col-sub-sm-1">
-              {index + 1}
+            <div className="hidden-xs">
+              <table>
+                {release.Tracks.map((track, index) =>
+                  <tr>
+                    <td width="2%">{index + 1}</td>
+                    <td>{track.title} ({track.version})</td>
+                    <td className="artistList">
+                      {track.Producer.map((producer) =>
+                        <span>{producer.displayName}</span>
+                      )}
+                    </td>
+                    <td>
+                      {track.Genres.map((genre) =>
+                        <span>{genre.name}</span>
+                      )}
+                    </td>
+                    <td>
+                      <TimeDuration length={track.lengthInSeconds} /> / {Math.floor(track.bpm * 10) / 10}bpm
+                    </td>
+                    <td className="text-right">
+                      <BuyFromJumbotronPlaylist name={track.Price + '$'} icon />
+                    </td>
+
+                  </tr>
+                )}
+              </table>
             </div>
-            <div className="col-sub-sm-5 ">
-              {track.title} ({track.version})
-            </div>
-            <div className="col-sub-sm-4 ">
-            {track.Producer.map((producer) =>
-              <span>{producer.displayName}</span>
-            )}
-            </div>
-            <div className="col-sub-sm-3">
-            {track.Remixer.map((remixer) =>
-              <span>{remixer.displayName}</span>
-            )}
-            </div>
-            <div className="col-sub-sm-2">
-            {track.Genres.map((genre) =>
-              <span>{genre.name}</span>
-            )}
-            </div>
-            <div className="col-sub-sm-2">
-              <span><TimeDuration length={track.lengthInSeconds} /> / {Math.round(track.bpm * 100) / 100}bpm </span>
-            </div>
-            <div className="col-sub-sm-1 text-right">
-              <BuyFromJumbotronPlaylist name={track.Price + '$'} icon />
-            </div>
-            </div>
-          )}
-          </div>
           </div>
         </div>
         </div>
