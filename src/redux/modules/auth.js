@@ -1,3 +1,5 @@
+import md5 from 'md5';
+
 const LOAD = 'redux-example/auth/LOAD';
 const LOAD_SUCCESS = 'redux-example/auth/LOAD_SUCCESS';
 const LOAD_FAIL = 'redux-example/auth/LOAD_FAIL';
@@ -92,7 +94,7 @@ export function login(email, password) {
     promise: (client) => client.post('/auth/login', {
       data: {
         email: email,
-        password: password
+        password: md5(password)
       }
     })
   };
