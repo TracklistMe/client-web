@@ -16,8 +16,8 @@ export default class Login extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const input = this.refs.username;
-    this.props.login(input.value);
-    input.value = '';
+    const password = this.refs.password;
+    this.props.login(input.value, password.value);
   }
 
   render() {
@@ -26,11 +26,14 @@ export default class Login extends Component {
     return (
       <div className={styles.loginPage + ' container'}>
         <DocumentMeta title="React Redux Example: Login"/>
+        <br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br />
         <h1>Login</h1>
         {!user &&
         <div>
           <form className="login-form" onSubmit={::this.handleSubmit}>
             <input type="text" ref="username" placeholder="Enter a username"/>
+            <input type="text" ref="password" placeholder="Enter your password"/>
             <button className="btn btn-success" onClick={::this.handleSubmit}><i className="fa fa-sign-in"/>{' '}Log In
             </button>
           </form>

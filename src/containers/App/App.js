@@ -8,8 +8,8 @@ import PlayerContainer from '../PlayerContainer/PlayerContainer';
 
 
 const title = 'TracklistMe';
-const description = 'Your Music Hub.';
-const image = './../../img/logoAphextwin.png';
+const description = 'All the modern best practices in one example.';
+const image = 'https://react-redux.herokuapp.com/logo.jpg';
 const logo = require('./../../img/logoAphextwin.png');
 
 
@@ -117,7 +117,7 @@ export default class App extends Component {
             <li><Link to="/widgets">Widgets</Link></li>
             <li><Link to="/survey">Survey</Link></li>
             <li><Link to="/about">About Us</Link></li>
-            {!user && <li><Link to="/login">Login</Link></li>}
+            {!user && <li><NavbarLink to="/login">Login</NavbarLink></li>}
             {user && <li className="logout-link"><a href="/logout" onClick={::this.handleLogout}>Logout</a></li>}
           </ul>
           </li>

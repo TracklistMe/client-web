@@ -42,6 +42,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loggingIn: false,
+        token: action.result.token,
         user: action.result
       };
     case LOGIN_FAIL:
@@ -84,12 +85,14 @@ export function load() {
   };
 }
 
-export function login(name) {
+export function login(email, password) {
+  console.log(password);
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.post('/login', {
+    promise: (client) => client.post('/auth/login', {
       data: {
-        name: name
+        email: email,
+        password: password
       }
     })
   };
