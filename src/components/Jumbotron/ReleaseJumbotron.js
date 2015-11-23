@@ -10,15 +10,23 @@ export default class ReleaseJumbotron extends Component {
   render() {
     const release = this.props.release; // eslint-disable-line no-shadow
     const height = Math.max(570, 400 + (release.Tracks.length * 40));
-    const uniqueArtists = new Set();
-    for (const track of release.Tracks)
-      for (const artist of track.Producer)
-        if (!uniqueArtists.has(artist)) {
-          uniqueArtists.add(artist);
+    const uniqueArtists = [];
+    let imd = 0;
+    for (const track of release.Tracks) {
+      for (const artist of track.Producer) {
+        console.log(artist.displayName);
+        imd = imd + 1;
+        if (!uniqueArtists[artist.id]) {
+          // The artist doesn't exists.
+          uniqueArtists[artist.id] = { artist: artist, counter: 1};
+        } else {
+          // The artist exists, increment the counter
+          uniqueArtists[artist.id].counter = uniqueArtists[artist.id].counter + 1;
         }
+      }
+    }
 
     console.log(uniqueArtists);
-
     if (!release) {
       return (<div></div>);
     }
