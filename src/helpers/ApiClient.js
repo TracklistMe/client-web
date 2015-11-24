@@ -19,6 +19,8 @@ class _ApiClient {
             if (options && options.params) {
               request.query(options.params);
             }
+            console.log(request);
+            request.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
             if (__SERVER__) {
               if (req.get('cookie')) {
                 request.set('cookie', req.get('cookie'));

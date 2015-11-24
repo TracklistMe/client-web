@@ -32,8 +32,8 @@ export default class Login extends Component {
         {!user &&
         <div>
           <form className="login-form" onSubmit={::this.handleSubmit}>
-            <input type="text" ref="username" placeholder="Enter a username"/>
-            <input type="text" ref="password" placeholder="Enter your password"/>
+            <input type="text" ref="username" value="info@nicolabortignon.com" placeholder="Enter a username"/>
+            <input type="text" ref="password" value="test1234" placeholder="Enter your password"/>
             <button className="btn btn-success" onClick={::this.handleSubmit}><i className="fa fa-sign-in"/>{' '}Log In
             </button>
           </form>
