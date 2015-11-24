@@ -18,6 +18,16 @@ import {
   } from 'containers';
 
 export default (store) => {
+  // try to login at bootstrap ?!
+  console.log(store);
+  if (store.getState() && isAuthLoaded(store.getState()) === false) {
+    // If we don't have a token
+  } else {
+    console.log('didnt find any token');
+    // if we have a token
+    store.dispatch(loadAuth());
+  }
+
   const requireLogin = (nextState, replaceState, cb) => {
     function checkAuth() {
       const { auth: { user }} = store.getState();
@@ -28,10 +38,13 @@ export default (store) => {
       cb();
     }
 
-    if (!isAuthLoaded(store.getState())) {
-      store.dispatch(loadAuth()).then(checkAuth);
+    console.log(store.getState());
+    // Check if we are already autenticated
+    if (isAuthLoaded(store.getState()) === false) {
+      // If we don't have a token
     } else {
-      checkAuth();
+      // if we have a token
+      store.dispatch(loadAuth()).then(checkAuth);
     }
   };
 

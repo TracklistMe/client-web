@@ -9,7 +9,7 @@ const LOGIN_FAIL = 'redux-example/auth/LOGIN_FAIL';
 const LOGOUT = 'redux-example/auth/LOGOUT';
 const LOGOUT_SUCCESS = 'redux-example/auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'redux-example/auth/LOGOUT_FAIL';
-
+const LOAD_TOKEN_FROM_LOCAL_STORAGE = 'LOAD_TOKEN_FROM_LOCAL_STORAGE';
 const initialState = {
   loaded: false,
   token: null,
@@ -73,15 +73,31 @@ export default function reducer(state = initialState, action = {}) {
         loggingOut: false,
         logoutError: action.error
       };
+    case LOAD_TOKEN_FROM_LOCAL_STORAGE:
+      return {
+        ...state,
+        token: action.token,
+      };
     default:
       return state;
   }
 }
 
 export function isLoaded(globalState) {
-  return globalState.auth && globalState.auth.loaded;
+  // This is invoked by routees.
+  // globalState.auth is the state of this current reducer.
+  // we are checking if it does exists, and we should check if we have
+  // the token
+  return globalState.auth && globalState.auth.token;
 }
 
+export function loadLocalStorage() {
+  const token = localStorage.getItem('token');
+  if (token) {
+    console.log('found a token localstorage ' + token);
+    return { type: LOAD_TOKEN_FROM_LOCAL_STORAGE, token };
+  }
+}
 export function load() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
