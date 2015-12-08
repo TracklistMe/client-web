@@ -18,17 +18,6 @@ import {
   } from 'containers';
 
 export default (store) => {
-  // try to login at bootstrap ?!
-  const attemptAutomaticLogin = () => {
-    console.log('Attempt for automatic Login ');
-    console.log(store);
-    if(store.dispatch){
-      store.dispatch(loadLocalStorage());
-    }
-      store.dispatch(loadLocalStorage());
-    
-  };
-
   const requireLogin = (nextState, replaceState, cb) => {
     function checkAuth() {
       const { auth: { user }} = store.getState();
@@ -48,8 +37,6 @@ export default (store) => {
       store.dispatch(loadAuth()).then(checkAuth);
     }
   };
-
-  attemptAutomaticLogin();
   /**
    * Please keep routes in alphabetical order
    */

@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import connectData from 'helpers/connectData';
+import { bindActionCreators } from 'redux';
 import DocumentMeta from 'react-document-meta';
-import { logout } from 'redux/modules/auth';
+import { logout, loadAuthCookie } from 'redux/modules/auth';
 import { pushState } from 'redux-router';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
 
@@ -44,9 +46,16 @@ const NavbarLink = ({to, children}) => (
   </Link>
 );
 
+function fetchData(getState, dispatch) {
+  bindActionCreators({loadAuthCookie}, dispatch).loadAuthCookie();
+}
+
 @connect(
   state => ({user: state.auth.user}),
   {logout, pushState})
+
+@connectData(fetchData)
+
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,

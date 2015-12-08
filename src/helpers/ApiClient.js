@@ -1,6 +1,6 @@
 import superagent from 'superagent';
 import config from '../config';
-
+import cookie from 'react-cookie';
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
 /*
@@ -19,8 +19,9 @@ class _ApiClient {
             if (options && options.params) {
               request.query(options.params);
             }
-            console.log(request);
-            request.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            if (cookie && cookie.load('loginResult')) {
+              request.set('Authorization', 'Bearer ' + cookie.load('loginResult').auth_token);
+            }
             if (__SERVER__) {
               if (req.get('cookie')) {
                 request.set('cookie', req.get('cookie'));
