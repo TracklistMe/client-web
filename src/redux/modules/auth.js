@@ -74,9 +74,10 @@ export default function reducer(state = initialState, action = {}) {
         logoutError: action.error
       };
     case LOAD_TOKEN_FROM_LOCAL_STORAGE:
+      const token = localStorage.getItem('token');
       return {
         ...state,
-        token: action.token,
+        token: token,
       };
     default:
       return state;
@@ -92,11 +93,7 @@ export function isLoaded(globalState) {
 }
 
 export function loadLocalStorage() {
-  const token = localStorage.getItem('token');
-  if (token) {
-    console.log('found a token localstorage ' + token);
-    return { type: LOAD_TOKEN_FROM_LOCAL_STORAGE, token };
-  }
+  return { type: LOAD_TOKEN_FROM_LOCAL_STORAGE };
 }
 export function load() {
   return {

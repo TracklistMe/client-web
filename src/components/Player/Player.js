@@ -350,7 +350,7 @@ export default class Player extends Component {
     const {currentTime, isPlaying} = this.props.player.player;
     return (
       <div className="player">
-        <audio id="audio" src="https://api.soundcloud.com/tracks/191772228/stream?client_id=e582b63d83a5fb2997d1dbf2f62705da" ref="audio"></audio>
+        <audio id="audio" src="" ref="audio"></audio>
         <div className="container">
           <div className="player-main">
             <div className="player-section player-info">

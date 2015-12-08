@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route} from 'react-router';
-import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
+import { isLoaded as isAuthLoaded, load as loadAuth, loadLocalStorage as loadLocalStorage} from 'redux/modules/auth';
 import {
     App,
     Chat,
@@ -19,14 +19,15 @@ import {
 
 export default (store) => {
   // try to login at bootstrap ?!
-  console.log(store);
-  if (store.getState() && isAuthLoaded(store.getState()) === false) {
-    // If we don't have a token
-  } else {
-    console.log('didnt find any token');
-    // if we have a token
-    store.dispatch(loadAuth());
-  }
+  const attemptAutomaticLogin = () => {
+    console.log('Attempt for automatic Login ');
+    console.log(store);
+    if(store.dispatch){
+      store.dispatch(loadLocalStorage());
+    }
+      store.dispatch(loadLocalStorage());
+    
+  };
 
   const requireLogin = (nextState, replaceState, cb) => {
     function checkAuth() {
@@ -48,6 +49,7 @@ export default (store) => {
     }
   };
 
+  attemptAutomaticLogin();
   /**
    * Please keep routes in alphabetical order
    */
@@ -59,7 +61,7 @@ export default (store) => {
       </Route>
       <Route component={App}>
         <Route path="/beta" component={Home}/>
-        <Route path="login" component={Login}/>
+        <Route path="/login" component={Login}/>
         <Route path="/genre/" component={Genre}/>
         <Route path="/widgets" component={Widgets}/>
         <Route path="/about" component={About}/>
