@@ -47,6 +47,7 @@ const NavbarLink = ({to, children}) => (
 );
 
 function fetchData(getState, dispatch) {
+  console.log('Get Cookies! 🍪');
   bindActionCreators({loadAuthCookie}, dispatch).loadAuthCookie();
 }
 

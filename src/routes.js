@@ -1,6 +1,5 @@
 import React from 'react';
 import {Route} from 'react-router';
-import { isLoaded as isAuthLoaded, load as loadAuth, loadLocalStorage as loadLocalStorage} from 'redux/modules/auth';
 import {
     App,
     Chat,
@@ -17,7 +16,8 @@ import {
     Release
   } from 'containers';
 
-export default (store) => {
+export default () => {
+  /*
   const requireLogin = (nextState, replaceState, cb) => {
     function checkAuth() {
       const { auth: { user }} = store.getState();
@@ -37,6 +37,9 @@ export default (store) => {
       store.dispatch(loadAuth()).then(checkAuth);
     }
   };
+  */
+
+
   /**
    * Please keep routes in alphabetical order
    */
@@ -55,7 +58,7 @@ export default (store) => {
         <Route path="/login" component={Login}/>
         <Route path="/release/:id" component={Release}/>
         <Route path="/track/:id" component={Track}/>
-        <Route onEnter={requireLogin}>
+        <Route>
           <Route path="/chat" component={Chat}/>
           <Route path="/loginSuccess" component={LoginSuccess}/>
         </Route>

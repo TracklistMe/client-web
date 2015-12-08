@@ -20,7 +20,10 @@ class _ApiClient {
               request.query(options.params);
             }
             if (cookie && cookie.load('loginResult')) {
-              request.set('Authorization', 'Bearer ' + cookie.load('loginResult').auth_token);
+              console.log('adding a bearer token ---');
+              console.log(cookie.load('loginResult').token);
+              console.log('---');
+              request.set('Authorization', 'Bearer ' + cookie.load('loginResult').token);
             }
             if (__SERVER__) {
               if (req.get('cookie')) {

@@ -17,7 +17,7 @@ export default class InfoBar extends Component {
     const styles = require('./InfoBar.scss');
     return (
       <div className={styles.infoBar + ' well'}>
-        <div className="container">
+        <div onClick={load} className="container">
           This is an info bar
           {' '}
           <strong>{info ? info.message : 'no info!'}</strong>

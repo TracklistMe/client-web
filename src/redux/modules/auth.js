@@ -43,6 +43,8 @@ export default function reducer(state = initialState, action = {}) {
       };
     case LOGIN_SUCCESS:
       // Token in action.result.token;
+      console.log('LOGIN WITH COOKIES DONE' + action.result);
+      console.log(action.result);
       cookie.save('loginResult', action.result);
       return {
         ...state,

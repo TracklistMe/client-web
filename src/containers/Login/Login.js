@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 import * as authActions from 'redux/modules/auth';
+import { InfoBar } from 'components';
 
 @connect(
   state => ({user: state.auth.user}),
@@ -26,8 +27,8 @@ export default class Login extends Component {
     return (
       <div className={styles.loginPage + ' container'}>
         <DocumentMeta title="React Redux Example: Login"/>
-        <br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><InfoBar/><br />
         <h1>Login</h1>
         {!user &&
         <div>
