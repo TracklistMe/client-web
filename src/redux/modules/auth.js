@@ -81,6 +81,7 @@ export default function reducer(state = initialState, action = {}) {
         logoutError: action.error
       };
     case LOAD_AUTH_COOKIE:
+      console.log('AUTH COOKIE');
       const loginResult = cookie.load('loginResult');
       const isLogged = loginResult ? true : false;
       const user = isLogged ? loginResult.user : null;
@@ -108,7 +109,7 @@ export function loadAuthCookie() {
   };
 }
 
-export function load() {
+export function loadPersonalInfo() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => client.get('/me')

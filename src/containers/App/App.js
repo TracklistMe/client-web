@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
-import { logout, loadAuthCookie } from 'redux/modules/auth';
+import { logout, loadAuthCookie, loadPersonalInfo } from 'redux/modules/auth';
 import { pushState } from 'redux-router';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
 
@@ -46,7 +46,7 @@ const NavbarLink = ({to, children}) => (
 
 @connect(
   state => ({user: state.auth.user, logged: state.auth.logged}),
-  {logout, loadAuthCookie, pushState})
+  {logout, loadPersonalInfo, loadAuthCookie, pushState})
 
 export default class App extends Component {
   static propTypes = {
@@ -55,6 +55,7 @@ export default class App extends Component {
     logged: PropTypes.bool.isRequired,
     logout: PropTypes.func.isRequired,
     loadAuthCookie: PropTypes.func.isRequired,
+    loadPersonalInfo: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired
   };
 
@@ -64,11 +65,16 @@ export default class App extends Component {
 
   componentWillMount() {
     this.props.loadAuthCookie();
+    if(this.props.logged){
+      this.props.loadPersonalInfo();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.logged && nextProps.logged) {
       // login, readback the query.next and redirect accorderly.
+      this.props.loadPersonalInfo();
+      // process to change the route.
       const redirectRoute = nextProps.location.query.next || '/beta';
       this.props.pushState(null, redirectRoute);
     } else if (this.props.logged && !nextProps.logged) {
@@ -146,7 +152,6 @@ export default class App extends Component {
              <icon className="basic-pictohead icon"></icon>
               {!logged && <span><NavbarLink to="/login">Login</NavbarLink> or Register</span>}
               {logged && <span><a href="/logout" onClick={::this.handleLogout}>Logout</a></span>}
- 
           </li>
           <li className="divider-vertical"></li>
           <li ><a href="#"><span className="basic-pictoshop icon"></span>2</a></li>
