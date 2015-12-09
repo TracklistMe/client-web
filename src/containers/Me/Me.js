@@ -11,7 +11,7 @@ export default class Me extends Component {
   }
   render() {
     const {user} = this.props;
-    if(!user){
+    if (!user) {
       return (
         <div></div>
       );

@@ -131,11 +131,7 @@ export default class App extends Component {
             <li><Link to="/widgets">Widgets</Link></li>
             <li><Link to="/survey">Survey</Link></li>
             <li><Link to="/about">About Us</Link></li>
-            <hr />
-            <li><Link to="/loginSuccess">A protected Page</Link></li>
-            <hr />
-            {!logged && <li><NavbarLink to="/login">Login</NavbarLink></li>}
-            {logged && <li className="logout-link"><a href="/logout" onClick={::this.handleLogout}>Logout</a></li>}
+            <li><Link to="/me">User Page</Link></li>
           </ul>
           </li>
           <li className="divider-vertical"></li>
