@@ -8,12 +8,12 @@ import {
     About,
     Track,
     Login,
-    LoginSuccess,
     Survey,
     NotFound,
     Landing,
     Genre,
-    Release
+    Release,
+    Me
   } from 'containers';
 import {requireAuthentication} from 'components/AuthenticationComponent/AuthenticationComponent';
 
@@ -56,12 +56,11 @@ export default () => {
         <Route path="/genre/" component={Genre}/>
         <Route path="/widgets" component={Widgets}/>
         <Route path="/about" component={About}/>
-        <Route path="/login" component={Login}/>
         <Route path="/release/:id" component={Release}/>
         <Route path="/track/:id" component={Track}/>
         <Route>
           <Route path="/chat" component={Chat}/>
-          <Route path="/loginSuccess" component={requireAuthentication(LoginSuccess)}/>
+          <Route path="/me" component={requireAuthentication(Me)}/>
         </Route>
         <Route path="/survey" component={Survey}/>
         <Route path="*" component={NotFound} status={404} />

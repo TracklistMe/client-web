@@ -65,7 +65,7 @@ export default class App extends Component {
 
   componentWillMount() {
     this.props.loadAuthCookie();
-    if(this.props.logged){
+    if (this.props.logged) {
       this.props.loadPersonalInfo();
     }
   }
@@ -75,7 +75,7 @@ export default class App extends Component {
       // login, readback the query.next and redirect accorderly.
       this.props.loadPersonalInfo();
       // process to change the route.
-      const redirectRoute = nextProps.location.query.next || '/beta';
+      const redirectRoute = nextProps.location.query.next || '/me';
       this.props.pushState(null, redirectRoute);
     } else if (this.props.logged && !nextProps.logged) {
       // logout
