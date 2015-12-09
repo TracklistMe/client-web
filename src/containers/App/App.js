@@ -143,7 +143,10 @@ export default class App extends Component {
         <ul className="nav navbar-nav navbar-right">
           <li className="divider-vertical"></li>
           <li>
-          <a href="#"> <span className="basic-pictohead icon"></span> Login or Register </a>
+             <span className="basic-pictohead icon"></span>
+              {!logged && <span><NavbarLink to="/login">Login</NavbarLink> or Register</span>}
+              {logged && <a href="/logout" onClick={::this.handleLogout}>Logout</a>}
+ 
           </li>
           <li className="divider-vertical"></li>
           <li><a href="#"><span className="basic-pictoshop icon"></span>2</a></li>
