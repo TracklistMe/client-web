@@ -32,3 +32,4 @@ export BetaOnboardingForm from './Onboarding/BetaOnboardingForm';
 export TimeDuration from './Utilities/TimeDuration';
 export BuyFromJumbotronPlaylist from './Buttons/BuyFromJumbotronPlaylist';
 export Player from './Player/Player';
+export AuthenticationComponent from './AuthenticationComponent/AuthenticationComponent';

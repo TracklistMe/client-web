@@ -3,24 +3,29 @@ import {connect} from 'react-redux';
 import * as authActions from 'redux/modules/auth';
 
 @connect(
-    state => ({user: state.auth.user}),
+    state => ({user: state.auth.user, logged: state.auth.logged}),
     authActions)
 export default
 class LoginSuccess extends Component {
   static propTypes = {
     user: PropTypes.object,
-    logout: PropTypes.func
+    logout: PropTypes.func,
+    logged: PropTypes.bool
   }
 
   render() {
-    const {user, logout} = this.props;
-    return (user &&
+    const {logged, logout} = this.props;
+    return (logged &&
       <div className="container">
+        <br /><br /><br />
+        <br /><br /><br />
+        <br /><br /><br />
+        <br /><br /><br />
         <h1>Login Success</h1>
 
         <div>
           <br /><br /><br />
-          <p>Hi, {user.name}. You have just successfully logged in, and were forwarded here
+          <p>Hi. You have just successfully logged in, and were forwarded here
             by <code>componentWillReceiveProps()</code> in <code>App.js</code>, which is listening to
             the auth reducer via redux <code>@connect</code>. How exciting!
           </p>

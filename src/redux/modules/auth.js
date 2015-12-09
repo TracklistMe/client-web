@@ -13,6 +13,7 @@ const LOAD_AUTH_COOKIE = 'LOAD_AUTH_COOKIE';
 const initialState = {
   loaded: false,
   token: null,
+  user: null
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -39,21 +40,23 @@ export default function reducer(state = initialState, action = {}) {
     case LOGIN:
       return {
         ...state,
+        logged: false,
         loggingIn: true
       };
     case LOGIN_SUCCESS:
       // Token in action.result.token;
-      console.log('LOGIN WITH COOKIES DONE' + action.result);
-      console.log(action.result);
       cookie.save('loginResult', action.result);
       return {
         ...state,
+        logged: true,
         loggingIn: false,
-        user: action.result.user
+        token: action.result.token,
+        user: action.result
       };
     case LOGIN_FAIL:
       return {
         ...state,
+        logged: false,
         loggingIn: false,
         user: null,
         loginError: action.error
@@ -64,9 +67,11 @@ export default function reducer(state = initialState, action = {}) {
         loggingOut: true
       };
     case LOGOUT_SUCCESS:
+      cookie.remove('loginResult');
       return {
         ...state,
         loggingOut: false,
+        logged: false,
         user: null
       };
     case LOGOUT_FAIL:
@@ -77,10 +82,12 @@ export default function reducer(state = initialState, action = {}) {
       };
     case LOAD_AUTH_COOKIE:
       const loginResult = cookie.load('loginResult');
-      const user = loginResult ? loginResult.user : null;
+      const isLogged = loginResult ? true : false;
+      const user = isLogged ? loginResult.user : null;
       return {
         ...state,
-        user
+        user,
+        logged: isLogged
       };
     default:
       return state;
@@ -109,7 +116,6 @@ export function load() {
 }
 
 export function login(email, password) {
-  console.log(password);
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
     promise: (client) => client.post('/auth/login', {
@@ -122,8 +128,12 @@ export function login(email, password) {
 }
 
 export function logout() {
+  return { type: LOGOUT_SUCCESS };
+  // Logout with remote API call
+  /*
   return {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
     promise: (client) => client.get('/logout')
   };
+  */
 }

@@ -15,6 +15,7 @@ import {
     Genre,
     Release
   } from 'containers';
+import {requireAuthentication} from 'components/AuthenticationComponent/AuthenticationComponent';
 
 export default () => {
   /*
@@ -60,7 +61,7 @@ export default () => {
         <Route path="/track/:id" component={Track}/>
         <Route>
           <Route path="/chat" component={Chat}/>
-          <Route path="/loginSuccess" component={LoginSuccess}/>
+          <Route path="/loginSuccess" component={requireAuthentication(LoginSuccess)}/>
         </Route>
         <Route path="/survey" component={Survey}/>
         <Route path="*" component={NotFound} status={404} />

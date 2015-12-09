@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import connectData from 'helpers/connectData';
-import { bindActionCreators } from 'redux';
 import DocumentMeta from 'react-document-meta';
 import { logout, loadAuthCookie } from 'redux/modules/auth';
 import { pushState } from 'redux-router';
@@ -46,22 +44,17 @@ const NavbarLink = ({to, children}) => (
   </Link>
 );
 
-function fetchData(getState, dispatch) {
-  console.log('Get Cookies! 🍪');
-  bindActionCreators({loadAuthCookie}, dispatch).loadAuthCookie();
-}
-
 @connect(
-  state => ({user: state.auth.user}),
-  {logout, pushState})
-
-@connectData(fetchData)
+  state => ({user: state.auth.user, logged: state.auth.logged}),
+  {logout, loadAuthCookie, pushState})
 
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
+    logged: PropTypes.bool.isRequired,
     logout: PropTypes.func.isRequired,
+    loadAuthCookie: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired
   };
 
@@ -69,13 +62,18 @@ export default class App extends Component {
     store: PropTypes.object.isRequired
   };
 
+  componentWillMount() {
+    this.props.loadAuthCookie();
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (!this.props.user && nextProps.user) {
-      // login
-      this.props.pushState(null, '/loginSuccess');
-    } else if (this.props.user && !nextProps.user) {
+    if (!this.props.logged && nextProps.logged) {
+      // login, readback the query.next and redirect accorderly.
+      const redirectRoute = nextProps.location.query.next || '/beta';
+      this.props.pushState(null, redirectRoute);
+    } else if (this.props.logged && !nextProps.logged) {
       // logout
-      this.props.pushState(null, '/');
+      this.props.pushState(null, '/beta');
     }
   }
 
@@ -85,7 +83,7 @@ export default class App extends Component {
   }
 
   render() {
-    const {user} = this.props;
+    const {user, logged} = this.props;
     const styles = require('./less/aphextwin.less');
     return (
       <div className={styles}>
@@ -127,8 +125,11 @@ export default class App extends Component {
             <li><Link to="/widgets">Widgets</Link></li>
             <li><Link to="/survey">Survey</Link></li>
             <li><Link to="/about">About Us</Link></li>
-            {!user && <li><NavbarLink to="/login">Login</NavbarLink></li>}
-            {user && <li className="logout-link"><a href="/logout" onClick={::this.handleLogout}>Logout</a></li>}
+            <hr />
+            <li><Link to="/loginSuccess">A protected Page</Link></li>
+            <hr />
+            {!logged && <li><NavbarLink to="/login">Login</NavbarLink></li>}
+            {logged && <li className="logout-link"><a href="/logout" onClick={::this.handleLogout}>Logout</a></li>}
           </ul>
           </li>
           <li className="divider-vertical"></li>
