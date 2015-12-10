@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
-import { TrackJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection, PlayedBySection } from 'components';
+import { GenreJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection } from 'components';
 import { loadGenre, unloadGenre } from 'redux/modules/genre';
 
 @connect(
@@ -12,8 +12,7 @@ export default class Genre extends Component
   static propTypes = {
     loadGenre: PropTypes.func,
     unloadGenre: PropTypes.func,
-    params: PropTypes.object,
-    track: PropTypes.object
+    params: PropTypes.object
   }
   componentDidMount() {
     // to do: remove second loading here for client-side navigation
@@ -28,20 +27,15 @@ export default class Genre extends Component
   }
 
   componentWillUnmount() {
-    console.log('COMPONENT WILL UNLOAD!!!');
     this.props.unloadGenre();
   }
 
 
   render() {
-    const { track } = this.props;
     return (
       <div>
-        <TrackJumbotron {...this.props} />
-          <div className="row darkestrow margin-bottom">
-            <PlayedBySection />
-          </div>
-          <div className="container-fluid">
+        <GenreJumbotron />
+         <div className="container-fluid">
           <div className="row margin-bottom">
             <ReleaseSection title="Release Session" releases={[
               {
@@ -193,7 +187,6 @@ export default class Genre extends Component
               }
             ]}/>
           </div>
-          {track ? track.cover : ''}
           <div className="row margin-bottom">
             <ReleaseSection title="New Tracks" releases={[
               {

@@ -45,7 +45,6 @@ export default function release(state = initialState, action = {}) {
         error: action.error
       };
     case UNLOAD_GENRE:
-      console.log('ACTION CALLED FOR UNLOAD');
       return {
         ...state,
         selectGenre: null
@@ -70,7 +69,6 @@ export function loadGenre(id) {
 }
 
 export function unloadGenre() {
-  console.log(' unload redux called ');
   return {
     type: UNLOAD_GENRE
   };

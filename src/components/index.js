@@ -15,7 +15,9 @@ export WidgetForm from './Buttons/CustomButton';
 export MainHeader from './MainHeader/MainHeader';
 export MainHeaderBackground from './MainHeader/MainHeaderBackground';
 export MiniHeader from './MiniHeader/MiniHeader';
+// Jumbotrons
 export HomeJumbotron from './Jumbotron/HomeJumbotron';
+export GenreJumbotron from './Jumbotron/GenreJumbotron';
 export TrackJumbotron from './Jumbotron/TrackJumbotron';
 export ReleaseJumbotron from './Jumbotron/ReleaseJumbotron';
 export ReleaseComponent from './ReleaseComponent/ReleaseComponent';
