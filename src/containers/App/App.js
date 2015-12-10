@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 import { logout, loadAuthCookie, loadPersonalInfo } from 'redux/modules/auth';
+import { load as loadGenre } from 'redux/modules/genre';
+
 import { pushState } from 'redux-router';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
 
@@ -45,17 +47,20 @@ const NavbarLink = ({to, children}) => (
 );
 
 @connect(
-  state => ({user: state.auth.user, logged: state.auth.logged}),
-  {logout, loadPersonalInfo, loadAuthCookie, pushState})
+  state => ({user: state.auth.user, selectGenre: state.genre.selectGenre, genres: state.genre.genres, logged: state.auth.logged}),
+  {logout, loadGenre, loadPersonalInfo, loadAuthCookie, pushState})
 
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
+    genres: PropTypes.array,
+    selectGenre: PropTypes.object,
     logged: PropTypes.bool.isRequired,
     logout: PropTypes.func.isRequired,
     loadAuthCookie: PropTypes.func.isRequired,
     loadPersonalInfo: PropTypes.func.isRequired,
+    loadGenre: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired
   };
 
@@ -64,6 +69,10 @@ export default class App extends Component {
   };
 
   componentWillMount() {
+    // Load overall informations.
+    this.props.loadGenre();
+
+    // Authentication
     this.props.loadAuthCookie();
     if (this.props.logged) {
       this.props.loadPersonalInfo();
@@ -89,7 +98,7 @@ export default class App extends Component {
   }
 
   render() {
-    const {user, logged} = this.props;
+    const {user, logged, genres} = this.props;
     const styles = require('./less/aphextwin.less');
     return (
       <div className={styles}>
@@ -119,11 +128,14 @@ export default class App extends Component {
         <ul className="nav navbar-nav">
           <li className="divider-vertical"></li>
           <li className="dropdownBackground dropdownBorder">
-          <a href="#">Genres
+          <a href="#">{this.props.selectGenre && this.props.selectGenre.name || 'Genres'}
           <span className="pull-right basic-pictosimply-down icon"></span></a>
           <ul>
-            <li><NavbarLink to="/genre/5">Deep House</NavbarLink></li>
-            <li><NavbarLink to="/genre/21">Progressive House</NavbarLink></li>
+            {genres && genres.map((genre) =>
+              <li>
+                <NavbarLink key={genre.id} to={'/genre/' + genre.id}>{genre.name}</NavbarLink>
+              </li>
+            )}
             <li><a href="#">Techno</a></li>
             <li><a href="#">House</a></li>
             {user && <li><Link to="/chat">Chat</Link></li>}
@@ -147,7 +159,7 @@ export default class App extends Component {
           <li className="navbar-text">
              <icon className="basic-pictohead icon"></icon>
               {!logged && <span><NavbarLink to="/login">Login</NavbarLink> or Register</span>}
-              {logged && <span><a href="/logout" onClick={::this.handleLogout}>Logout</a></span>}
+              {logged && <span><NavbarLink to="/logout" onClick={::this.handleLogout}>Logout</NavbarLink></span>}
           </li>
           <li className="divider-vertical"></li>
           <li ><a href="#"><span className="basic-pictoshop icon"></span>2</a></li>

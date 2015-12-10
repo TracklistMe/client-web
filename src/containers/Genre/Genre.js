@@ -1,46 +1,37 @@
 import React, {Component, PropTypes} from 'react';
-import { TrackJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection, PlayedBySection } from 'components';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { load } from 'redux/modules/track';
+import { TrackJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection, PlayedBySection } from 'components';
+import { loadGenre, unloadGenre } from 'redux/modules/genre';
 
 @connect(
-  store => ({
-    track: store.track.data
-  }),
-  dispatch => bindActionCreators({ load }, dispatch)
-)
+  state => ({genres: state.genre.genres, genre: state.genre.selectGenre}),
+  {loadGenre, unloadGenre})
+
 export default class Genre extends Component
 {
   static propTypes = {
+    loadGenre: PropTypes.func,
+    unloadGenre: PropTypes.func,
     params: PropTypes.object,
     track: PropTypes.object
   }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired
-  }
-
   componentDidMount() {
     // to do: remove second loading here for client-side navigation
     // to do: remove loading here for server-side rendered page
-    this.constructor.preload(this.context.store, this.props.params.id);
+    // this.constructor.preload(this.context.store, this.props.params.id);
+    this.props.loadGenre(this.props.params.id);
   }
-
   componentWillReceiveProps(nextProps) {
-    if (parseInt(this.context.store.getState().track.data.id, 10) !== parseInt(nextProps.params.id, 10)) {
-      this.constructor.preload(this.context.store, nextProps.params.id);
+    if (parseInt(this.props.params.id, 10) !== parseInt(nextProps.params.id, 10)) {
+      this.props.loadGenre(nextProps.params.id);
     }
   }
 
-  static preload(store, id) {
-    const promises = [];
-    // if (!are_settings_loaded(store.getState()))
-    // {
-    promises.push(store.dispatch(load(id)));
-    // }
-    return Promise.all(promises);
+  componentWillUnmount() {
+    console.log('COMPONENT WILL UNLOAD!!!');
+    this.props.unloadGenre();
   }
+
 
   render() {
     const { track } = this.props;

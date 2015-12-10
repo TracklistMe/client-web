@@ -53,7 +53,7 @@ export default () => {
       <Route component={App}>
         <Route path="/beta" component={Home}/>
         <Route path="/login" component={Login}/>
-        <Route path="/genre/" component={Genre}/>
+        <Route path="/genre/:id" component={Genre}/>
         <Route path="/widgets" component={Widgets}/>
         <Route path="/about" component={About}/>
         <Route path="/release/:id" component={Release}/>

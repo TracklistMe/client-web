@@ -33,3 +33,5 @@ export TimeDuration from './Utilities/TimeDuration';
 export BuyFromJumbotronPlaylist from './Buttons/BuyFromJumbotronPlaylist';
 export Player from './Player/Player';
 export AuthenticationComponent from './AuthenticationComponent/AuthenticationComponent';
+// Chart
+export ChartTop10 from './ChartComponent/ChartTop10';

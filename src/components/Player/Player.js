@@ -141,9 +141,6 @@ export default class Player extends Component {
 
   handleLoadStart() {
     this.props.changeCurrentTime(0);
-    this.setState({
-      duration: 0
-    });
   }
 
   handleMouseClick(event) {
@@ -350,7 +347,7 @@ export default class Player extends Component {
     const {currentTime, isPlaying} = this.props.player.player;
     return (
       <div className="player">
-        <audio id="audio" src="" ref="audio"></audio>
+        <audio id="audio" src="http://promo.tracklist.me/datastore/Sphera_Records/SPH162/SPH162_4_cutted.mp3" ref="audio"></audio>
         <div className="container">
           <div className="player-main">
             <div className="player-section player-info">
