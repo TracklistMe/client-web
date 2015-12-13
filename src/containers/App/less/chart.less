@@ -1,7 +1,32 @@
 .chart {
-	height: 1066px;
+  height: 1066px;
   background-color: @brand-darkest;
   display: block;
+  padding: 35px;
+}
+.chart .chartHeader{
+  padding-bottom: 75px;
+  border-bottom: 1px solid @brand-darker;
+}
+.chartHeadline{
+	float: left;
+}
+.chart play_all_button{
+  margin-top: 15px;
+  float: right;
+}
+.chart .title{
+  .fontTitle();
+  font-weight: 800;
+  font-size: @font-size-h1/4*3;
+  line-height: @font-size-h1/4*3;
+  color: @brand-lightest;
+}
+.chart .subtitle{
+  .fontTitle();
+  font-weight: 600;
+  font-size: @font-size-h5;
+  color: @brand-lightest;
 }
 .bottomLine{
 	.gradient();
