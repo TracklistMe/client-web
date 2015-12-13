@@ -39,9 +39,7 @@ const meta = {
 };
 
 const NavbarLink = ({to, children}) => (
-  <Link to={to} activeStyle={{
-    color: 'red'
-  }}>
+  <Link to={to}>
   {children}
   </Link>
 );
@@ -159,7 +157,7 @@ export default class App extends Component {
           <li className="navbar-text">
              <icon className="basic-pictohead icon"></icon>
               {!logged && <span><NavbarLink to="/login">Login</NavbarLink> or Register</span>}
-              {logged && <span><NavbarLink to="/logout" onClick={::this.handleLogout}>Logout</NavbarLink></span>}
+              {logged && <span><a onClick={::this.handleLogout}>Logout</a></span>}
           </li>
           <li className="divider-vertical"></li>
           <li ><a href="#"><span className="basic-pictoshop icon"></span>2</a></li>

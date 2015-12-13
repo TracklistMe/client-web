@@ -87,6 +87,9 @@ export default class ChartTop10 extends Component {
               />
             )}
           </table>
+          <div className="footer">
+            View More
+          </div>
       	</div>
       	<div className="bottomLine">
       	</div>
