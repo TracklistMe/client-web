@@ -33,3 +33,82 @@
 	width: 100%;
 	height: 4px;
 }
+
+.chartTop10Entries tr > td{
+  padding-top: 10px !important;
+  padding-bottom: 5px !important;
+}
+
+.chart_top10_entry{
+  color: @brand-lightest;
+  border-bottom: 1px solid @brand-darker;
+}
+.chart_top10_entry:hover td {
+  cursor: pointer; 
+  cursor: hand; 
+  background-color: @brand-darker;
+  margin-top: 3px;
+}
+
+.chart_top10_entry td{
+  margin-top: 3px;
+}
+.chart_top10_entry .position{
+  .fontSubtitle();
+  font-size: @font-size-small;
+  width: 5%;
+  font-weight: 800;
+  text-align: center;
+}
+.chart_top10_entry .buyButton{
+  text-align: right;
+  padding-bottom: 15px !important;
+  vertical-align: bottom;
+  padding-bottom: 10px;
+}
+.chart_top10_entry .coverHolder{
+  width: 20% !important;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+.chart_top10_entry .descriptionHolder{
+  vertical-align: top;
+}
+
+.chart_top10_entry .descriptionHolder .entryTitle{
+  font-size: @font-size-small*1.1;
+  .fontSubtitle();
+  color: @brand-lightest;
+  font-weight: 800;
+}
+.chart_top10_entry .descriptionHolder .entryArtist{
+  font-size: @font-size-small*0.9;
+  line-height: @font-size-small*0.9;
+  .fontSubtitle(); 
+  color: @brand-lightest;
+  font-weight: 600;
+}
+.chart_top10_entry .descriptionHolder .entryLabel{
+  font-size: @font-size-small*0.8;
+  padding-top: @font-size-small*0.5;
+  font-weight: 600;
+  .fontSubtitle();
+  color: @brand-lightest;
+}
+
+.chart_top10_entry .cover_image{
+  width: 100%;
+}
+
+.chart_top10_entry .entryTitle{
+  font-size: @font-size-small;
+  color: @brand-neutral;
+}
+.chart_top10_entry .entryArtist{
+  font-size: @font-size-small;
+  color: @brand-neutral;
+}
+.chart_top10_entry .entryLabel{
+  font-size: @font-size-small;
+  color: @brand-neutral;
+}
