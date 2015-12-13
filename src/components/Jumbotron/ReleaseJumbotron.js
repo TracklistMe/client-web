@@ -58,29 +58,31 @@ export default class ReleaseJumbotron extends Component {
           <div className="row">
             <div className="hidden-xs">
               <table>
-                {release.Tracks.map((track, index) =>
-                  <tr>
-                    <td width="2%">{index + 1}</td>
-                    <td>{track.title} ({track.version})</td>
-                    <td className="artistList">
-                      {track.Producer.map((producer) =>
-                        <span>{producer.displayName}</span>
-                      )}
-                    </td>
-                    <td>
-                      {track.Genres.map((genre) =>
-                        <span>{genre.name}</span>
-                      )}
-                    </td>
-                    <td>
-                      <TimeDuration length={track.lengthInSeconds} /> / {Math.floor(track.bpm * 10) / 10}bpm
-                    </td>
-                    <td className="text-right">
-                      <BuyFromJumbotronPlaylist name={track.Price + '$'} icon />
-                    </td>
+                <tbody>
+                  {release.Tracks.map((track, index) =>
+                    <tr key={index}>
+                      <td width="2%">{index + 1}</td>
+                      <td>{track.title} ({track.version})</td>
+                      <td className="artistList">
+                        {track.Producer.map((producer, indexProducer) =>
+                          <span key={indexProducer}>{producer.displayName}</span>
+                        )}
+                      </td>
+                      <td>
+                        {track.Genres.map((genre, indexGenre) =>
+                          <span key={indexGenre}>{genre.name}</span>
+                        )}
+                      </td>
+                      <td>
+                        <TimeDuration length={track.lengthInSeconds} /> / {Math.floor(track.bpm * 10) / 10}bpm
+                      </td>
+                      <td className="text-right">
+                        <BuyFromJumbotronPlaylist name={track.Price + '$'} icon />
+                      </td>
 
-                  </tr>
-                )}
+                    </tr>
+                  )}
+                </tbody>
               </table>
             </div>
           </div>

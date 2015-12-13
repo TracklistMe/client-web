@@ -562,15 +562,19 @@
 
 .navbar ul ul li:before {
   /* For a round bullet */
-  content: '\2014';
+    content: '';
   color: @brand-darkest;
-  margin-left: -1px;
+  margin-left: 10px;
   padding-right: 20px;
   visibility: none;
 }
 
+
+
 .navbar ul ul li:hover:before{
+  content: '\2014';
   color: @brand-primary;
+  margin-left: -1px;
 }
 .navbar ul ul li:hover{
   visibility: block;

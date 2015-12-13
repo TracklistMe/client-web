@@ -112,7 +112,7 @@ export default class App extends Component {
         </button>
         <ul className="nav navbar-nav">
           <li className="dropdownBackground dropdownBorder">
-          <Link to="/"> <img src={logo} /></Link>
+          <Link to="/beta"> <img src={logo} /></Link>
           <ul>
             <li><NavbarLink to="/track/77">Go to track 77</NavbarLink></li>
             <li><NavbarLink to="/track/80">Go to track 80</NavbarLink></li>
