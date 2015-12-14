@@ -7,6 +7,7 @@ import {
     Widgets,
     About,
     Track,
+    Tracklist,
     Login,
     Survey,
     NotFound,
@@ -56,6 +57,7 @@ export default () => {
         <Route path="/genre/:id" component={Genre}/>
         <Route path="/widgets" component={Widgets}/>
         <Route path="/about" component={About}/>
+        <Route path="/tracklist/:id" component={Tracklist}/>
         <Route path="/release/:id" component={Release}/>
         <Route path="/track/:id" component={Track}/>
         <Route>
