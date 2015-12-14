@@ -3,6 +3,9 @@ import config from '../config';
 import cookie from 'react-cookie';
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
+const DEV_API_ENDPOINT = 'http://localhost:3000';
+const PROD_API_ENDPOINT = '/api';
+
 /*
  * This silly underscore is here to avoid a mysterious "ReferenceError: ApiClient is not defined" error.
  * See Issue #14. https://github.com/erikras/react-redux-universal-hot-example/issues/14
@@ -51,13 +54,21 @@ class _ApiClient {
       return 'http://localhost:' + config.apiPort + adjustedPath;
     }
     if (__DEVELOPMENT__) {
-      return 'http://localhost:3000' + adjustedPath;
+      return DEV_API_ENDPOINT + adjustedPath;
     }
     // Prepend `/api` to relative URL, to proxy to API server.
-    return '/api' + adjustedPath;
+    return PROD_API_ENDPOINT + adjustedPath;
   }
 }
 
 const ApiClient = _ApiClient;
+
+export function apiEndPoint() {
+  if (__DEVELOPMENT__) {
+    return DEV_API_ENDPOINT;
+  }
+  // Prepend `/api` to relative URL, to proxy to API server.
+  return PROD_API_ENDPOINT;
+}
 
 export default ApiClient;
