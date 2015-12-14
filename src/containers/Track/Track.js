@@ -43,7 +43,6 @@ export default class Track extends Component
   }
 
   render() {
-    const { track } = this.props;
     return (
       <div>
         <TrackJumbotron {...this.props} />
@@ -202,7 +201,6 @@ export default class Track extends Component
               }
             ]}/>
           </div>
-          {track ? track.cover : ''}
           <div className="row margin-bottom">
             <ReleaseSection title="New Tracks" releases={[
               {

@@ -26,8 +26,7 @@ export default class ReleaseJumbotron extends Component {
         }
       }
     }
-    console.log('API CALLEr ------------------');
-    console.log(apiEndPoint());
+
     if (!release) {
       return (<div></div>);
     }

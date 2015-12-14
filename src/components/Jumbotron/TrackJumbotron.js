@@ -3,6 +3,7 @@ import MainHeaderBackground from '../MainHeader/MainHeaderBackground';
 import ArtistComponent from '../Artist/ArtistComponent';
 import CustomButton from '../Buttons/CustomButton';
 import { Waveform, d3 } from 'react-d3-components/dist/react-d3-components';
+import {apiEndPoint} from '../../helpers/ApiClient';
 
 export default class TrackJumbotron extends Component {
   static propTypes = {
@@ -21,15 +22,15 @@ export default class TrackJumbotron extends Component {
     }
     const {track} = this.props; // eslint-disable-line no-shadow
     if (!track || !track.Genres) {
-      return (<div> not loaded</div>);
+      return (<div>Loading Track</div>);
     }
     return (
       <div className="trackJumbotron">
-        <MainHeaderBackground image={track ? track.cover : ''} />
+        <MainHeaderBackground image={apiEndPoint() + '/images/' + track.cover} />
         <div className="headerContent">
           <div className="row trackJumbotronContainer">
             <div className="hidden-xs hidden-sm col-sub-xs-5 col-sub-sm-6 col-sub-md-5 col-sub-lg-4 overflowHidden">
-              <img className="cover" src={track ? track.cover : ''} />
+              <img className="cover" src={apiEndPoint() + '/images/' + track.cover} />
             </div>
             <div className="col-sub-xs-18 col-sub-sm-18 col-sub-md-13 col-sub-lg-14">
               <div className="row">
