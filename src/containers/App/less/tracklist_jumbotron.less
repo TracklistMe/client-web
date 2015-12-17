@@ -28,7 +28,7 @@
 	font-weight: 400;
 }
 .tracklistJumbotron .titleContainer{
-	clear: both; 
+	display: block;
 }
 .tracklistJumbotron .genreContainer{
 	margin-top: 5px;
@@ -39,7 +39,44 @@
 }
 
 .tracklistJumbotron .dateHolder{
+	width: auto !important; 
+	margin-top: 40px;
 	border: 1px solid @brand-neutral;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: @brand-lightest;
+}
+
+.dateHolder .dateNumber{
+	display: inline-block;
+  vertical-align:middle;
+	font-size: @font-size-h2;
+	padding-right: 4px;
+}
+.dateHolder .dateMonth{
+	display: inline-block;
+	text-align: justify;
+	font-size: @font-size-very-small;
+	line-height: @font-size-very-small;
+	vertical-align:middle;
+	padding-right: 15px;
+} 
+.dateHolder .verticalDivider{
+	display: inline-block;
+	vertical-align:middle;
+	height: @font-size-h2;
+	padding-right: 15px;
+	border-left: 1px solid @brand-neutral;
+} 
+.dateHolder .eventName{
+	display: inline-block;
+  vertical-align:middle;
+	font-size: @font-size-h2;
 }
 
 .tracklistJumbotron .trackDescriptionSpace{
