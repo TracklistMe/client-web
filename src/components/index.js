@@ -20,6 +20,7 @@ export HomeJumbotron from './Jumbotron/HomeJumbotron';
 export GenreJumbotron from './Jumbotron/GenreJumbotron';
 export TrackJumbotron from './Jumbotron/TrackJumbotron';
 export TracklistJumbotron from './Jumbotron/TracklistJumbotron';
+export TracklistEntry from './Tracklist/TracklistEntry';
 export ReleaseJumbotron from './Jumbotron/ReleaseJumbotron';
 export ReleaseComponent from './ReleaseComponent/ReleaseComponent';
 export Headline from './Headline/Headline';

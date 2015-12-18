@@ -29,10 +29,10 @@ export default class TrackJumbotron extends Component {
         <MainHeaderBackground image={apiEndPoint() + '/images/' + track.cover} />
         <div className="headerContent">
           <div className="row trackJumbotronContainer">
-            <div className="hidden-xs hidden-sm col-sub-xs-5 col-sub-sm-6 col-sub-md-5 col-sub-lg-4 overflowHidden">
+            <div className="hidden-xs hidden-sm col-sub-xs-5 col-sub-sm-6 col-sub-md-6 col-sub-lg-5 overflowHidden">
               <img className="cover" src={apiEndPoint() + '/images/' + track.cover} />
             </div>
-            <div className="col-sub-xs-18 col-sub-sm-18 col-sub-md-13 col-sub-lg-14">
+            <div className="col-sub-xs-18 col-sub-sm-18 col-sub-md-12 col-sub-lg-13">
               <div className="row">
                 <div className="col-lg-6 text-left trackDescriptionSpace">
                   <div className="genreContainer">

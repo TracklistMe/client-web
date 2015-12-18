@@ -26,10 +26,10 @@ export default class TracklistJumbotron extends Component {
         <MainHeaderBackground image="http://www.global-sets.com/wp-content/uploads/2014/05/adam-beyer-live-660x330.jpg" />
         <div className="headerContent">
           <div className="row trackJumbotronContainer">
-            <div className="hidden-xs hidden-sm col-sub-xs-5 col-sub-sm-6 col-sub-md-6 col-sub-lg-4 overflowHidden">
+            <div className="hidden-xs hidden-sm col-sub-xs-5 col-sub-sm-6 col-sub-md-6 col-sub-lg-5 overflowHidden">
               <img className="cover" src="http://www.sorstu.ca/wp-content/uploads/artistes/square/adam-beyer.jpg" />
             </div>
-            <div className="col-sub-xs-18 col-sub-sm-18 col-sub-md-12 col-sub-lg-14">
+            <div className="col-sub-xs-18 col-sub-sm-18 col-sub-md-12 col-sub-lg-13">
               <div className="row">
                 <div className="col-lg-6 text-left trackDescriptionSpace">
                   <h1>Adam Beyer</h1>
@@ -39,7 +39,7 @@ export default class TracklistJumbotron extends Component {
                   sharing Stats
                 </div>
               </div>
-              <div className="row">
+              <div className="row inlineBlock">
                 <div className="col-lg-12">
                   <div className="dateHolder">
                     <div className="dateNumber">18</div>

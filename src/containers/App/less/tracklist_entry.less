@@ -1,0 +1,87 @@
+.tracklistEntry{
+	border-bottom: 1px solid @brand-lighter;
+  box-sizing: border-box;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  display: flex;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-collapse: seperate;
+  border-spacing: 8px 0;
+}
+.tracklistEntry.active{
+	padding-bottom: 14px;
+}
+
+// The essential styling
+.cell.cover {
+  flex: none;
+  width: 10%;
+  max-width: 10%;
+}
+.cell.cover.active img{
+	width: 100% !important;
+	height: auto;
+}
+.cell.cover img{
+	width: 70% !important;
+	border: 0px;
+}
+
+.cell {
+  display: table-cell;
+  flex: 1;
+  flex-direction: column;
+  position: relative;
+}
+
+.cell-min {
+  width: 1%;
+  flex: none auto;
+}
+
+.cell-max {
+  width: 100%;
+  flex: 1 100%;
+}
+
+ 
+.cell {
+  border-radius: 6px; 
+  margin-right: 8px;
+  padding: 6px;
+}
+
+.cell.cell-nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.cell.cell-valign-middle {
+  vertical-align: middle;
+   display: flex;
+  justify-content: center;
+}
+
+.cell.cell-valign-bottom {
+  vertical-align: bottom;
+   display: flex;
+  justify-content: flex-end;
+}
+
+.cell.cell-align-center {
+  text-align: center;
+}
+
+.cell.cell-align-right {
+  text-align: right;
+}
+
+.cell.cell-100px {
+  flex: none;
+  width: 100px;
+  max-width: 100px;
+}
