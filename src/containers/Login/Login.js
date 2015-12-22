@@ -24,10 +24,10 @@ export default class Login extends Component {
   render() {
     const {user, logout} = this.props;
     return (
-      <div className={styles.loginPage + ' container'}>
+      <div>
         <DocumentMeta title={config.app.title + ': Login'}/>
         <br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><InfoBar/><br />
+        <br /><br /><br /><br /><br />
         <h1>Login</h1>
         {!user &&
         <div>

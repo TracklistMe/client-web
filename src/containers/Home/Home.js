@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
+import DocumentMeta from 'react-document-meta';
 import { HomeJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection } from 'components';
-=======
-import { Link } from 'react-router';
-import { CounterButton, GithubButton } from 'components';
 import config from '../../config';
->>>>>>> erikras/master
 
 export default class Home extends Component {
   render() {
-    return ( 
+    return (
        <div>
+        <DocumentMeta title={config.app.title}/>
         <HomeJumbotron
           miniHeaders={[{
             image: 'https://pmcvariety.files.wordpress.com/2015/06/taylor-swift-apple-streaming.jpg?w=670&h=377&crop=1',
