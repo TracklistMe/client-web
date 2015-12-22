@@ -13,7 +13,6 @@ export default class ArtistComponent extends Component {
 }
 
 ArtistComponent.propTypes = {
-  onClick: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   avatar: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,

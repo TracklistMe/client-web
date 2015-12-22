@@ -39,7 +39,7 @@ const meta = {
 };
 
 const NavbarLink = ({to, children}) => (
-  <Link to={to}>
+  <Link key={to} to={to}>
   {children}
   </Link>
 );
