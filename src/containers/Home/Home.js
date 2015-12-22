@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import { HomeJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection } from 'components';
+=======
+import { Link } from 'react-router';
+import { CounterButton, GithubButton } from 'components';
+import config from '../../config';
+>>>>>>> erikras/master
 
 export default class Home extends Component {
   render() {
-    return (
+    return ( 
        <div>
         <HomeJumbotron
           miniHeaders={[{

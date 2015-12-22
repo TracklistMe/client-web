@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 import {initialize} from 'redux-form';
 import {SurveyForm} from 'components';
+import config from '../../config';
 
 @connect(
   () => ({}),
@@ -12,12 +13,12 @@ export default class Survey extends Component {
     initialize: PropTypes.func.isRequired
   }
 
-  handleSubmit(data) {
+  handleSubmit = (data) => {
     window.alert('Data submitted! ' + JSON.stringify(data));
     this.props.initialize('survey', {});
   }
 
-  handleInitialize() {
+  handleInitialize = () => {
     this.props.initialize('survey', {
       name: 'Little Bobby Tables',
       email: 'bobby@gmail.com',
@@ -31,7 +32,7 @@ export default class Survey extends Component {
     return (
       <div className="container">
         <h1>Survey</h1>
-        <DocumentMeta title="React Redux Example: Survey"/>
+        <DocumentMeta title={config.app.title + ': Survey'}/>
 
         <p>
           This is an example of a form in redux in which all the state is kept within the redux store.
@@ -60,7 +61,7 @@ export default class Survey extends Component {
         </p>
 
         <div style={{textAlign: 'center', margin: 15}}>
-          <button className="btn btn-primary" onClick={::this.handleInitialize}>
+          <button className="btn btn-primary" onClick={this.handleInitialize}>
             <i className="fa fa-pencil"/> Initialize Form
           </button>
         </div>
@@ -68,7 +69,7 @@ export default class Survey extends Component {
         <p>The circles to the left of the inputs correspond to flags provided by <code>redux-form</code>:
           Touched, Visited, Active, and Dirty.</p>
 
-        <SurveyForm onSubmit={::this.handleSubmit}/>
+        <SurveyForm onSubmit={this.handleSubmit}/>
       </div>
     );
   }

@@ -90,7 +90,7 @@ export default class App extends Component {
     }
   }
 
-  handleLogout(event) {
+  handleLogout = (event) => {
     event.preventDefault();
     this.props.logout();
   }
@@ -138,7 +138,6 @@ export default class App extends Component {
             <li><a href="#">Techno</a></li>
             <li><a href="#">House</a></li>
             {user && <li><Link to="/chat">Chat</Link></li>}
-
             <li><Link to="/widgets">Widgets</Link></li>
             <li><Link to="/survey">Survey</Link></li>
             <li><Link to="/about">About Us</Link></li>

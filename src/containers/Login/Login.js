@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 import * as authActions from 'redux/modules/auth';
-import { InfoBar } from 'components';
+import config from '../../config';
 
 @connect(
   state => ({user: state.auth.user}),
@@ -14,7 +14,7 @@ export default class Login extends Component {
     logout: PropTypes.func
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     const input = this.refs.username;
     const password = this.refs.password;
@@ -23,10 +23,9 @@ export default class Login extends Component {
 
   render() {
     const {user, logout} = this.props;
-    const styles = require('./Login.scss');
     return (
       <div className={styles.loginPage + ' container'}>
-        <DocumentMeta title="React Redux Example: Login"/>
+        <DocumentMeta title={config.app.title + ': Login'}/>
         <br /><br /><br /><br /><br /><br /><br /><br /><br />
         <br /><br /><br /><br /><InfoBar/><br />
         <h1>Login</h1>
