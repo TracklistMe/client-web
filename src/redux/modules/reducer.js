@@ -12,6 +12,7 @@ import release from './release';
 import earlyUser from './earlyUser';
 import player from './player';
 import genre from './genre';
+import artist from './artist';
 
 export default combineReducers({
   router: routerStateReducer,
@@ -28,5 +29,6 @@ export default combineReducers({
   release,
   earlyUser,
   player,
+  artist,
   genre
 });

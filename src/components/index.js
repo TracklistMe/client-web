@@ -22,6 +22,7 @@ export TrackJumbotron from './Jumbotron/TrackJumbotron';
 export TracklistJumbotron from './Jumbotron/TracklistJumbotron';
 export TracklistEntry from './Tracklist/TracklistEntry';
 export ReleaseJumbotron from './Jumbotron/ReleaseJumbotron';
+export ArtistJumbotron from './Jumbotron/ArtistJumbotron';
 export ReleaseComponent from './ReleaseComponent/ReleaseComponent';
 export Headline from './Headline/Headline';
 export ReleaseSection from './Sections/ReleaseSection';

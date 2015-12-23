@@ -14,6 +14,7 @@ import {
     Landing,
     Genre,
     Release,
+    Artist,
     Me
   } from 'containers';
 import {requireAuthentication} from 'components/AuthenticationComponent/AuthenticationComponent';
@@ -60,6 +61,7 @@ export default () => {
         <Route path="/tracklist/:id" component={Tracklist}/>
         <Route path="/release/:id" component={Release}/>
         <Route path="/track/:id" component={Track}/>
+        <Route path="/artist/:id" component={Artist}/>
         <Route>
           <Route path="/chat" component={Chat}/>
           <Route path="/me" component={requireAuthentication(Me)}/>

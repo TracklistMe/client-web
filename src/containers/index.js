@@ -10,6 +10,7 @@ export Survey from './Survey/Survey';
 export Event from './Event/Event';
 export NotFound from './NotFound/NotFound';
 export Track from './Track/Track';
+export Artist from './Artist/Artist';
 export Tracklist from './Tracklist/Tracklist';
 export Genre from './Genre/Genre';
 export Release from './Release/Release';
