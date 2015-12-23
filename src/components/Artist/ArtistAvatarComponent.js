@@ -1,9 +1,10 @@
 import React, {Component, PropTypes } from 'react';
+import {apiEndPoint} from '../../helpers/ApiClient';
 
 export default class ArtistAvatarComponent extends Component {
   render() {
     return (
-      <artist_avatar style={{backgroundImage: 'url(' + this.props.avatar + ')'}} />
+      <artist_avatar style={{backgroundImage: 'url(' + apiEndPoint() + '/images/' + this.props.avatar + ')'}} />
     );
   }
 }

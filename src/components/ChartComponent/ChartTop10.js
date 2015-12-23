@@ -76,16 +76,18 @@ export default class ChartTop10 extends Component {
             <CustomButton name="Play All" icon />
           </div>
           <table className="chartTop10Entries">
-            {chartEntries.map((entry, index) =>
-              <ChartTop10Entry
-              key={index}
-              position={index + 1}
-              cover={entry.cover}
-              title={entry.title}
-              artists={entry.artists}
-              label={entry.label}
-              />
-            )}
+            <tbody>
+              {chartEntries.map((entry, index) =>
+                <ChartTop10Entry
+                key={index}
+                position={index + 1}
+                cover={entry.cover}
+                title={entry.title}
+                artists={entry.artists}
+                label={entry.label}
+                />
+              )}
+            </tbody>
           </table>
           <div className="footer">
             View More

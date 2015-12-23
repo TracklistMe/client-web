@@ -37,7 +37,6 @@ export function isLoaded(globalState) {
 }
 
 export function load(artistId) {
-  console.log('called artist redux');
   return {
     promise: (client) => client.get('/artists/' + artistId),
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL]
