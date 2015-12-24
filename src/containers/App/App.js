@@ -92,6 +92,8 @@ export default class App extends Component {
     if (!this.props.logged && nextProps.logged) {
       // login, readback the query.next and redirect accorderly.
       this.props.loadPersonalInfo();
+      this.props.loadCartInformations();
+      this.props.loadCartEntries();
       // process to change the route.
       const redirectRoute = nextProps.location.query.next || '/me';
       this.props.pushState(null, redirectRoute);
@@ -175,7 +177,11 @@ export default class App extends Component {
               {logged && <span><a onClick={::this.handleLogout}>Logout</a></span>}
           </li>
           <li className="divider-vertical"></li>
-          <li ><a href="#"><span className="basic-pictoshop icon"></span>{totalBasketItems}</a></li>
+          <li>
+            <Link to="/cart">
+              <span className="basic-pictoshop icon"></span>{totalBasketItems}</a>
+            </Link>
+          </li>
         </ul>
         </div>
       </nav>
