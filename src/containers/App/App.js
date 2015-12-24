@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 import { logout, loadAuthCookie, loadPersonalInfo } from 'redux/modules/auth';
 import { load as loadGenre } from 'redux/modules/genre';
-import { loadCartInformations, loadCartEntries } from 'redux/modules/cart';
+import { loadCartInformations } from 'redux/modules/cart';
 
 import { pushState } from 'redux-router';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
@@ -46,14 +46,8 @@ const NavbarLink = ({to, children}) => (
 );
 
 @connect(
-  state => ({
-    user: state.auth.user,
-    selectGenre: state.genre.selectGenre,
-    genres: state.genre.genres,
-    logged: state.auth.logged,
-    totalBasketItems: state.cart.totalBasketItems
-  }),
-  {logout, loadGenre, loadPersonalInfo, loadAuthCookie, loadCartInformations, loadCartEntries, pushState})
+  state => ({user: state.auth.user, selectGenre: state.genre.selectGenre, genres: state.genre.genres, logged: state.auth.logged}),
+  {logout, loadGenre, loadPersonalInfo, loadAuthCookie, loadCartInformations, pushState})
 
 export default class App extends Component {
   static propTypes = {
@@ -61,15 +55,13 @@ export default class App extends Component {
     user: PropTypes.object,
     genres: PropTypes.array,
     selectGenre: PropTypes.object,
-    totalBasketItems: PropTypes.number,
     logged: PropTypes.bool.isRequired,
     logout: PropTypes.func.isRequired,
     loadAuthCookie: PropTypes.func.isRequired,
     loadPersonalInfo: PropTypes.func.isRequired,
     loadGenre: PropTypes.func.isRequired,
     loadCartInformations: PropTypes.func.isRequired,
-    pushState: PropTypes.func.isRequired,
-    loadCartEntries: PropTypes.func.isRequired,
+    pushState: PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -79,12 +71,11 @@ export default class App extends Component {
   componentWillMount() {
     // Load overall informations.
     this.props.loadGenre();
+    this.props.loadCartInformations();
     // Authentication
     this.props.loadAuthCookie();
     if (this.props.logged) {
       this.props.loadPersonalInfo();
-      this.props.loadCartInformations();
-      this.props.loadCartEntries();
     }
   }
 
@@ -107,10 +98,7 @@ export default class App extends Component {
   }
 
   render() {
-    const {user, logged, genres, totalBasketItems} = this.props;
-    console.log('+++++');
-    console.log(this.props);
-    console.log(totalBasketItems);
+    const {user, logged, genres} = this.props;
     const styles = require('./less/aphextwin.less');
     return (
       <div className={styles}>
@@ -175,7 +163,7 @@ export default class App extends Component {
               {logged && <span><a onClick={::this.handleLogout}>Logout</a></span>}
           </li>
           <li className="divider-vertical"></li>
-          <li ><a href="#"><span className="basic-pictoshop icon"></span>{totalBasketItems}</a></li>
+          <li ><a href="#"><span className="basic-pictoshop icon"></span>2</a></li>
         </ul>
         </div>
       </nav>
