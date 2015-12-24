@@ -15,6 +15,7 @@ import {
     Genre,
     Release,
     Artist,
+    Cart,
     Me
   } from 'containers';
 import {requireAuthentication} from 'components/AuthenticationComponent/AuthenticationComponent';
@@ -54,6 +55,7 @@ export default () => {
       </Route>
       <Route component={App}>
         <Route path="/beta" component={Home}/>
+        <Route path="/cart" component={Cart}/>
         <Route path="/login" component={Login}/>
         <Route path="/genre/:id" component={Genre}/>
         <Route path="/widgets" component={Widgets}/>

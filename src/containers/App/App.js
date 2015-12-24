@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 import { logout, loadAuthCookie, loadPersonalInfo } from 'redux/modules/auth';
 import { load as loadGenre } from 'redux/modules/genre';
+import { loadCartInformations } from 'redux/modules/cart';
 
 import { pushState } from 'redux-router';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
@@ -46,7 +47,7 @@ const NavbarLink = ({to, children}) => (
 
 @connect(
   state => ({user: state.auth.user, selectGenre: state.genre.selectGenre, genres: state.genre.genres, logged: state.auth.logged}),
-  {logout, loadGenre, loadPersonalInfo, loadAuthCookie, pushState})
+  {logout, loadGenre, loadPersonalInfo, loadAuthCookie, loadCartInformations, pushState})
 
 export default class App extends Component {
   static propTypes = {
@@ -59,6 +60,7 @@ export default class App extends Component {
     loadAuthCookie: PropTypes.func.isRequired,
     loadPersonalInfo: PropTypes.func.isRequired,
     loadGenre: PropTypes.func.isRequired,
+    loadCartInformations: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired
   };
 
@@ -69,7 +71,7 @@ export default class App extends Component {
   componentWillMount() {
     // Load overall informations.
     this.props.loadGenre();
-
+    this.props.loadCartInformations();
     // Authentication
     this.props.loadAuthCookie();
     if (this.props.logged) {
