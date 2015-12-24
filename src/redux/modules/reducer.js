@@ -13,6 +13,7 @@ import earlyUser from './earlyUser';
 import player from './player';
 import genre from './genre';
 import artist from './artist';
+import cart from './cart';
 
 export default combineReducers({
   router: routerStateReducer,
@@ -30,5 +31,6 @@ export default combineReducers({
   earlyUser,
   player,
   artist,
+  cart,
   genre
 });

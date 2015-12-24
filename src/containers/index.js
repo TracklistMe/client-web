@@ -16,3 +16,4 @@ export Genre from './Genre/Genre';
 export Release from './Release/Release';
 export PlayerContainer from './PlayerContainer/PlayerContainer';
 export Me from './Me/Me';
+export Cart from './Cart/Cart';
