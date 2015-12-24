@@ -179,7 +179,7 @@ export default class App extends Component {
           <li className="divider-vertical"></li>
           <li>
             <Link to="/cart">
-              <span className="basic-pictoshop icon"></span>{totalBasketItems}</a>
+              <span className="basic-pictoshop icon"></span>{totalBasketItems}
             </Link>
           </li>
         </ul>
