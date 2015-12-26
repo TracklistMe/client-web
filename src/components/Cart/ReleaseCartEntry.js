@@ -1,13 +1,34 @@
 import React, {Component, PropTypes } from 'react';
 import {apiEndPoint} from '../../helpers/ApiClient';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {addReleaseToCart, loadCartInformations} from 'redux/modules/cart';
 
+@connect(
+    state => ({cart: state.cart}),
+    dispatch => bindActionCreators({addReleaseToCart, loadCartInformations}, dispatch))
 export default class ReleaseCartEntry extends Component {
+  static propTypes = {
+    key: PropTypes.number.isRequired,
+    currencySymbol: PropTypes.string,
+    item: PropTypes.object,
+    addReleaseToCart: PropTypes.func.isRequired,
+    loadCartInformations: PropTypes.func.isRequired
+  };
+  constructor(props) {
+    super(props);
+    this.handleAddRelease = this.handleAddRelease.bind(this);
+  }
+
+  handleAddRelease() {
+    console.log('handler cliekced');
+    this.props.addReleaseToCart(this.props.item.data.id);
+  }
   render() {
-    console.log(this.props.item);
     return (
       <tr className="cartEntry trackCartEntry" key={this.props.key}>
         <td className="cover">
-          +
+          <button onClick={this.handleAddRelease} >+</button>
           <img src={apiEndPoint() + '/images/' + this.props.item.data.cover} />
           -
         </td>
@@ -22,9 +43,3 @@ export default class ReleaseCartEntry extends Component {
     );
   }
 }
-
-ReleaseCartEntry.propTypes = {
-  key: PropTypes.number.isRequired,
-  currencySymbol: PropTypes.string,
-  item: PropTypes.object
-};

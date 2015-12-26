@@ -1,9 +1,9 @@
 import React, {Component, PropTypes } from 'react';
 import {apiEndPoint} from '../../helpers/ApiClient';
+// import {addTrackToCart} from 'redux/modules/cart';
 
 export default class TrackCartEntry extends Component {
   render() {
-    console.log(this.props.item);
     return (
       <tr className="cartEntry trackCartEntry" key={this.props.key}>
         <td className="cover">
