@@ -18,7 +18,7 @@ export default class Me extends Component {
     }
     return (
       <div>
-        <DocumentMeta title="Tracklist.me : {user.displayName}" />
+        <DocumentMeta title={'Tracklist.me ' + user.displayName} />
         <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         User: {user.displayName}
