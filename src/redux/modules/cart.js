@@ -21,13 +21,15 @@ const initialState = {
 };
 
 class BasketItem {
-  constructor(id, name, price, quantity, data) {
+  constructor(id, price, quantity, data) {
     console.log('Create a new element');
     this.id = id;
-    this.name = name;
     this.price = price;
     this._quantity = quantity;
     this.data = data;
+  }
+  get total() {
+    return this._quantity * this.price;
   }
   get quantity() {
     return this._quantity;
@@ -75,18 +77,30 @@ export default function reducer(state = initialState, action = {}) {
           // it's a track
           item = new BasketItem(
             unifiedId,
-            action.result[index].Track.title + '(' + action.result[index].Track.title + ')',
-            action.result[index].Track.Price,
+            state.convertedPriceTable[action.result[index].Track.Price],
             1,
             action.result[index].Track
           );
           totalBasketItems++;
         } else {
-          // It's a release
+          // It's a release.
+          // We need to calculate the price. The price can be either a bundle
+          // or the sum of all the prices of the single tracks included in the release.
+          let totalPrice;
+          if (action.result[index].Release.Price) {
+            // I have a price for the bundle;
+            console.log('this release has price');
+            totalPrice = state.convertedPriceTable[action.result[index].Release.Price];
+          } else {
+            totalPrice = 0;
+            for (const track of action.result[index].Release.Tracks) {
+              totalPrice += state.convertedPriceTable[track.Price];
+            }
+          }
+
           item = new BasketItem(
             unifiedId,
-            action.result[index].Release.title,
-            action.result[index].Release.Price,
+            totalPrice,
             1,
             action.result[index].Release
           );
@@ -95,11 +109,10 @@ export default function reducer(state = initialState, action = {}) {
         // Verify if the item is not already available in the current snapshot of the store, otherwise just add it.
         let found = false;
         for (let indexElement = 0; indexElement < remoteBasket.length; indexElement++) {
-
           console.log('comparing', remoteBasket[indexElement].id, item.id);
           if (remoteBasket[indexElement].id === item.id) {
             found = true;
-            remoteBasket[indexElement]	.quantity += item.quantity;
+            remoteBasket[indexElement].quantity += item.quantity;
           }
         }
         if (!found) {
@@ -129,5 +142,19 @@ export function loadCartEntries() {
   return {
     types: [CART_LOAD_ENTRIES, CART_LOAD_ENTRIES_SUCCESS, CART_LOAD_ENTRIES_FAILURE],
     promise: client => client.get('/me/cart')
+  };
+}
+
+export function addReleaseToCart(id) {
+  return {
+    types: [CART_LOAD_ENTRIES, CART_LOAD_ENTRIES_SUCCESS, CART_LOAD_ENTRIES_FAILURE],
+    promise: client => client.get('/me/cart/release/' + id)
+  };
+}
+
+export function addTrackToCart(id) {
+  return {
+    types: [CART_LOAD_ENTRIES, CART_LOAD_ENTRIES_SUCCESS, CART_LOAD_ENTRIES_FAILURE],
+    promise: client => client.get('/me/cart/track/' + id)
   };
 }

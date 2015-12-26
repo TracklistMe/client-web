@@ -1,18 +1,20 @@
 import React, {Component, PropTypes } from 'react';
 import {apiEndPoint} from '../../helpers/ApiClient';
 
-export default class TrackCartEntry extends Component {
+export default class ReleaseCartEntry extends Component {
   render() {
     console.log(this.props.item);
     return (
       <tr className="cartEntry trackCartEntry" key={this.props.key}>
         <td className="cover">
+          +
           <img src={apiEndPoint() + '/images/' + this.props.item.data.cover} />
+          -
         </td>
-        <td>{this.props.item.data.title + ' (' + this.props.item.data.version + ')'}</td>
+        <td>{this.props.item.data.title}</td>
         <td>Artists</td>
         <td>
-        {this.props.item.data.Releases[0].Labels[0].displayName}
+          {this.props.item.data.Labels[0].displayName}
         </td>
         <td>{this.props.item.price} {this.props.currencySymbol}</td>
         <td>{this.props.item.total} {this.props.currencySymbol}</td>
@@ -21,7 +23,7 @@ export default class TrackCartEntry extends Component {
   }
 }
 
-TrackCartEntry.propTypes = {
+ReleaseCartEntry.propTypes = {
   key: PropTypes.number.isRequired,
   currencySymbol: PropTypes.string,
   item: PropTypes.object

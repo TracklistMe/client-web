@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
+import { TrackCartEntry, ReleaseCartEntry } from 'components';
 
 @connect(
   state => ({cart: state.cart})
@@ -16,14 +17,14 @@ export default class Cart extends Component {
       );
     }
     return (
-      <div className="row">
-        <br /><br /><br /><br /><br /><br /><br />
-          <table className="col-lg-12 table table-striped">
+      <div className="row cart">
+          <table className="col-lg-12">
             <thead>
               <tr>
-                <th></th>
-                <th></th>
-                <th>Quantity</th>
+                <th>Cover </th>
+                <th>Name</th>
+                <th>Artists</th>
+                <th>Label</th>
                 <th>Amount</th>
                 <th>Total</th>
               </tr>
@@ -58,17 +59,16 @@ export default class Cart extends Component {
               </tr>
             </tfoot>
             <tbody>
-            {cart.basket.map((item, index) =>
-              <tr key={index}>
-                <td><span className="glyphicon glyphicon-remove"></span></td>
-                <td>{item.name}</td>
-                <td>
-                <span className="glyphicon glyphicon-minus"></span>  Number
-                    <span className="glyphicon glyphicon-plus"></span>
-                </td>
-                <td>Item Price / Currency</td>
-                <td>Item Total / Currency</td>
-              </tr>
+            {cart.basket.map(function createEntries(item, index) {
+              if (!item.data.Tracks) {
+                // this is a track
+                return <TrackCartEntry key={index} item={item} currencySymbol={cart.currency.symbol} />;
+              }
+              if (item.data.Tracks) {
+                // this is a release
+                return <ReleaseCartEntry key={index} item={item} currencySymbol={cart.currency.symbol} />;
+              }
+            }
             )}
             </tbody>
           </table>
