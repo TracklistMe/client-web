@@ -16,6 +16,14 @@ const CART_ADD_TRACK = 'CART_ADD_TRACK';
 const CART_ADD_TRACK_SUCCESS = 'CART_ADD_TRACK_SUCCESS';
 const CART_ADD_TRACK_FAILURE = 'CART_ADD_TRACK_FAILURE';
 
+// Remove a release or a track from the cart
+const CART_REMOVE_RELEASE = 'CART_REMOVE_RELEASE';
+const CART_REMOVE_RELEASE_SUCCESS = 'CART_REMOVE_RELEASE_SUCCESS';
+const CART_REMOVE_RELEASE_FAILURE = 'CART_REMOVE_RELEASE_FAILURE';
+const CART_REMOVE_TRACK = 'CART_REMOVE_TRACK';
+const CART_REMOVE_TRACK_SUCCESS = 'CART_REMOVE_TRACK_SUCCESS';
+const CART_REMOVE_TRACK_FAILURE = 'CART_REMOVE_TRACK_FAILURE';
+
 
 const initialState = {
   currency: {
@@ -78,14 +86,20 @@ function addItemToBasket(basket, itemToAdd) {
   return basket;
 }
 
+function removeItemFromBasket(basket, itemToRemove) {
+  for (let indexElement = 0; indexElement < basket.length; indexElement++) {
+    if (basket[indexElement].id === itemToRemove.id) {
+      basket[indexElement].quantity -= 1;
+    }
+  }
+  return basket;
+}
+
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case CART_ADD_RELEASE:
-      console.log('CART_ADD_RELEASE received');
       return state;
     case CART_ADD_RELEASE_SUCCESS:
-      console.log('----------');
-      console.log(action);
       const addedRelease = action.result.Release;
       const price = calculateReleasePrice(
             addedRelease,
@@ -96,7 +110,7 @@ export default function reducer(state = initialState, action = {}) {
             1,
             addedRelease
           );
-      const basket = addItemToBasket(state.basket, item);
+      let basket = addItemToBasket(state.basket, item);
       let totalBasketItems = state.totalBasketItems + addedRelease.Tracks.length;
       return {
         ...state,
@@ -105,10 +119,20 @@ export default function reducer(state = initialState, action = {}) {
       };
     case CART_ADD_RELEASE_FAILURE:
       return state;
+    case CART_REMOVE_RELEASE:
+      return state;
+    case CART_REMOVE_RELEASE_SUCCESS:
+      item = new BasketItem('release-' + action.id);
+      basket = removeItemFromBasket(state.basket, item);
+      return {
+        ...state,
+        basket: basket
+      };
+    case CART_REMOVE_RELEASE_FAILURE:
+      return state;
     case CART_LOAD_CURRENCY_INFORMATIONS:
       return state;
     case CART_LOAD_CURRENCY_INFORMATIONS_SUCCESS:
-      console.log(action.result);
       const convertedPriceTableArray = [];
       for (let index = 0; index < action.result.ConvertedPrices.length; index++) {
         convertedPriceTableArray[action.result.ConvertedPrices[index].MasterPrice] =
@@ -198,9 +222,26 @@ export function addReleaseToCart(id) {
   };
 }
 
-export function addTrackToCart(id) {
+export function removeReleaseFromCart(id) {
+  console.log('redux received delete release ' + id);
+  return {
+    types: [CART_REMOVE_RELEASE, CART_REMOVE_RELEASE_SUCCESS, CART_REMOVE_RELEASE_FAILURE],
+    id: id,
+    promise: client => client.del('/me/cart/release/' + id)
+  };
+}
+
+export function addTrackFromCart(id) {
   return {
     types: [CART_ADD_TRACK, CART_ADD_TRACK_SUCCESS, CART_ADD_TRACK_FAILURE],
     promise: client => client.get('/me/cart/track/' + id)
+  };
+}
+
+export function removeTrackFromCart(id) {
+  console.log('redux received delete release ' + id);
+  return {
+    types: [CART_REMOVE_TRACK, CART_REMOVE_TRACK_SUCCESS, CART_REMOVE_TRACK_FAILURE],
+    promise: client => client.del('/me/cart/track/' + id)
   };
 }
