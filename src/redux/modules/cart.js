@@ -39,7 +39,6 @@ const initialState = {
 
 class BasketItem {
   constructor(id, price, quantity, data) {
-    console.log('Create a new element');
     this.id = id;
     this.price = price;
     this._quantity = quantity;
@@ -101,7 +100,7 @@ export default function reducer(state = initialState, action = {}) {
       return state;
     case CART_ADD_RELEASE_SUCCESS:
       const addedRelease = action.result.Release;
-      const price = calculateReleasePrice(
+      let price = calculateReleasePrice(
             addedRelease,
             state.convertedPriceTable);
       let item = new BasketItem(
@@ -119,16 +118,53 @@ export default function reducer(state = initialState, action = {}) {
       };
     case CART_ADD_RELEASE_FAILURE:
       return state;
+    case CART_ADD_TRACK:
+      return state;
+    case CART_ADD_TRACK_SUCCESS:
+      console.log('acction adding track');
+      const addedTrack = action.result.Track;
+      price = state.convertedPriceTable[addedTrack.Price];
+      item = new BasketItem(
+            'track-' + addedTrack.id,
+            price,
+            1,
+            addedRelease
+          );
+      basket = addItemToBasket(state.basket, item);
+      totalBasketItems = state.totalBasketItems + 1;
+      return {
+        ...state,
+        basket: basket,
+        totalBasketItems: totalBasketItems
+      };
+    case CART_ADD_TRACK_FAILURE:
+      console.log('there were an error');
+      return state;
     case CART_REMOVE_RELEASE:
       return state;
     case CART_REMOVE_RELEASE_SUCCESS:
       item = new BasketItem('release-' + action.id);
       basket = removeItemFromBasket(state.basket, item);
+      totalBasketItems = state.totalBasketItems - action.quantity;
       return {
         ...state,
-        basket: basket
+        basket: basket,
+        totalBasketItems: totalBasketItems
       };
     case CART_REMOVE_RELEASE_FAILURE:
+      return state;
+    case CART_REMOVE_TRACK:
+      return state;
+    case CART_REMOVE_TRACK_SUCCESS:
+      item = new BasketItem('track-' + action.id);
+      basket = removeItemFromBasket(state.basket, item);
+      totalBasketItems = state.totalBasketItems - 1;
+      return {
+        ...state,
+        basket: basket,
+        totalBasketItems: totalBasketItems
+      };
+    case CART_REMOVE_TRACK_FAILURE:
       return state;
     case CART_LOAD_CURRENCY_INFORMATIONS:
       return state;
@@ -148,6 +184,7 @@ export default function reducer(state = initialState, action = {}) {
         },
         convertedPriceTable: convertedPriceTableArray
       };
+
     case CART_LOAD_CURRENCY_INFORMATIONS_FAILURE:
       return state;
     case CART_LOAD_ENTRIES:
@@ -215,33 +252,33 @@ export function loadCartEntries() {
 }
 
 export function addReleaseToCart(id) {
-  console.log('redux received add release ' + id);
   return {
     types: [CART_ADD_RELEASE, CART_ADD_RELEASE_SUCCESS, CART_ADD_RELEASE_FAILURE],
     promise: client => client.post('/me/cart/release/' + id)
   };
 }
 
-export function removeReleaseFromCart(id) {
-  console.log('redux received delete release ' + id);
+export function removeReleaseFromCart(id, quantity) {
   return {
     types: [CART_REMOVE_RELEASE, CART_REMOVE_RELEASE_SUCCESS, CART_REMOVE_RELEASE_FAILURE],
     id: id,
+    quantity: quantity,
     promise: client => client.del('/me/cart/release/' + id)
   };
 }
 
-export function addTrackFromCart(id) {
+export function addTrackToCart(id) {
   return {
     types: [CART_ADD_TRACK, CART_ADD_TRACK_SUCCESS, CART_ADD_TRACK_FAILURE],
-    promise: client => client.get('/me/cart/track/' + id)
+    promise: client => client.post('/me/cart/track/' + id)
   };
 }
 
-export function removeTrackFromCart(id) {
-  console.log('redux received delete release ' + id);
+export function removeTrackFromCart(id, quantity) {
   return {
     types: [CART_REMOVE_TRACK, CART_REMOVE_TRACK_SUCCESS, CART_REMOVE_TRACK_FAILURE],
+    id: id,
+    quantity: quantity,
     promise: client => client.del('/me/cart/track/' + id)
   };
 }

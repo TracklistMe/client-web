@@ -27,7 +27,7 @@ export default class ReleaseCartEntry extends Component {
   }
 
   handleRemoveRelease() {
-    this.props.removeReleaseFromCart(this.props.item.data.id);
+    this.props.removeReleaseFromCart(this.props.item.data.id, this.props.item.data.Tracks.length);
   }
   render() {
     return (
