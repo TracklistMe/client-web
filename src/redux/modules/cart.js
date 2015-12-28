@@ -89,6 +89,9 @@ function removeItemFromBasket(basket, itemToRemove) {
   for (let indexElement = 0; indexElement < basket.length; indexElement++) {
     if (basket[indexElement].id === itemToRemove.id) {
       basket[indexElement].quantity -= 1;
+      if (basket[indexElement].quantity === 0) {
+        basket.splice(indexElement, 1);
+      }
     }
   }
   return basket;
