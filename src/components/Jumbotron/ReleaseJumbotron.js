@@ -3,11 +3,31 @@ import MainHeaderBackground from '../MainHeader/MainHeaderBackground';
 import TimeDuration from '../Utilities/TimeDuration';
 import BuyFromJumbotronPlaylist from '../Buttons/BuyFromJumbotronPlaylist';
 import {apiEndPoint} from '../../helpers/ApiClient';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {addTrackToCart} from 'redux/modules/cart';
+
+@connect(
+    null,
+    dispatch => bindActionCreators({addTrackToCart}, dispatch))
+
 
 export default class ReleaseJumbotron extends Component {
   static propTypes = {
+    addTrackToCart: PropTypes.func.isRequired,
     release: PropTypes.object
   }
+
+
+  constructor(props) {
+    super(props);
+    this.handleAddTrack = this.handleAddTrack.bind(this);
+  }
+
+  handleAddTrack(id) {
+    this.props.addTrackToCart(id);
+  }
+
   render() {
     const release = this.props.release; // eslint-disable-line no-shadow
     const height = Math.max(570, 400 + (release.Tracks.length * 40));
@@ -77,7 +97,7 @@ export default class ReleaseJumbotron extends Component {
                         <TimeDuration length={track.lengthInSeconds} /> / {Math.floor(track.bpm * 10) / 10}bpm
                       </td>
                       <td className="text-right">
-                        <BuyFromJumbotronPlaylist name={track.Price + '$'} icon />
+                        <BuyFromJumbotronPlaylist handler={this.handleAddTrack.bind(this, track.id)} name={track.Price + '$'} icon />
                       </td>
 
                     </tr>

@@ -8,7 +8,7 @@ export default class BuyFromJumbotronPlaylist extends Component {
 
   render() {
     return (
-      <add_to_cart_from_jumbotron_playlist>
+      <add_to_cart_from_jumbotron_playlist onClick={this.props.handler} >
       <span>
         <text>{this.props.name}</text>
       </span>
@@ -22,5 +22,6 @@ export default class BuyFromJumbotronPlaylist extends Component {
 
 BuyFromJumbotronPlaylist.propTypes = {
   name: PropTypes.string.isRequired,
-  icon: PropTypes.bool
+  icon: PropTypes.bool,
+  handler: PropTypes.func
 };
