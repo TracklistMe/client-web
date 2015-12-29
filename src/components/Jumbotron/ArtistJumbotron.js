@@ -82,9 +82,9 @@ export default class ArtistJumbotron extends Component {
       reset: null,
       queuecompleted: null
     };
-
+    const uploadAPIendpoint = apiEndPoint() + '/artists/58/profilePicture/100/100';
     const componentConfig = {
-      postUrl: '/uploadHandler',
+      postUrl: uploadAPIendpoint,
     };
 
     const {artist} = this.props; // eslint-disable-line no-shadow
@@ -93,7 +93,7 @@ export default class ArtistJumbotron extends Component {
     }
     return (
       <div className="artistJumbotron">
-        <MainHeaderBackground image={apiEndPoint() + '/images/' + artist.avatar} />
+        <MainHeaderBackground image={apiEndPoint + '/images/' + artist.avatar} />
         <div className="headerContent">
           <div className="row artistJumbotronContainer">
             <div className="hidden-xs hidden-sm col-sub-xs-5 col-sub-sm-6 col-sub-md-6 col-sub-lg-5 overflowHidden">
