@@ -211,13 +211,13 @@ export default class BetaOnboardingForm extends Component {
         return (
           <div id="positionFriend">An email has been sent to your friend.
             <br />Once confirmed, your beta access will be closer!
-            <br />For now you are still in position <span className="highlight">1234</span>.
+            <br />For now you are still in position <span className="highlight">254</span>.
             <br /><a className="smallHighlightedText" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite your friends!</a>
           </div>
         );
       case SHOW_CURRENT_POSITION:
         return (
-          <div id="position">You ve been added in queue at position <span className="highlight">1234</span>.
+          <div id="position">You ve been added in queue at position <span className="highlight">254</span>.
             <br />Thank you, an email has been sent. Please confirm it.
             <br /> Want to skip the queue?
             <br /><a className="smallHighlightedText" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite your friends! </a>
@@ -258,7 +258,7 @@ export default class BetaOnboardingForm extends Component {
           <div id="position">
             You are all set!
             <br />
-            You are waiting now in queue at position <span className="highlight">1234</span>
+            You are waiting now in queue at position <span className="highlight">254</span>
             <br />Want to skip the queue?
             <br /><span id="inviteFriend" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite your friends! </span>
           </div>);
@@ -273,7 +273,7 @@ export default class BetaOnboardingForm extends Component {
         return (
             <div id="position">
             <br />We just sent the confirmation email. <br />
-            You are currently in queue at position <span className="highlight">1234</span>.
+            You are currently in queue at position <span className="highlight">254</span>.
             <br /> Want to skip the queue?
             <br /><span id="inviteFriend" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite your friends! </span>
             </div>
@@ -282,7 +282,7 @@ export default class BetaOnboardingForm extends Component {
         return (
             <div id="position">
             <br />We just sent the invite to your friend.<br />
-            You are currently in queue at position <span className="highlight">1234</span>.
+            You are currently in queue at position <span className="highlight">254</span>.
             <br /> Want to get in faster?
             <br /><span id="inviteFriend" onClick={this.inviteMoreFriendHandler.bind(this)}> Invite more friends! </span>
             </div>
