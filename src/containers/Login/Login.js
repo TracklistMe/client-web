@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import DocumentMeta from 'react-document-meta';
-import * as authActions from 'redux/modules/auth';
+import Helmet from 'react-helmet';
 import config from '../../config';
+import * as authActions from 'redux/modules/auth';
 
 @connect(
   state => ({user: state.auth.user}),
@@ -25,7 +25,7 @@ export default class Login extends Component {
     const {user, logout} = this.props;
     return (
       <div>
-        <DocumentMeta title={config.app.title + ': Login'}/>
+        <Helmet title={config.app.title + ': Login'}/>
         <br /><br /><br /><br /><br /><br /><br /><br /><br />
         <br /><br /><br /><br /><br />
         <h1>Login</h1>

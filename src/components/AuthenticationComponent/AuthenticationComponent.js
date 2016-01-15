@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {pushState} from 'redux-router';
 
 export function requireAuthentication(Component) {
-
   class AuthenticationComponent extends React.Component {
     static propTypes = {
       token: PropTypes.string,

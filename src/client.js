@@ -26,7 +26,7 @@ const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrol
 
 /*
 function initSocket() {
-  const socket = io('', {path: '/api/ws', transports: ['polling']});
+  const socket = io('', {path: '/ws'});
   socket.on('news', (data) => {
     console.log(data);
     socket.emit('my other event', { my: 'data from client' });

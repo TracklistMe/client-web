@@ -22,11 +22,12 @@ import qs from 'query-string';
 import getRoutes from './routes';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
+const targetUrl = 'http://' + config.apiHost + ':' + config.apiPort;
 const pretty = new PrettyError();
 const app = new Express();
 const server = new http.Server(app);
 const proxy = httpProxy.createProxyServer({
-  target: 'http://' + config.apiHost + ':' + config.apiPort,
+  target: targetUrl,
   ws: true
 });
 
@@ -46,6 +47,7 @@ if (__DEVELOPMENT__) {
     proxy.web(req, res);
   });
 }
+
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
@@ -122,11 +124,6 @@ app.use((req, res) => {
 });
 
 if (config.port) {
-  if (config.isProduction) {
-    const io = new SocketIo(server);
-    io.path('/api/ws');
-  }
-
   server.listen(config.port, (err) => {
     if (err) {
       console.error(err);

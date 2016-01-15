@@ -35,5 +35,6 @@ module.exports = Object.assign({
         'twitter:image:height': '200'
       }
     }
-  }
+  },
+
 }, environment);

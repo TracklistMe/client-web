@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import DocumentMeta from 'react-document-meta';
 import { HomeJumbotron, ReleaseSection, ArtistSection, StuffPicksSection, BlogSection } from 'components';
 import config from '../../config';
+import Helmet from 'react-helmet';
 
 export default class Home extends Component {
   render() {
     return (
        <div>
-        <DocumentMeta title={config.app.title}/>
+        <Helmet title={config.app.title}/>
         <HomeJumbotron
           miniHeaders={[{
             image: 'https://pmcvariety.files.wordpress.com/2015/06/taylor-swift-apple-streaming.jpg?w=670&h=377&crop=1',

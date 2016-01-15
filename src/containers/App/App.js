@@ -1,43 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import config from '../../config';
 import { connect } from 'react-redux';
-import DocumentMeta from 'react-document-meta';
 import { logout, loadAuthCookie, loadPersonalInfo } from 'redux/modules/auth';
 import { load as loadGenre } from 'redux/modules/genre';
 import { loadCartInformations, loadCartEntries } from 'redux/modules/cart';
-
+import Helmet from 'react-helmet';
 import { pushState } from 'redux-router';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
 
-
-const title = 'TracklistMe';
-const description = 'All the modern best practices in one example.';
-const image = 'https://react-redux.herokuapp.com/logo.jpg';
 const logo = require('./../../img/logoAphextwin.png');
-
-
-const meta = {
-  title,
-  description,
-  meta: {
-    charSet: 'utf-8',
-    property: {
-      'og:site_name': title,
-      'og:image': image,
-      'og:locale': 'en_US',
-      'og:title': title,
-      'og:description': description,
-      'twitter:card': 'summary',
-      'twitter:site': '@tracklistme',
-      'twitter:creator': '@tracklistme',
-      'twitter:title': title,
-      'twitter:description': description,
-      'twitter:image': image,
-      'twitter:image:width': '200',
-      'twitter:image:height': '200'
-    }
-  }
-};
 
 const NavbarLink = ({to, children}) => (
   <Link key={to} to={to}>
@@ -110,13 +82,10 @@ export default class App extends Component {
 
   render() {
     const {user, logged, genres, totalBasketItems} = this.props;
-    console.log('+++++');
-    console.log(this.props);
-    console.log(totalBasketItems);
     const styles = require('./less/aphextwin.less');
     return (
       <div className={styles}>
-      <DocumentMeta {...meta}/>
+      <Helmet {...config.app.head}/>
       <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
         <div className="navbar-background"> </div>
         <div className="navbar-header">
