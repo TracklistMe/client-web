@@ -202,7 +202,7 @@ export function confirmUser(verificationCode, id, password) {
 export function requestConfirmationEmail(email) {
   return {
     types: [REQUEST_CONFIRMATION_EMAIL, REQUEST_CONFIRMATION_EMAIL_SUCCESS, REQUEST_CONFIRMATION_EMAIL_FAILURE],
-    promise: client => client.post('/earlyUsers/' + email + '/requestVerificationEmail')
+    promise: client => client.post('/earlyUsers/' + email + '/requestVerificationEmail/')
   };
 }
 
