@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import { lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail, inviteMoreFriend, inviteFriendEmail, loginWithPassword} from 'redux/modules/earlyUser';
+import { lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, loginUser, requestConfirmationEmail, inviteMoreFriend, inviteFriendEmail, loginWithPassword} from 'redux/modules/earlyUser';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -23,7 +23,7 @@ const SHOW_CURRENT_POSITION_AFTER_FRIEND_BEING_ADDED = 'after inviting a friend 
 @connect(
   state => ({earlyUser: state.earlyUser}),
   dispatch => bindActionCreators({ lookupEmail, setIsArtist, setIsLabel, registerUser, confirmUser, requestConfirmationEmail,
-    loginWithPassword, inviteMoreFriend, inviteFriendEmail}, dispatch)
+    loginWithPassword, loginUser, inviteMoreFriend, inviteFriendEmail}, dispatch)
 )
 export default class BetaOnboardingForm extends Component {
   static propTypes = {
@@ -42,6 +42,7 @@ export default class BetaOnboardingForm extends Component {
     inviteFriendEmail: PropTypes.func,
     confirmUser: PropTypes.func,
     inviteMoreFriend: PropTypes.func,
+    loginUser: PropTypes.func,
     loginWithPassword: PropTypes.func,
     auth: PropTypes.string,
     id: PropTypes.string
@@ -64,6 +65,7 @@ export default class BetaOnboardingForm extends Component {
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.submitFriendEmail = this.submitFriendEmail.bind(this);
     this.handleChangeFriendEmail = this.handleChangeFriendEmail.bind(this);
+    this.handleLoginWithUsernameAndPassword = this.handleLoginWithUsernameAndPassword.bind(this);
     this.submitEmail = this.submitEmail.bind(this);
     this.isAnArtistHandler = this.isAnArtistHandler.bind(this);
     this.isALabelHandler = this.isALabelHandler.bind(this);
@@ -126,6 +128,13 @@ export default class BetaOnboardingForm extends Component {
   handleChangeFriendEmail(event) {
     this.setState({friendEmail: event.target.value,
       friendEmailIsValid: this.validateEmail(event.target.value)});
+  }
+
+  handleLoginWithUsernameAndPassword() {
+    console.log('HANDLE THE LOGIN WITH USERNAME AND PASSWORD');
+    console.log(this.state.email);
+    console.log(this.state.password);
+    this.props.loginUser(this.state.email, this.state.password);
   }
 
   loginWithPasswordHandler() {
@@ -305,7 +314,7 @@ export default class BetaOnboardingForm extends Component {
               <div className="container-4 container-5">
                 <div id="emailBlock">
                   <input type="password" id="email" value={this.state.password} onChange={this.handlePasswordChange} ref="password" placeholder="Password" />
-                  <button className={activeSubmitEmailButton} id="sendButton" onClick={this.submitEmail}>
+                  <button className={activeSubmitEmailButton} id="sendButton" onClick={this.handleLoginWithUsernameAndPassword}>
                     {!earlyUser.registering && <span id="send" className="basic-pictosimply-right"></span>}
                     {earlyUser.registering && <span id="loading" className="basic-pictoloader iconSpin"></span>}
                   </button>

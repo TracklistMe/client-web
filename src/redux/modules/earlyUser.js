@@ -31,6 +31,10 @@ const SEND_FRIEND_INVITATION = 'SEND_FRIEND_INVITATION';
 const SEND_FRIEND_INVITATION_SUCCESS = 'SEND_FRIEND_INVITATION_SUCCESS';
 const SEND_FRIEND_INVITATION_FAILURE = 'SEND_FRIEND_INVITATION_FAILURE';
 
+const LOGIN_USER = 'LOGIN_USER';
+const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
+const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
+
 const IS_ARTIST = 'IS_ARTIST';
 const IS_LABEL = 'IS_LABEL';
 
@@ -165,6 +169,12 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         phase: 12
       };
+    case LOGIN_USER_SUCCESS:
+      return {
+        ...state,
+        earlyUser: action.result.user,
+        phase: 7,
+      };
     default:
       return state;
   }
@@ -212,6 +222,16 @@ export function inviteFriendEmail(inviterId, FriendEmail) {
     promise: client => client.post('/earlyUsers/' + inviterId + '/inviteFriend/' + FriendEmail)
   };
 }
+
+export function loginUser(email, password) {
+  return {
+    types: [LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE],
+    promise: client => client.post('/earlyUsers/login/', {
+      data: {email: email, password: md5(password)}
+    })
+  };
+}
+
 
 // Simple changes in status
 export function setIsArtist(isArtist) {
