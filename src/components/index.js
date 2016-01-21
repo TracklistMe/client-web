@@ -43,3 +43,4 @@ export ChartTop10 from './ChartComponent/ChartTop10';
 // Cart
 export TrackCartEntry from './Cart/TrackCartEntry';
 export ReleaseCartEntry from './Cart/ReleaseCartEntry';
+export AddRemoveCounter from './Cart/AddRemoveCounter';

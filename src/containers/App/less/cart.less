@@ -1,20 +1,71 @@
+.cartPage{
+	background-color: @brand-darkest;
+	color: @brand-lightest;
+}
 .cart {
 	padding-top: 100px;
 	padding-bottom: 200px;
 }
+
 .cartEntry .cover {
-	width: 10%;
+	width: 50px;
+	height: 58px;
+	margin-left: 5px;
+	padding-top: 6px;
+	padding-bottom: 2px;
 }
-.cartEntry .cover img {
-	border: 0px solid;
+.cartEntry .cover img{
+	margin-left: 9px;
+	margin-right: 9px;
+	border: 0px solid #fff;
 }
-.cartEntry td{
-	padding-left: 1%;
-	padding-right: 1%;
-	border-bottom: 1px solid @brand-lighter;
+.cartEntry td {
+	padding: 0px;
+	margin: 0px;
+	height: 40px !important;
+	font-size: @font-size-very-small;
+	border-bottom: 1px solid @brand-darker;
+}
+.cartEntry tr {
+	padding: 0px;
+	margin: 0px;
+	height: 40px !important;
 }
 
 
-.cart table{
+.cart > table{
+	margin-top: 20px;
+	border-style: double;
+	border-width: 4px 0px 4px 0px;
+	border-color: @brand-darker;
+}
 
+.cartEntry table { 
+	width: 100%;
+}
+.cartEntry .coverTD{
+	width: 60px;
+}
+.cartEntry .titleTD{
+	width: 60px;
+}
+.cartEntry .artistTD{
+	width: 60px;
+}
+.cartEntry .labelTD{
+	width: 60px;
+}
+.cartEntry .genreTD{
+	width: 60px;
+}
+.cartEntry .lengthTD{
+	width: 60px;
+}
+.cartEntry .addRemoveButtonTD{
+	width: 60px;
+}
+.cartEntry .costTD{
+	background-color: #fc0;
+	text-align: center;
+	width: 60px;
 }

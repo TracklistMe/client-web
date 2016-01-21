@@ -2,6 +2,7 @@ import React, {Component, PropTypes } from 'react';
 import {apiEndPoint} from '../../helpers/ApiClient';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import { AddRemoveCounter } from 'components';
 import {addTrackToCart, removeTrackFromCart} from 'redux/modules/cart';
 
 @connect(
@@ -34,18 +35,18 @@ export default class TrackCartEntry extends Component {
   render() {
     return (
       <tr className="cartEntry trackCartEntry" key={this.props.key}>
-        <td className="cover">
-          <button onClick={this.handleAddTrack} >+</button>
-          <img src={apiEndPoint() + '/images/' + this.props.item.data.cover} />
-          <button onClick={this.handleRemoveTrack} >-</button>
+        <td className="coverTD">
+          <img className="cover" src={apiEndPoint() + '/images/' + this.props.item.data.cover} />
         </td>
         <td>{this.props.item.data.title + ' (' + this.props.item.data.version + ')'}</td>
         <td>Artists</td>
         <td>
         {this.props.item.data.Releases[0].Labels[0].displayName}
         </td>
-        <td>{this.props.item.price} {this.props.currencySymbol}</td>
-        <td>{this.props.item.total} {this.props.currencySymbol}</td>
+        <td>genre</td>
+        <td>Length</td>
+        <td><AddRemoveCounter addHandler={this.handleAddTrack} removeHandler={this.handleRemoveTrack} /></td>
+        <td className="costTD">{this.props.item.total} {this.props.currencySymbol}</td>
       </tr>
     );
   }

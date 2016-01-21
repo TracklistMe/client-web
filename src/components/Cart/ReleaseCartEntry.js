@@ -31,19 +31,25 @@ export default class ReleaseCartEntry extends Component {
   }
   render() {
     return (
-      <tr className="cartEntry trackCartEntry" key={this.props.key}>
-        <td className="cover">
-          <button onClick={this.handleAddRelease} >+</button>
-          <img src={apiEndPoint() + '/images/' + this.props.item.data.cover} />
-          <button onClick={this.handleRemoveRelease} >-</button>
+      <tr className="cartEntry" key={this.props.key}>
+        <td colSpan="8">
+          <table>
+            <tr>
+              <td className="coverTD">
+                <img className="cover" src={apiEndPoint() + '/images/' + this.props.item.data.cover} />
+              </td>
+              <td>{this.props.item.data.title}</td>
+              <td>Artists</td>
+              <td>
+                {this.props.item.data.Labels[0].displayName}
+              </td>
+              <td>genre</td>
+              <td>Length</td>
+              <td><button onClick={this.handleAddTrack} >+</button> <button onClick={this.handleRemoveTrack} >-</button></td>
+              <td className="costTD">{this.props.item.total} {this.props.currencySymbol}</td>
+            </tr>
+          </table>
         </td>
-        <td>{this.props.item.data.title}</td>
-        <td>Artists</td>
-        <td>
-          {this.props.item.data.Labels[0].displayName}
-        </td>
-        <td>{this.props.item.price} {this.props.currencySymbol}</td>
-        <td>{this.props.item.total} {this.props.currencySymbol}</td>
       </tr>
     );
   }
