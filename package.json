@@ -93,7 +93,7 @@
     "hoist-non-react-statics": "^1.0.3",
     "http-proxy": "^1.12.0",
     "invariant": "^2.2.0",
-    "less": "^2.5.3",
+    "less": "^2.6.0",
     "less-loader": "^2.2.1",
     "lru-memoize": "^1.0.0",
     "map-props": "^1.0.0",
