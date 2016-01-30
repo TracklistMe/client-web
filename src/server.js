@@ -46,7 +46,6 @@ if (__DEVELOPMENT__) {
   });
 }
 
-
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
   let json;

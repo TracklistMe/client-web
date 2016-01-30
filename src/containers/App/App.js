@@ -89,25 +89,25 @@ export default class App extends Component {
       <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
         <div className="navbar-background"> </div>
         <div className="navbar-header">
-        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span className="sr-only">Toggle navigation</span>
-          <span className="icon-bar"></span>
-          <span className="icon-bar"></span>
-          <span className="icon-bar"></span>
-        </button>
-        <ul className="nav navbar-nav">
-          <li className="dropdownBackground dropdownBorder">
-          <Link to="/beta"> <img src={logo} /></Link>
-          <ul>
-            <li><NavbarLink to="/track/77">Go to track 77</NavbarLink></li>
-            <li><NavbarLink to="/track/80">Go to track 80</NavbarLink></li>
-            <li><NavbarLink to="/release/257">Go to release 257</NavbarLink></li>
-            <li><NavbarLink to="/tracklist/77">Tracklist</NavbarLink></li>
-            <li><NavbarLink to="/artist/58">Artist (Siwell)</NavbarLink></li>
-            <li><a href="#">Labels</a></li>
+          <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span className="sr-only">Toggle navigation</span>
+            <span className="icon-bar"></span>
+            <span className="icon-bar"></span>
+            <span className="icon-bar"></span>
+          </button>
+          <ul className="nav navbar-nav">
+            <li className="dropdownBackground dropdownBorder">
+            <Link to="/beta"> <img src={logo} /></Link>
+            <ul>
+              <li><NavbarLink to="/track/77">Go to track 77</NavbarLink></li>
+              <li><NavbarLink to="/track/80">Go to track 80</NavbarLink></li>
+              <li><NavbarLink to="/release/257">Go to release 257</NavbarLink></li>
+              <li><NavbarLink to="/tracklist/77">Tracklist</NavbarLink></li>
+              <li><NavbarLink to="/artist/58">Artist (Siwell)</NavbarLink></li>
+              <li><a href="#">Labels</a></li>
+            </ul>
+            </li>
           </ul>
-          </li>
-        </ul>
         </div>
         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul className="nav navbar-nav">

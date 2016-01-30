@@ -1,7 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
+<<<<<<< HEAD
 import config from '../../config';
+=======
+>>>>>>> upstream/master
 import * as authActions from 'redux/modules/auth';
 
 @connect(
