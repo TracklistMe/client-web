@@ -1,6 +1,7 @@
  
 =======
-# Based on React Redux Universal Hot Example
+# Tracklist.me Web Client
+### Based on React Redux Universal Hot Example
 
 [![Build Status](https://travis-ci.org/TracklistMe/client-react.svg?branch=master)](https://travis-ci.org/TracklistMe/client-react)
 
