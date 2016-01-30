@@ -11,7 +11,6 @@ import ApiClient from './helpers/ApiClient';
 import Html from './helpers/Html';
 import PrettyError from 'pretty-error';
 import http from 'http';
-import SocketIo from 'socket.io';
 import cookie from 'react-cookie';
 
 import {ReduxRouter} from 'redux-router';
@@ -38,7 +37,6 @@ app.use(Express.static(path.join(__dirname, '..', 'static')));
 
 // Proxy to API server
 if (__DEVELOPMENT__) {
-  console.log('is a dev ')
   app.use('http://localhost:' + config.apiPort, (req, res) => {
     proxy.web(req, res);
   });
