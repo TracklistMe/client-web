@@ -2,6 +2,7 @@ import React, {Component, PropTypes } from 'react';
 import {apiEndPoint} from '../../helpers/ApiClient';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {AddRemoveCounter} from 'components';
 import {addReleaseToCart, removeReleaseFromCart} from 'redux/modules/cart';
 
 @connect(
@@ -38,14 +39,18 @@ export default class ReleaseCartEntry extends Component {
               <td className="coverTD">
                 <img className="cover" src={apiEndPoint() + '/images/' + this.props.item.data.cover} />
               </td>
-              <td>{this.props.item.data.title}</td>
-              <td>Artists</td>
-              <td>
+              <td className="titleTD">{this.props.item.data.title}</td>
+              <td className="artistTD">Artists</td>
+              <td className="labelTD">
                 {this.props.item.data.Labels[0].displayName}
               </td>
-              <td>genre</td>
-              <td>Length</td>
-              <td><button onClick={this.handleAddTrack} >+</button> <button onClick={this.handleRemoveTrack} >-</button></td>
+              <td className="genreTD">genre</td>
+              <td className="lengthTD">Length</td>
+              <td className="addRemoveButtonTD">
+                <AddRemoveCounter addHandler={this.handleAddRelease}
+                                    counter={this.props.item.quantity}
+                                    removeHandler={this.handleRemoveRelease} />
+              </td>
               <td className="costTD">{this.props.item.total} {this.props.currencySymbol}</td>
             </tr>
           </table>

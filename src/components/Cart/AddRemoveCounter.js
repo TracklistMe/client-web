@@ -8,24 +8,23 @@ export default class AddRemoveCounter extends Component {
   };
   constructor(props) {
     super(props);
-    this.handleAddRelease = this.handleAddRelease.bind(this);
-    this.handleRemoveRelease = this.handleRemoveRelease.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
-  handleAddRelease() {
-    console.log('handler cliekced');
+  handleAdd() {
     this.props.addHandler();
   }
 
-  handleRemoveRelease() {
+  handleRemove() {
     this.props.removeHandler();
   }
   render() {
     return (
       <addRemoveCounter>
-        <button onClick={this.handleAddTrack} >+</button>
-        <span>2</span>
-        <button onClick={this.handleRemoveTrack} >-</button>
+        <button onClick={this.handleAdd} >+</button>
+        <span>{this.props.counter}</span>
+        <button onClick={this.handleRemove} >-</button>
       </addRemoveCounter>
     );
   }
