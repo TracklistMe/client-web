@@ -29,9 +29,28 @@
 .cartEntry tr {
 	padding: 0px;
 	margin: 0px;
-	height: 40px !important;
 }
 
+.cartEntry .verticalLine{
+  border-left: 1px solid @brand-darker;
+  margin-left: 30px;
+  bottom: 20px;
+  display: block;
+  position: absolute;
+}
+.cartEntry .expandItem{
+	height: 20px !important;
+	background-color: fade(@brand-neutral, 10%);
+	border-bottom: 0px solid @brand-darker;
+	text-align: center;
+}
+
+.cartEntry .tdNoCover {
+	border-bottom: 0px !important;
+	vertical-align: top;
+	padding-right: 5px;
+	position: relative;
+}
 
 .cart > table{
 	margin-top: 20px;
@@ -45,12 +64,15 @@
 }
 .cartEntry .coverTD{
 	width: 60px;
+	margin-right: 10px;
 }
-.cartEntry .titleTD{
+.cartEntry .titleTD {
 	text-align: left;
 	width: 25%;
-	margin-left: 60px;
 	padding-left: 1%;
+}
+.cartEntry .forceHeight {
+	height: 60px !important;
 }
 .cartEntry .artistTD{
 	width: 20%;
@@ -65,7 +87,7 @@
 	width: 10%;
 }
 .cartEntry .addRemoveButtonTD{
-	text-align: center;
+	text-align: right;
 	width: 15%;
 }
 .cartEntry .costTD{
