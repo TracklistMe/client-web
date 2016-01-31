@@ -15,25 +15,24 @@ module.exports = Object.assign({
   apiHost: process.env.APIHOST || 'localhost',
   apiPort: process.env.APIPORT,
   app: {
-    title: 'Tracklist Me',
-    description: 'Your Next Music Hub.',
-    meta: {
-      charSet: 'utf-8',
-      property: {
-        'og:site_name': 'Tracklist.me',
-        'og:image': 'https://react-redux.herokuapp.com/logo.jpg',
-        'og:locale': 'en_US',
-        'og:title': 'Tracklist Me',
-        'og:description': 'Your new music hub.',
-        'twitter:card': 'summary',
-        'twitter:site': '@tracklistme',
-        'twitter:creator': '@tracklistme',
-        'twitter:title': 'Tracklist.me',
-        'twitter:description': 'Your Next Music Hub.',
-        'twitter:image': 'https://react-redux.herokuapp.com/logo.jpg',
-        'twitter:image:width': '200',
-        'twitter:image:height': '200'
-      }
+    title: 'React Redux Example',
+    description: 'All the modern best practices in one example.',
+    head: {
+      titleTemplate: 'React Redux Example: %s',
+      meta: [
+        {name: 'description', content: 'All the modern best practices in one example.'},
+        {charset: 'utf-8'},
+        {property: 'og:site_name', content: 'Tracklist.me'},
+        {property: 'og:image', content: 'https://react-redux.herokuapp.com/logo.jpg'},
+        {property: 'og:locale', content: 'en_US'},
+        {property: 'og:title', content: 'Tracklist Me'},
+        {property: 'og:description', content: 'Your new music hub.'},
+        {property: 'og:card', content: 'summary'},
+        {property: 'og:site', content: '@tracklistme'},
+        {property: 'og:creator', content: '@tracklistme'},
+        {property: 'og:image:width', content: '200'},
+        {property: 'og:image:height', content: '200'}
+      ]
     }
   },
 
