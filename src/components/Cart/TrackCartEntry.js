@@ -11,7 +11,6 @@ import {addTrackToCart, removeTrackFromCart} from 'redux/modules/cart';
 
 export default class TrackCartEntry extends Component {
   static propTypes = {
-    key: PropTypes.number.isRequired,
     currencySymbol: PropTypes.string,
     item: PropTypes.object,
     addTrackToCart: PropTypes.func.isRequired,
@@ -35,7 +34,7 @@ export default class TrackCartEntry extends Component {
 
   render() {
     return (
-      <tr className="cartEntry trackCartEntry" key={this.props.key}>
+      <tr className="cartEntry trackCartEntry">
         <td className="coverTD">
           <img className="cover" src={apiEndPoint() + '/images/' + this.props.item.data.cover} />
         </td>
