@@ -30,6 +30,9 @@ export default class ReleaseJumbotron extends Component {
 
   render() {
     const release = this.props.release; // eslint-disable-line no-shadow
+    if (!release || !release.Tracks) {
+      return (<div></div>);
+    }
     const height = Math.max(570, 400 + (release.Tracks.length * 40));
     const uniqueArtists = [];
     let imd = 0;
@@ -45,10 +48,6 @@ export default class ReleaseJumbotron extends Component {
           uniqueArtists[artist.id].counter = uniqueArtists[artist.id].counter + 1;
         }
       }
-    }
-
-    if (!release) {
-      return (<div></div>);
     }
     return (
       <div className="releaseJumbotron">
