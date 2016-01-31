@@ -11,7 +11,6 @@ import {addReleaseToCart, removeReleaseFromCart} from 'redux/modules/cart';
 export default class ReleaseCartEntry extends Component {
 
   static propTypes = {
-    key: PropTypes.number.isRequired,
     currencySymbol: PropTypes.string,
     isExpanded: PropTypes.bool,
     item: PropTypes.object,
@@ -47,7 +46,7 @@ export default class ReleaseCartEntry extends Component {
     // There is a space between the cover and the end of that row
     const lineForReleaseRow = 10;
     return (
-      <tr className="cartEntry" key={this.props.key}>
+      <tr className="cartEntry">
         <td colSpan="8">
           <table>
             <tbody>
