@@ -8,6 +8,7 @@ import { loadCartInformations, loadCartEntries } from 'redux/modules/cart';
 import Helmet from 'react-helmet';
 import { pushState } from 'redux-router';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
+import ga from 'react-ga';
 
 const logo = require('./../../img/logoAphextwin.png');
 
@@ -42,6 +43,9 @@ export default class App extends Component {
     loadCartInformations: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired,
     loadCartEntries: PropTypes.func.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string
+    }),
   };
 
   static contextTypes = {
@@ -60,6 +64,11 @@ export default class App extends Component {
     }
   }
 
+  componentDidMount() {
+    ga.initialize('UA-41334661-1', { debug: true });
+    ga.pageview(this.props.location.pathname);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (!this.props.logged && nextProps.logged) {
       // login, readback the query.next and redirect accorderly.
@@ -72,6 +81,12 @@ export default class App extends Component {
     } else if (this.props.logged && !nextProps.logged) {
       // logout
       this.props.pushState(null, '/beta');
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      ga.pageview(nextProps.location.pathname);
     }
   }
 
