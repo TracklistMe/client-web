@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import DocumentMeta from 'react-document-meta';
 import BetaOnboardingForm from './../../components/Onboarding/BetaOnboardingForm';
+import ga from 'react-ga';
 
 const title = 'TracklistMe';
 const description = 'Fair for the artists, fair for you.';
@@ -32,6 +33,10 @@ const meta = {
 export default class Landing extends Component {
   static propTypes = {
     params: PropTypes.object
+  }
+  componentDidMount() {
+    ga.initialize('UA-41334661-1', { debug: true });
+    ga.pageview('Beta LandingPage');
   }
   render() {
     const {auth, id} = this.props.params;
