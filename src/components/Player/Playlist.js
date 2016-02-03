@@ -74,14 +74,14 @@ export default class Playlist extends Component {
       <div className="playlist-body">
         <ul className="playlist-songs">
           {playlist.map((track, index) =>
-            <li key={index} className={'playlist-song'}>
+            <li key={index} className={'playlist-song' + (index === player.currentSongIndex ? ' active' : '')}>
               <img className="playlist-song-image" src={apiEndPoint() + '/images/' + track.cover}/>
               <div className="playlist-song-title"> {track.title} ({track.version}) </div>
             </li>
           )}
         </ul>
       </div>
-      <div className = "playlist-footer" > 10 Songs </div>
+      <div className = "playlist-footer" > {playlist.length} Songs </div>
     </div>
     );
   }

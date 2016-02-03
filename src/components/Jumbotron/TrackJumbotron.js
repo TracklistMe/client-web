@@ -6,18 +6,18 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 // import { Waveform, d3 } from 'react-d3-components/dist/react-d3-components';
 import {apiEndPoint} from '../../helpers/ApiClient';
-import {addTrack} from 'redux/modules/player';
+import {playTrack} from 'redux/modules/player';
 
 @connect(
     state => ({player: state.player}),
-    dispatch => bindActionCreators({addTrack}, dispatch))
+    dispatch => bindActionCreators({playTrack}, dispatch))
 
 export default class TrackJumbotron extends Component {
   static propTypes = {
     track: PropTypes.shape({
       Genres: PropTypes.array
     }),
-    addTrack: PropTypes.func.isRequired
+    playTrack: PropTypes.func.isRequired
   };
   constructor(props) {
     super(props);
@@ -25,8 +25,7 @@ export default class TrackJumbotron extends Component {
   }
   addTrackToPlayer() {
     console.log('Received AD TRack Handle');
-    console.log(this.props.track);
-    this.props.addTrack(this.props.track);
+    this.props.playTrack(this.props.track);
     // this.props.addTrackToCart(this.props.item.data.id);
   }
   render() {

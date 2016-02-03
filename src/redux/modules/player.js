@@ -16,10 +16,28 @@ export default function reducer(state = initialState, action) {
   console.log(action.type);
   switch (action.type) {
     case PLAYER_ADD_TRACK:
-      state.playlist.push(action.song);
+      let isPlaying = state.isPlaying;
+      let currentSongIndex = state.currentSongIndex;
+      // check if the current track playing is the one that you want to play.
+      if (currentSongIndex) {
+        console.log(state.playlist[currentSongIndex].source, action.song.source);
+      }
+      if (currentSongIndex && state.playlist[currentSongIndex].source === action.song.source) {
+        // in this case the track is the same.
+      } else {
+        state.playlist.push(action.song);
+        if (action.addToQueue === false) {
+          // play the track straight away
+          isPlaying = true;
+          currentSongIndex = state.playlist.length - 1;
+          console.log(currentSongIndex);
+        }
+      }
       return {
         ...state,
-        playlist: state.playlist
+        playlist: state.playlist,
+        currentSongIndex: currentSongIndex,
+        isPlaying: isPlaying
       };
     case PLAYER_ADD_TRACK_SUCCESS:
       break;
@@ -50,10 +68,14 @@ export default function reducer(state = initialState, action) {
   }
 }
 
-export function addTrack(song) {
+export function playTrack(song, startingTime = -1, addToQueue = false) {
+  console.log(song);
+  song.source = song.snippetPath;
   console.log(song);
   return {
     type: PLAYER_ADD_TRACK,
-    song: song
+    song: song,
+    startingTime: startingTime,
+    addToQueue: addToQueue
   };
 }
