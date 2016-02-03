@@ -12,10 +12,15 @@ const initialState = {
   playlist: []
 };
 
-export default function player(state = initialState, action) {
+export default function reducer(state = initialState, action) {
+  console.log(action.type);
   switch (action.type) {
     case PLAYER_ADD_TRACK:
-      break;
+      state.playlist.push(action.song);
+      return {
+        ...state,
+        playlist: state.playlist
+      };
     case PLAYER_ADD_TRACK_SUCCESS:
       break;
     case PLAYER_ADD_TRACK_FAILURE:
@@ -45,11 +50,10 @@ export default function player(state = initialState, action) {
   }
 }
 
-export function addTrack(song, startingTime, waitInQueue) {
+export function addTrack(song) {
+  console.log(song);
   return {
-    types: [PLAYER_ADD_TRACK, PLAYER_ADD_TRACK_SUCCESS, PLAYER_ADD_TRACK_FAILURE],
-    song: song,
-    startingTime: startingTime,
-    waitInQueue: waitInQueue
+    type: PLAYER_ADD_TRACK,
+    song: song
   };
 }
