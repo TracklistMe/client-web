@@ -16,7 +16,7 @@ export default class ReleaseJumbotron extends Component {
   static propTypes = {
     addTrackToCart: PropTypes.func.isRequired,
     release: PropTypes.object
-  }
+  };
 
 
   constructor(props) {

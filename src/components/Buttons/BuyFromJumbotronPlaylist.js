@@ -4,7 +4,7 @@ export default class BuyFromJumbotronPlaylist extends Component {
   static defaultProps = {
     name: '',
     icon: true
-  }
+  };
 
   render() {
     return (

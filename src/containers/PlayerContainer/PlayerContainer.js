@@ -7,7 +7,7 @@ import {getPlayingSongId} from '../../utils/PlayerUtils';
 export default class PlayerContainer extends Component {
   static propTypes = {
     playingSongId: PropTypes.number
-  }
+  };
 
   render() {
   //  const isMobile = false;

@@ -10,13 +10,11 @@ import {SurveyForm} from 'components';
 export default class Survey extends Component {
   static propTypes = {
     initialize: PropTypes.func.isRequired
-  }
-
+  };
   handleSubmit = (data) => {
     window.alert('Data submitted! ' + JSON.stringify(data));
     this.props.initialize('survey', {});
-  }
-
+  };
   handleInitialize = () => {
     this.props.initialize('survey', {
       name: 'Little Bobby Tables',
@@ -25,8 +23,7 @@ export default class Survey extends Component {
       currentlyEmployed: true,
       sex: 'male'
     });
-  }
-
+  };
   render() {
     return (
       <div className="container">

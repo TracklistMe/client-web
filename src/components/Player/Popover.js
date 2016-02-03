@@ -5,7 +5,7 @@ export default class Popover extends Component {
   static propTypes = {
     children: PropTypes.array,
     className: PropTypes.string
-  }
+  };
   constructor(props) {
     super(props);
     if (props.children.length !== 2) {
