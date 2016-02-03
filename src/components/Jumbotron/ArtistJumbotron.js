@@ -11,7 +11,7 @@ export default class ArtistJumbotron extends Component {
       avatar: PropTypes.string.isRequired
     }),
     onDrop: PropTypes.func
-  }
+  };
 
   constructor(props) {
     super(props);

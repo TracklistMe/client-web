@@ -5,11 +5,10 @@ export default class TimeDuration extends Component {
     length: PropTypes.number,
     format: PropTypes.string
   };
-
   static defaultProps = {
     length: 0,
     format: 'hh:mm:ss'
-  }
+  };
   render() {
     const hours = Math.floor(this.props.length / (60 * 60));
     const reminderFromHours = this.props.length % (60 * 60);

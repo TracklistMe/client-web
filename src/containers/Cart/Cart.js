@@ -8,7 +8,7 @@ import { TrackCartEntry, ReleaseCartEntry} from 'components';
 export default class Cart extends Component {
   static propTypes = {
     cart: PropTypes.object
-  }
+  };
   render() {
     const {cart} = this.props;
     if (!cart) {
