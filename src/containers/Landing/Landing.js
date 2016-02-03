@@ -29,11 +29,10 @@ const meta = {
     }
   }
 };
-
 export default class Landing extends Component {
   static propTypes = {
     params: PropTypes.object
-  }
+  };
   componentDidMount() {
     ga.initialize('UA-41334661-1', { debug: true });
     ga.pageview('Beta LandingPage');

@@ -46,7 +46,7 @@ export default class BetaOnboardingForm extends Component {
     loginWithPassword: PropTypes.func,
     auth: PropTypes.string,
     id: PropTypes.string
-  }
+  };
 
   constructor(props) {
     super(props);

@@ -6,7 +6,7 @@ export default class TracklistJumbotron extends Component {
     tracklist: PropTypes.shape({
       Genres: PropTypes.array
     })
-  }
+  };
   render() {
     const data = [{
       label: 'somethingA',

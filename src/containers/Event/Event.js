@@ -15,12 +15,10 @@ export default class Track extends Component
   static propTypes = {
     params: PropTypes.object,
     track: PropTypes.object
-  }
-
+  };
   static contextTypes = {
     store: PropTypes.object.isRequired
-  }
-
+  };
   componentDidMount() {
     // to do: remove second loading here for client-side navigation
     // to do: remove loading here for server-side rendered page

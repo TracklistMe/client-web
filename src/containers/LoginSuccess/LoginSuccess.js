@@ -11,8 +11,7 @@ class LoginSuccess extends Component {
     user: PropTypes.object,
     logout: PropTypes.func,
     logged: PropTypes.bool
-  }
-
+  };
   render() {
     const {logged, logout} = this.props;
     return (logged &&
