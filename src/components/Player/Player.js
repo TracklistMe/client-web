@@ -9,10 +9,12 @@ import SongDetails from './SongDetails';
 import {CHANGE_TYPES} from '../../constants/SongConstants';
 import {formatSeconds} from '../../utils/FormatUtils';
 import {offsetLeft} from '../../utils/MouseUtils';
+
+import {apiEndPoint} from '../../helpers/ApiClient';
 // import {getImageUrl} from '../utils/SongUtils';
 
 @connect(
-    state => ({player: state}),
+    state => ({player: state.player}),
     dispatch => bindActionCreators({changeCurrentTime, changeSong, toggleIsPlaying}, dispatch))
 export default class Player extends Component {
   static propTypes = {
@@ -20,12 +22,11 @@ export default class Player extends Component {
     users: PropTypes.object,
     playingSongId: PropTypes.number,
     player: PropTypes.shape({
-      player: PropTypes.shape({
-        currentSongIndex: PropTypes.number,
-        currentTime: PropTypes.number,
-        isPlaying: PropTypes.bool,
-        selectedPlaylists: PropTypes.array
-      })
+      currentSongIndex: PropTypes.number,
+      currentTime: PropTypes.number,
+      isPlaying: PropTypes.bool,
+      playlist: PropTypes.array,
+      selectedPlaylists: PropTypes.array
     }),
     playlists: PropTypes.object,
     currentTime: PropTypes.number,
@@ -183,7 +184,7 @@ export default class Player extends Component {
     this.setState({
       isSeeking: false,
     }, function updateTime() {
-      ReactDOM.findDOMNode(this.refs.audio).currentTime = this.props.player.player.currentTime;
+      ReactDOM.findDOMNode(this.refs.audio).currentTime = this.props.player.currentTime;
     });
   }
 
@@ -264,7 +265,7 @@ export default class Player extends Component {
   togglePlay() {
     const {
       isPlaying
-    } = this.props.player.player;
+    } = this.props.player;
     const audioElement = ReactDOM.findDOMNode(this.refs.audio);
     if (isPlaying) {
       audioElement.pause();
@@ -324,14 +325,14 @@ export default class Player extends Component {
     const {player, songs} = this.props;
     return (
       <Playlist
-                player={player.player}
+                player={player}
                 songs={songs} />
     );
   }
 
   renderDurationBar() {
     const {duration} = this.state;
-    const {currentTime} = this.props.player.player;
+    const {currentTime} = this.props.player;
     if (duration !== 0) {
       const width = currentTime / duration * 100;
       return (
@@ -344,18 +345,23 @@ export default class Player extends Component {
   }
 
   render() {
-    const {currentTime, isPlaying} = this.props.player.player;
+    const {currentTime, isPlaying, playlist, currentSongIndex} = this.props.player;
+    if (!playlist) {
+      return (<div> </div>);
+    }
     return (
       <div className="player">
-        <audio id="audio" src="http://promo.tracklist.me/datastore/Sphera_Records/SPH162/SPH162_4_cutted.mp3" ref="audio"></audio>
+        <audio id="audio" autoPlay src={currentSongIndex !== null ? (apiEndPoint() + '/snippets/' + playlist[currentSongIndex].source) : ''} ref="audio"></audio>
         <div className="container">
           <div className="player-main">
+            {currentSongIndex !== null &&
             <div className="player-section player-info">
-              <img className="player-image" src={'https://geo-media.beatport.com/image/12299950.jpg'} />
+              <img className="player-image" src={apiEndPoint() + '/images/' + playlist[currentSongIndex].cover} />
               <SongDetails
-                title={'song.title'}
+                title={playlist[currentSongIndex].title + ' (' + playlist[currentSongIndex].version + ')'}
                 username={'artists name '} />
             </div>
+            }
             <div className="player-section">
               <div
                 className="player-button">
