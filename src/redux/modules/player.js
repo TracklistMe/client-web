@@ -1,6 +1,7 @@
 import * as types from '../../constants/ActionTypes';
 // Load cart informations
 const PLAYER_ADD_TRACK = 'PLAYER_ADD_TRACK';
+const GO_TO_ENTRY = 'GO_TO_ENTRY';
 const PLAYER_ADD_TRACK_SUCCESS = 'PLAYER_ADD_TRACK_SUCCESS';
 const PLAYER_ADD_TRACK_FAILURE = 'PLAYER_ADD_TRACK_FAILURE';
 
@@ -38,6 +39,11 @@ export default function reducer(state = initialState, action) {
         playlist: state.playlist,
         currentSongIndex: currentSongIndex,
         isPlaying: isPlaying
+      };
+    case GO_TO_ENTRY:
+      return {
+        ...state,
+        currentSongIndex: action.index
       };
     case PLAYER_ADD_TRACK_SUCCESS:
       break;
@@ -77,5 +83,12 @@ export function playTrack(song, startingTime = -1, addToQueue = false) {
     song: song,
     startingTime: startingTime,
     addToQueue: addToQueue
+  };
+}
+
+export function goToEntry(index) {
+  return {
+    type: GO_TO_ENTRY,
+    index: index
   };
 }

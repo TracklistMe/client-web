@@ -1,14 +1,18 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {apiEndPoint} from '../../helpers/ApiClient';
+import {goToEntry} from 'redux/modules/player';
+import {bindActionCreators} from 'redux';
 
 @connect(
-    state => ({player: state.player}))
+    state => ({player: state.player}),
+    dispatch => bindActionCreators({goToEntry}, dispatch))
 
 export default class Playlist extends Component {
   static propTypes = {
     player: PropTypes.object.isRequired,
-    songs: PropTypes.object
+    songs: PropTypes.object,
+    goToEntry: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -22,6 +26,9 @@ export default class Playlist extends Component {
     this.setState({
       shownPlaylistIndex: null
     });
+  }
+  goToEntryHandle(index) {
+    this.props.goToEntry(index);
   }
 
   changeShownPlaylistIndex(index, event) {
@@ -74,7 +81,7 @@ export default class Playlist extends Component {
       <div className="playlist-body">
         <ul className="playlist-songs">
           {playlist.map((track, index) =>
-            <li key={index} className={'playlist-song' + (index === player.currentSongIndex ? ' active' : '')}>
+            <li key={index} onClick={this.goToEntryHandle.bind(this, index)} className={'playlist-song' + (index === player.currentSongIndex ? ' active' : '')}>
               <img className="playlist-song-image" src={apiEndPoint() + '/images/' + track.cover}/>
               <div className="playlist-song-title"> {track.title} ({track.version}) </div>
             </li>
