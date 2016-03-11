@@ -107,11 +107,8 @@
     "express": "^4.13.3",
     "express-session": "^1.12.1",
     "file-loader": "^0.8.5",
-<<<<<<< HEAD
     "history": "1.17.0",
-=======
     "hoist-non-react-statics": "^1.0.3",
->>>>>>> erikras/master
     "http-proxy": "^1.12.0",
     "invariant": "^2.2.0",
     "less": "^2.6.0",
