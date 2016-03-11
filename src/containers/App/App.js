@@ -6,6 +6,7 @@ import { logout, loadAuthCookie, loadPersonalInfo } from 'redux/modules/auth';
 import { load as loadGenre } from 'redux/modules/genre';
 import { loadCartInformations, loadCartEntries } from 'redux/modules/cart';
 import Helmet from 'react-helmet';
+<<<<<<< HEAD
 import { pushState } from 'redux-router';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
 
@@ -27,6 +28,32 @@ const NavbarLink = ({to, children}) => (
   }),
   {logout, loadGenre, loadPersonalInfo, loadAuthCookie, loadCartInformations, loadCartEntries, pushState})
 
+=======
+import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
+import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
+import { InfoBar } from 'components';
+import { routeActions } from 'react-router-redux';
+import config from '../../config';
+import { asyncConnect } from 'redux-async-connect';
+
+@asyncConnect([{
+  promise: ({store: {dispatch, getState}}) => {
+    const promises = [];
+
+    if (!isInfoLoaded(getState())) {
+      promises.push(dispatch(loadInfo()));
+    }
+    if (!isAuthLoaded(getState())) {
+      promises.push(dispatch(loadAuth()));
+    }
+
+    return Promise.all(promises);
+  }
+}])
+@connect(
+  state => ({user: state.auth.user}),
+  {logout, pushState: routeActions.push})
+>>>>>>> erikras/master
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -61,6 +88,7 @@ export default class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+<<<<<<< HEAD
     if (!this.props.logged && nextProps.logged) {
       // login, readback the query.next and redirect accorderly.
       this.props.loadPersonalInfo();
@@ -72,13 +100,21 @@ export default class App extends Component {
     } else if (this.props.logged && !nextProps.logged) {
       // logout
       this.props.pushState(null, '/beta');
+=======
+    if (!this.props.user && nextProps.user) {
+      // login
+      this.props.pushState('/loginSuccess');
+    } else if (this.props.user && !nextProps.user) {
+      // logout
+      this.props.pushState('/');
+>>>>>>> erikras/master
     }
   }
 
   handleLogout = (event) => {
     event.preventDefault();
     this.props.logout();
-  }
+  };
 
   render() {
     const {user, logged, genres, totalBasketItems} = this.props;

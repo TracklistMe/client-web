@@ -20,14 +20,19 @@ import {
   } from 'containers';
 import {requireAuthentication} from 'components/AuthenticationComponent/AuthenticationComponent';
 
+<<<<<<< HEAD
 export default () => {
   /*
   const requireLogin = (nextState, replaceState, cb) => {
+=======
+export default (store) => {
+  const requireLogin = (nextState, replace, cb) => {
+>>>>>>> erikras/master
     function checkAuth() {
       const { auth: { user }} = store.getState();
       if (!user) {
         // oops, not logged in, so can't be here!
-        replaceState(null, '/');
+        replace('/');
       }
       cb();
     }

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import multireducer from 'multireducer';
-import { routerStateReducer } from 'redux-router';
+import { routeReducer } from 'react-router-redux';
+import {reducer as reduxAsyncConnect} from 'redux-async-connect';
 
 import auth from './auth';
 import counter from './counter';
@@ -16,7 +17,8 @@ import artist from './artist';
 import cart from './cart';
 
 export default combineReducers({
-  router: routerStateReducer,
+  routing: routeReducer,
+  reduxAsyncConnect,
   auth,
   form,
   multireducer: multireducer({
