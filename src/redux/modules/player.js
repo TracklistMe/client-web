@@ -23,10 +23,10 @@ export default function reducer(state = initialState, action) {
       let isPlaying = state.isPlaying;
       let currentSongIndex = state.currentSongIndex;
       // check if the current track playing is the one that you want to play.
-      if (currentSongIndex) {
+      if (currentSongIndex !== null) {
         console.log(state.playlist[currentSongIndex].source, action.song.source);
       }
-      if (currentSongIndex && state.playlist[currentSongIndex].source === action.song.source) {
+      if (currentSongIndex !== null && state.playlist[currentSongIndex].source === action.song.source) {
         // in this case the track is the same.
       } else {
         state.playlist.push(action.song);
@@ -51,15 +51,17 @@ export default function reducer(state = initialState, action) {
     case GO_TO_NEXT:
       return {
         ...state,
+        currentTime: 0,
         currentSongIndex: (state.currentSongIndex + 1) % state.playlist.length
       };
     case GO_TO_PREVIOUS:
-      let previousEntryIndex= state.currentSongIndex - 1;
-      if (previousEntryIndex < 0){
+      let previousEntryIndex = state.currentSongIndex - 1;
+      if (previousEntryIndex < 0) {
         previousEntryIndex = state.playlist.length - 1;
       }
       return {
         ...state,
+        currentTime: 0,
         currentSongIndex: previousEntryIndex
       };
     case PLAYER_ADD_TRACK_SUCCESS:
@@ -92,9 +94,7 @@ export default function reducer(state = initialState, action) {
 }
 
 export function playTrack(song, startingTime = -1, addToQueue = false) {
-  console.log(song);
   song.source = song.snippetPath;
-  console.log(song);
   return {
     type: PLAYER_ADD_TRACK,
     song: song,
@@ -113,11 +113,11 @@ export function goToEntry(index) {
 export function nextEntry() {
   return {
     type: GO_TO_NEXT
-  }
+  };
 }
 
 export function previousEntry() {
   return {
     type: GO_TO_PREVIOUS
-  }
+  };
 }

@@ -9,13 +9,14 @@ import SongDetails from './SongDetails';
 import {CHANGE_TYPES} from '../../constants/SongConstants';
 import {formatSeconds} from '../../utils/FormatUtils';
 import {offsetLeft} from '../../utils/MouseUtils';
+import {nextEntry, previousEntry} from 'redux/modules/player';
 
 import {apiEndPoint} from '../../helpers/ApiClient';
 // import {getImageUrl} from '../utils/SongUtils';
 
 @connect(
     state => ({player: state.player}),
-    dispatch => bindActionCreators({changeCurrentTime, changeSong, toggleIsPlaying}, dispatch))
+    dispatch => bindActionCreators({changeCurrentTime, changeSong, toggleIsPlaying, nextEntry, previousEntry}, dispatch))
 export default class Player extends Component {
   static propTypes = {
     songs: PropTypes.object,
@@ -28,6 +29,8 @@ export default class Player extends Component {
       playlist: PropTypes.array,
       selectedPlaylists: PropTypes.array
     }),
+    nextEntry: PropTypes.func.isRequired,
+    previousEntry: PropTypes.func.isRequired,
     playlists: PropTypes.object,
     currentTime: PropTypes.number,
     changeCurrentTime: PropTypes.func.isRequired,
@@ -54,13 +57,13 @@ export default class Player extends Component {
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
     this.seek = this.seek.bind(this);
+    this.nextHandler = this.nextHandler.bind(this);
+    this.previousHandler = this.previousHandler.bind(this);
     this.toggleMute = this.toggleMute.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
     this.toggleRepeat = this.toggleRepeat.bind(this);
     this.toggleShuffle = this.toggleShuffle.bind(this);
     this.state = {
-      activePlaylistIndex: null,
-      currentTime: 0,
       duration: 0,
       isSeeking: false,
       muted: false,
@@ -121,6 +124,16 @@ export default class Player extends Component {
     audioElement.volume = volume;
   }
 
+  nextHandler() {
+    // Workaround for updating the time in case we have only one track in playlist
+    document.getElementById('audio').currentTime = 0;
+    this.props.nextEntry();
+  }
+  previousHandler() {
+    // Workaround for updating the time in case we have only one track in playlist
+    this.props.previousEntry();
+  }
+
   handleEnded() {
     if (this.state.repeat) {
       ReactDOM.findDOMNode(this.refs.audio).play();
@@ -154,6 +167,7 @@ export default class Player extends Component {
   }
 
   handlePlay() {
+    console.log('IS PLAYING');
     this.props.toggleIsPlaying(true);
   }
 
@@ -192,10 +206,8 @@ export default class Player extends Component {
     if (this.state.isSeeking) {
       return;
     }
-
     const audioElement = event.currentTarget;
     const currentTime = Math.floor(audioElement.currentTime);
-
     this.props.changeCurrentTime(currentTime);
   }
 
@@ -365,7 +377,7 @@ export default class Player extends Component {
             <div className="player-section">
               <div
                 className="player-button">
-                <icon className="basic-pictoskip-back pictoFont"></icon>
+                <icon onClick={this.previousHandler} className="basic-pictoskip-back pictoFont"></icon>
               </div>
               <div
                 className="player-button"
@@ -374,7 +386,7 @@ export default class Player extends Component {
               </div>
               <div
                 className="player-button">
-                <icon className="basic-pictoskip-forward pictoFont"></icon>
+                <icon onClick={this.nextHandler} className="basic-pictoskip-forward pictoFont"></icon>
               </div>
             </div>
             <div className="player-section player-seek">
