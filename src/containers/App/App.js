@@ -7,6 +7,7 @@ import { load as loadGenre } from 'redux/modules/genre';
 import { loadCartInformations, loadCartEntries } from 'redux/modules/cart';
 import Helmet from 'react-helmet';
 import { pushState } from 'redux-router';
+import { routeActions } from 'react-router-redux';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
 // import { asyncConnect } from 'redux-async-connect'; how to handle async redux connection
 
@@ -26,7 +27,7 @@ const NavbarLink = ({to, children}) => (
     logged: state.auth.logged,
     totalBasketItems: state.cart.totalBasketItems
   }),
-  {logout, loadGenre, loadPersonalInfo, loadAuthCookie, loadCartInformations, loadCartEntries, pushState})
+  {logout, loadGenre, loadPersonalInfo, loadAuthCookie, loadCartInformations, loadCartEntries, pushState: routeActions.push})
 
 /* Example of async connection in redux
 @asyncConnect([{
