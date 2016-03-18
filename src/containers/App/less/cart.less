@@ -29,9 +29,30 @@
 .cartEntry tr {
 	padding: 0px;
 	margin: 0px;
-	height: 40px !important;
 }
 
+.cartEntry .verticalLine{
+  border-left: 1px solid @brand-darker;
+  margin-left: 30px;
+  bottom: 20px;
+  display: block;
+  position: absolute;
+}
+.cartEntry .expandItem{
+	height: 20px !important;
+	background-color: fade(@brand-neutral, 10%);
+	border-bottom: 0px solid @brand-darker;
+	text-align: center;
+	cursor: pointer; 
+	cursor: hand;
+}
+
+.cartEntry .tdNoCover {
+	border-bottom: 0px !important;
+	vertical-align: top;
+	padding-right: 5px;
+	position: relative;
+}
 
 .cart > table{
 	margin-top: 20px;
@@ -45,27 +66,34 @@
 }
 .cartEntry .coverTD{
 	width: 60px;
+	margin-right: 10px;
 }
-.cartEntry .titleTD{
-	width: 60px;
+.cartEntry .titleTD {
+	text-align: left;
+	width: 25%;
+	padding-left: 1%;
+}
+.cartEntry .forceHeight {
+	height: 61px !important;
 }
 .cartEntry .artistTD{
-	width: 60px;
+	width: 20%;
 }
 .cartEntry .labelTD{
-	width: 60px;
+	width: 10%;
 }
 .cartEntry .genreTD{
-	width: 60px;
+	width: 10%;
 }
 .cartEntry .lengthTD{
-	width: 60px;
+	width: 10%;
 }
 .cartEntry .addRemoveButtonTD{
-	width: 60px;
+	text-align: right;
+	width: 15%;
 }
 .cartEntry .costTD{
-	background-color: #fc0;
-	text-align: center;
-	width: 60px;
+	text-align: right;
+	padding-right: 2%;
+	width: 8%;
 }

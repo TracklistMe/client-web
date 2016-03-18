@@ -4,7 +4,7 @@ export default class BuyFromTop10Chart extends Component {
   static defaultProps = {
     name: '',
     icon: true
-  }
+  };
 
   render() {
     return (

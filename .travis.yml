@@ -17,3 +17,6 @@ script:
   - npm run lint
   - npm test
   - npm run test-node
+
+notifications:
+  slack: tracklistme:hsgCdsyo04B7QGU1eXbN9OUV

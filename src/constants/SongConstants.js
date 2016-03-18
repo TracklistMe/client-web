@@ -15,9 +15,9 @@ export const GENRES = [
   'tropical'
 ];
 
-export const GENRES_MAP = (function() {
+export const GENRES_MAP = (function generateMaps() {
   const result = {};
-  GENRES.forEach(function(genre) {
+  GENRES.forEach(function generateGenres(genre) {
     result[genre] = 1;
   });
   return result;

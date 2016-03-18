@@ -6,6 +6,12 @@ export default class TracklistEntry extends Component {
     return (
       <div key={this.props.id} className={'tracklistEntry ' + (this.props.active === true ? 'active' : '')}>
         <div className={'cell cover ' + (this.props.active === true ? 'active' : '')}><img src="http://www.sorstu.ca/wp-content/uploads/artistes/square/adam-beyer.jpg" /></div>
+        <div className="cell cell-valign-middle">
+          <span>13:10</span>
+
+          arrow down
+          <span>23:14</span>
+        </div>
         <div className="cell cell-valign-middle">Title</div>
         <div className="cell cell-valign-middle">Artist</div>
         <div className="cell cell-valign-middle">Label</div>

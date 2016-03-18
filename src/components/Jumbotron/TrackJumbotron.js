@@ -9,7 +9,7 @@ export default class TrackJumbotron extends Component {
     track: PropTypes.shape({
       Genres: PropTypes.array
     })
-  }
+  };
   render() {
     const data = [{
       label: 'somethingA',

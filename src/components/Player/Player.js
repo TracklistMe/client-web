@@ -182,7 +182,7 @@ export default class Player extends Component {
     document.removeEventListener('mouseup', this.handleSeekMouseUp);
     this.setState({
       isSeeking: false,
-    }, function() {
+    }, function updateTime() {
       ReactDOM.findDOMNode(this.refs.audio).currentTime = this.props.player.player.currentTime;
     });
   }
@@ -236,7 +236,7 @@ export default class Player extends Component {
 
     this.setState({
       isSeeking: false,
-    }, function() {
+    }, function updateVolume() {
       ReactDOM.findDOMNode(this.refs.audio).volume = this.state.volume;
     });
   }

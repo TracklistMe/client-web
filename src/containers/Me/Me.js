@@ -8,7 +8,7 @@ import DocumentMeta from 'react-document-meta';
 export default class Me extends Component {
   static propTypes = {
     user: PropTypes.object
-  }
+  };
   render() {
     const {user} = this.props;
     if (!user) {

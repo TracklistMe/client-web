@@ -4,8 +4,7 @@ export default class MainHeaderBackground extends Component {
   static defaultProps = {
     image: '',
     height: 500
-  }
-
+  };
   render() {
     const navbarHeight = 60;
     return (

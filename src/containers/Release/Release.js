@@ -15,11 +15,10 @@ export default class Release extends Component
   static propTypes = {
     params: PropTypes.object,
     release: PropTypes.object
-  }
-
+  };
   static contextTypes = {
     store: PropTypes.object.isRequired
-  }
+  };
 
   componentDidMount() {
     // to do: remove second loading here for client-side navigation

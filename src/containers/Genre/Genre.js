@@ -13,7 +13,7 @@ export default class Genre extends Component
     loadGenre: PropTypes.func,
     unloadGenre: PropTypes.func,
     params: PropTypes.object
-  }
+  };
   componentDidMount() {
     // to do: remove second loading here for client-side navigation
     // to do: remove loading here for server-side rendered page
