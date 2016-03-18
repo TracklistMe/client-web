@@ -73,7 +73,7 @@ function addItemToBasket(basket, itemToAdd) {
   // Verify if the item is not already available in the current snapshot of the store, otherwise just add it.
   let found = false;
   for (let indexElement = 0; indexElement < basket.length; indexElement++) {
-    console.log(basket[indexElement].id, itemToAdd.id);
+    // console.log(basket[indexElement].id, itemToAdd.id);
     if (basket[indexElement].id === itemToAdd.id) {
       found = true;
       basket[indexElement].quantity += itemToAdd.quantity;

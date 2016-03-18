@@ -87,14 +87,18 @@ export default class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.logged && nextProps.logged) {
-      // login, readback the query.next and redirect accorderly.
+    const isLogged = this.props.logged;
+    const nextStateIsLogged = nextProps.logged;
+    if (isLogged === false && nextStateIsLogged === true) {
+      // I just got logged in succesffuly.
+      // If there were a query parameter next, move to that location,
+      // otherwise go to the user profile page.
       this.props.loadPersonalInfo();
       this.props.loadCartInformations();
       this.props.loadCartEntries();
       // process to change the route.
       const redirectRoute = nextProps.location.query.next || '/me';
-      this.props.pushState(null, redirectRoute);
+      this.props.pushState(redirectRoute);
     } else if (this.props.logged && !nextProps.logged) {
       // logout
       this.props.pushState(null, '/beta');
