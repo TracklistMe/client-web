@@ -21,7 +21,8 @@ import {
 import {requireAuthentication} from 'components/AuthenticationComponent/AuthenticationComponent';
 
 
-export default (store) => {
+export default () => {
+  /*
   const requireLogin = (nextState, replace, cb) => {
     function checkAuth() {
       const { auth: { user }} = store.getState();
@@ -41,8 +42,7 @@ export default (store) => {
       store.dispatch(loadAuth()).then(checkAuth);
     }
   };
- 
-
+ */
 
   /**
    * Please keep routes in alphabetical order

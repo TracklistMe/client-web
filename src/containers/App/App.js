@@ -6,7 +6,6 @@ import { logout, loadAuthCookie, loadPersonalInfo } from 'redux/modules/auth';
 import { load as loadGenre } from 'redux/modules/genre';
 import { loadCartInformations, loadCartEntries } from 'redux/modules/cart';
 import Helmet from 'react-helmet';
-import { pushState } from 'redux-router';
 import { routeActions } from 'react-router-redux';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
 // import { asyncConnect } from 'redux-async-connect'; how to handle async redux connection
