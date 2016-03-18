@@ -20,14 +20,15 @@ import {
   } from 'containers';
 import {requireAuthentication} from 'components/AuthenticationComponent/AuthenticationComponent';
 
+
 export default () => {
   /*
-  const requireLogin = (nextState, replaceState, cb) => {
+  const requireLogin = (nextState, replace, cb) => {
     function checkAuth() {
       const { auth: { user }} = store.getState();
       if (!user) {
         // oops, not logged in, so can't be here!
-        replaceState(null, '/');
+        replace('/');
       }
       cb();
     }
@@ -41,8 +42,7 @@ export default () => {
       store.dispatch(loadAuth()).then(checkAuth);
     }
   };
-  */
-
+ */
 
   /**
    * Please keep routes in alphabetical order

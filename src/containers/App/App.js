@@ -6,8 +6,9 @@ import { logout, loadAuthCookie, loadPersonalInfo } from 'redux/modules/auth';
 import { load as loadGenre } from 'redux/modules/genre';
 import { loadCartInformations, loadCartEntries } from 'redux/modules/cart';
 import Helmet from 'react-helmet';
-import { pushState } from 'redux-router';
+import { routeActions } from 'react-router-redux';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
+// import { asyncConnect } from 'redux-async-connect'; how to handle async redux connection
 import ga from 'react-ga';
 
 const logo = require('./../../img/logoAphextwin.png');
@@ -26,8 +27,24 @@ const NavbarLink = ({to, children}) => (
     logged: state.auth.logged,
     totalBasketItems: state.cart.totalBasketItems
   }),
-  {logout, loadGenre, loadPersonalInfo, loadAuthCookie, loadCartInformations, loadCartEntries, pushState})
+  {logout, loadGenre, loadPersonalInfo, loadAuthCookie, loadCartInformations, loadCartEntries, pushState: routeActions.push})
 
+/* Example of async connection in redux
+@asyncConnect([{
+  promise: ({store: {dispatch, getState}}) => {
+    const promises = [];
+
+    if (!isInfoLoaded(getState())) {
+      promises.push(dispatch(loadInfo()));
+    }
+    if (!isAuthLoaded(getState())) {
+      promises.push(dispatch(loadAuth()));
+    }
+
+    return Promise.all(promises);
+  }
+}])
+*/
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,

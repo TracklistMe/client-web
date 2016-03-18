@@ -2,7 +2,6 @@ import React, {Component, PropTypes } from 'react';
 import MainHeaderBackground from '../MainHeader/MainHeaderBackground';
 import ArtistComponent from '../Artist/ArtistComponent';
 import CustomButton from '../Buttons/CustomButton';
-// import { Waveform, d3 } from 'react-d3-components/dist/react-d3-components';
 import {apiEndPoint} from '../../helpers/ApiClient';
 
 export default class TrackJumbotron extends Component {
@@ -55,6 +54,7 @@ export default class TrackJumbotron extends Component {
               </div>
               <div className="row">
                 <div className="col-sm-12 text-left">
+                  No waveform
                 </div>
                 <div className="col-xs-6 col-lg-3 text-left">
                   Released: <strong>20/12/2014</strong>
