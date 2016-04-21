@@ -2,11 +2,11 @@ import React, {Component, PropTypes} from 'react';
 import { TracklistJumbotron, Headline, TracklistEntry } from 'components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { load } from 'redux/modules/track';
+import { load } from 'redux/modules/tracklist';
 
 @connect(
   store => ({
-    tracklist: store.track.data
+    tracklist: store.tracklist.data
   }),
   dispatch => bindActionCreators({ load }, dispatch)
 )
@@ -28,7 +28,7 @@ export default class Tracklist extends Component
   }
 
   componentWillReceiveProps(nextProps) {
-    if (parseInt(this.context.store.getState().track.data.id, 10) !== parseInt(nextProps.params.id, 10)) {
+    if (parseInt(this.context.store.getState().tracklist.data.id, 10) !== parseInt(nextProps.params.id, 10)) {
       this.constructor.preload(this.context.store, nextProps.params.id);
     }
   }

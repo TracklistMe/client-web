@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 export function addCommas(str) {
   if (!(str === null || str === undefined)) {
     return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -25,6 +27,10 @@ export function formatSeconds(num) {
   return `${minutes}:${seconds}`;
 }
 
+export function formatDate(date, format) {
+  console.log(date);
+  return moment(date).format(format);
+}
 export function getSocialIcon(service) {
   switch (service) {
     case 'facebook':
