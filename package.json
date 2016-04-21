@@ -147,7 +147,7 @@
     "webpack-isomorphic-tools": "^2.2.18"
   },
   "devDependencies": {
-    "autoprefixer-loader": "^3.1.0",
+    "autoprefixer-loader": "^3.2.0",
     "babel-eslint": "^5.0.0-beta6",
     "babel-plugin-react-transform": "^2.0.0",
     "babel-plugin-typecheck": "^3.6.0",
