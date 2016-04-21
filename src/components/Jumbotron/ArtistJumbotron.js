@@ -24,7 +24,6 @@ export default class ArtistJumbotron extends Component {
 
   onDrop(files) {
     console.log('DROPPED A FILE BUM! ');
-    console.log(files);
     this.setState({
       files: files
     });

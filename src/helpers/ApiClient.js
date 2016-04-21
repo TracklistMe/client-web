@@ -27,7 +27,6 @@ function formatUrl(path) {
  */
 class _ApiClient {
   constructor(req) {
-    console.log('REQUEST ', req);
     methods.forEach((method) =>
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
