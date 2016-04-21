@@ -38,7 +38,6 @@ export default class ReleaseJumbotron extends Component {
     let imd = 0;
     for (const track of release.Tracks) {
       for (const artist of track.Producer) {
-        console.log(artist.displayName);
         imd = imd + 1;
         if (!uniqueArtists[artist.id]) {
           // The artist doesn't exists.
