@@ -7,7 +7,6 @@ import { load as loadGenre } from 'redux/modules/genre';
 import { loadCartInformations, loadCartEntries } from 'redux/modules/cart';
 import Helmet from 'react-helmet';
 import { routeActions } from 'react-router-redux';
-import PlayerContainer from '../PlayerContainer/PlayerContainer';
 // import { asyncConnect } from 'redux-async-connect'; how to handle async redux connection
 import ga from 'react-ga';
 
@@ -199,7 +198,6 @@ export default class App extends Component {
         <p>2014 - 2016</p>
         </div>
       </footer>
-      <PlayerContainer />
       </div>
     );
   }

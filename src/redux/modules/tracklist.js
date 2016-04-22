@@ -1,6 +1,6 @@
-const LOAD = 'redux-example/LOAD';
-const LOAD_SUCCESS = 'redux-example/LOAD_SUCCESS';
-const LOAD_FAIL = 'redux-example/LOAD_FAIL';
+const LOAD = 'tracklist/LOAD';
+const LOAD_SUCCESS = 'tracklist/LOAD_SUCCESS';
+const LOAD_FAIL = 'tracklist/LOAD_FAIL';
 
 const initialState = {
   loaded: false
@@ -14,6 +14,7 @@ export default function tracklist(state = initialState, action = {}) {
         loading: true
       };
     case LOAD_SUCCESS:
+      console.log('LOADED CORRECTLY');
       return {
         ...state,
         loading: false,
@@ -37,6 +38,7 @@ export function isLoaded(globalState) {
 }
 
 export function load(tracklistId) {
+  console.log('Requestin tracjlist ' + tracklistId);
   return {
     promise: (client) => client.get('/tracklists/' + tracklistId),
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL]
