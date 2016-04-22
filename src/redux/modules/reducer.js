@@ -9,6 +9,7 @@ import {reducer as form} from 'redux-form';
 import info from './info';
 import widgets from './widgets';
 import track from './track';
+import tracklist from './tracklist';
 import release from './release';
 import earlyUser from './earlyUser';
 import player from './player';
@@ -29,6 +30,7 @@ export default combineReducers({
   info,
   widgets,
   track,
+  tracklist,
   release,
   earlyUser,
   player,

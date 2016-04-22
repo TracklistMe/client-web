@@ -2,11 +2,11 @@ import React, {Component, PropTypes} from 'react';
 import { TracklistJumbotron, Headline, TracklistEntry } from 'components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { load } from 'redux/modules/track';
+import { load } from 'redux/modules/tracklist';
 
 @connect(
   store => ({
-    tracklist: store.track.data
+    tracklist: store.tracklist.data
   }),
   dispatch => bindActionCreators({ load }, dispatch)
 )
@@ -24,11 +24,15 @@ export default class Tracklist extends Component
   componentDidMount() {
     // to do: remove second loading here for client-side navigation
     // to do: remove loading here for server-side rendered page
+    console.log('i got a props with param id ' + this.props.params.id);
     this.constructor.preload(this.context.store, this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (parseInt(this.context.store.getState().track.data.id, 10) !== parseInt(nextProps.params.id, 10)) {
+    if (this.context.store.getState().tracklist &&
+      this.context.store.getState().tracklist.data &&
+      parseInt(this.context.store.getState().tracklist.data.id, 10) !== parseInt(nextProps.params.id, 10)) {
+      console.log('received correctly ID');
       this.constructor.preload(this.context.store, nextProps.params.id);
     }
   }
@@ -43,6 +47,10 @@ export default class Tracklist extends Component
   }
 
   render() {
+    console.log(this.props.tracklist);
+    if (!this.props.tracklist || !this.props.tracklist.Tracks) {
+      return (<div>Loading Tracklist</div>);
+    }
     return (
       <div>
         <TracklistJumbotron {...this.props} />
@@ -52,8 +60,9 @@ export default class Tracklist extends Component
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <Headline title="Tracklist"/>
               </div>
-                <TracklistEntry active />
-                <TracklistEntry />
+                {this.props.tracklist.Tracks.map((track, index) =>
+                  <TracklistEntry key={index} track={track} />
+                )}
             </div>
           </div>
           <div className="row darkerrow ">

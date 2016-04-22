@@ -7,7 +7,6 @@ import { load as loadGenre } from 'redux/modules/genre';
 import { loadCartInformations, loadCartEntries } from 'redux/modules/cart';
 import Helmet from 'react-helmet';
 import { routeActions } from 'react-router-redux';
-import PlayerContainer from '../PlayerContainer/PlayerContainer';
 // import { asyncConnect } from 'redux-async-connect'; how to handle async redux connection
 import ga from 'react-ga';
 
@@ -138,7 +137,7 @@ export default class App extends Component {
               <li><NavbarLink to="/track/77">Go to track 77</NavbarLink></li>
               <li><NavbarLink to="/track/80">Go to track 80</NavbarLink></li>
               <li><NavbarLink to="/release/257">Go to release 257</NavbarLink></li>
-              <li><NavbarLink to="/tracklist/77">Tracklist</NavbarLink></li>
+              <li><NavbarLink to="/tracklist/1">Tracklist</NavbarLink></li>
               <li><NavbarLink to="/artist/58">Artist (Siwell)</NavbarLink></li>
               <li><a href="#">Labels</a></li>
             </ul>
@@ -199,7 +198,6 @@ export default class App extends Component {
         <p>2014 - 2016</p>
         </div>
       </footer>
-      <PlayerContainer />
       </div>
     );
   }
