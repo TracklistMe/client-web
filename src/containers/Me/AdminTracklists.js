@@ -14,7 +14,7 @@ import { loadPersonalTracklists } from 'redux/modules/auth';
 export default class AdminTracklists extends Component {
   static propTypes = {
     user: PropTypes.shape({
-      tracklists: PropTypes.object
+      tracklists: PropTypes.array
     })
   };
   static contextTypes = {
@@ -38,7 +38,7 @@ export default class AdminTracklists extends Component {
 
   render() {
     const {user} = this.props;
-    if (!user) {
+    if (!user || !user.tracklists) {
       return (
         <div></div>
       );
