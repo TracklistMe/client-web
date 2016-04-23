@@ -100,7 +100,7 @@ export default class App extends Component {
       this.props.pushState(redirectRoute);
     } else if (this.props.logged && !nextProps.logged) {
       // logout
-      this.props.pushState('/beta');
+      this.props.pushState(null, '/beta');
     }
   }
 
@@ -112,9 +112,7 @@ export default class App extends Component {
 
   handleLogout = (event) => {
     event.preventDefault();
-    console.log('cliccked logout');
     this.props.logout();
-    this.props.pushState('/me');
   };
 
   render() {

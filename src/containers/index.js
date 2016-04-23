@@ -16,6 +16,4 @@ export Genre from './Genre/Genre';
 export Release from './Release/Release';
 export PlayerContainer from './PlayerContainer/PlayerContainer';
 export Me from './Me/Me';
-export AdminTracklists from './Me/AdminTracklists';
-export AdminTracklist from './Me/AdminTracklist';
 export Cart from './Cart/Cart';

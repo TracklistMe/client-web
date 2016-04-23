@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import { Link } from 'react-router';
 import {connect} from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 
@@ -23,7 +22,6 @@ export default class Me extends Component {
         <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         User: {user.displayName}
-        <Link to="/me/tracklists">Tracklists</Link>
       </div>
     );
   }
