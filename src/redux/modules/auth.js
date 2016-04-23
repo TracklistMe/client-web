@@ -10,6 +10,10 @@ const LOGOUT = 'redux-example/auth/LOGOUT';
 const LOGOUT_SUCCESS = 'redux-example/auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'redux-example/auth/LOGOUT_FAIL';
 const LOAD_AUTH_COOKIE = 'LOAD_AUTH_COOKIE';
+const LOAD_PERSONAL_TRACKLIST = 'LOAD_PERSONAL_TRACKLIST';
+const LOAD_PERSONAL_TRACKLIST_SUCCESS = 'LOAD_PERSONAL_TRACKLIST_SUCCESS';
+const LOAD_PERSONAL_TRACKLIST_FAIL = 'LOAD_PERSONAL_TRACKLIST_FAIL';
+
 const initialState = {
   loaded: false,
   token: null,
@@ -90,6 +94,18 @@ export default function reducer(state = initialState, action = {}) {
         user,
         logged: isLogged
       };
+    case LOAD_PERSONAL_TRACKLIST:
+      return state;
+    case LOAD_PERSONAL_TRACKLIST_SUCCESS:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          tracklists: action.result
+        }
+      };
+    case LOAD_PERSONAL_TRACKLIST_FAIL:
+      return state;
     default:
       return state;
   }
@@ -113,6 +129,13 @@ export function loadPersonalInfo() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => client.get('/me')
+  };
+}
+
+export function loadPersonalTracklists() {
+  return {
+    types: [LOAD_PERSONAL_TRACKLIST, LOAD_PERSONAL_TRACKLIST_SUCCESS, LOAD_PERSONAL_TRACKLIST_FAIL],
+    promise: (client) => client.get('/me/tracklists')
   };
 }
 

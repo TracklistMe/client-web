@@ -9,14 +9,15 @@ import {
     Track,
     Tracklist,
     Login,
-    Survey,
     NotFound,
     Landing,
     Genre,
     Release,
     Artist,
     Cart,
-    Me
+    Me,
+    AdminTracklists,
+    AdminTracklist
   } from 'containers';
 import {requireAuthentication} from 'components/AuthenticationComponent/AuthenticationComponent';
 
@@ -64,11 +65,12 @@ export default () => {
         <Route path="/release/:id" component={Release}/>
         <Route path="/track/:id" component={Track}/>
         <Route path="/artist/:id" component={Artist}/>
-        <Route>
-          <Route path="/chat" component={Chat}/>
-          <Route path="/me" component={requireAuthentication(Me)}/>
-        </Route>
-        <Route path="/survey" component={Survey}/>
+        <Route path="/chat" component={Chat}/>
+        {/* render the user related pages */}
+        <Route path="/me" component={requireAuthentication(Me)}/>
+        <Route path="/me/tracklists" component={requireAuthentication(AdminTracklists)}/>
+        <Route path="/me/tracklists/:id" component={requireAuthentication(AdminTracklist)}/>
+        {/* catch all the other routes */}
         <Route path="*" component={NotFound} status={404} />
       </Route>
     </Route>
