@@ -1,12 +1,11 @@
 import React, {Component, PropTypes} from 'react';
-import { Link } from 'react-router';
 import {connect} from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 
 @connect(
   state => ({user: state.auth.user})
   )
-export default class Me extends Component {
+export default class AdminTracklist extends Component {
   static propTypes = {
     user: PropTypes.object
   };
@@ -19,11 +18,8 @@ export default class Me extends Component {
     }
     return (
       <div>
-        <DocumentMeta title={'Tracklist.me ' + user.displayName} />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        User: {user.displayName}
-        <Link to="/me/tracklists">Tracklists</Link>
+        <DocumentMeta title={user.displayName + '\'s tracklist - Tracklist.me'} />
+        <h1>{user.displayName } - the tracklist  ***NAME*** </h1>
       </div>
     );
   }
