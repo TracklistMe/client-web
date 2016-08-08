@@ -50,11 +50,11 @@ export default class ReleaseJumbotron extends Component {
     }
     return (
       <div className="releaseJumbotron">
-      <MainHeaderBackground image={apiEndPoint() + '/images/' + release.cover} height={height}/>
+      <MainHeaderBackground image={apiEndPoint() + '/releases/' + release.id + '/cover/small'} height={height}/>
       <div className="headerContent" style={{height: height + 'px'}} >
         <div className="row trackJumbotronContainer">
         <div className="col-sub-xs-10 col-sub-xs-offset-4 col-sub-sm-offset-0 hidden-sm col-sub-sm-6 col-sub-md-5 col-sub-lg-4 overflowHidden">
-          <img className="cover" src={apiEndPoint() + '/images/' + release.cover} />
+          <img className="cover" src={apiEndPoint() + '/releases/' + release.id + '/cover/small'} />
         </div>
         <div className="col-sub-xs-18 col-sub-sm-18 col-sub-md-13 col-sub-lg-14">
           <div className="row hidden-xs">
