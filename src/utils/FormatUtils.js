@@ -28,7 +28,6 @@ export function formatSeconds(num) {
 }
 
 export function formatDate(date, format) {
-  console.log(date);
   return moment(date).format(format);
 }
 export function getSocialIcon(service) {

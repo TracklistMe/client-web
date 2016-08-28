@@ -1,18 +1,17 @@
 import React, {Component, PropTypes } from 'react';
-import {apiEndPoint} from '../../helpers/ApiClient';
 import {formatSeconds} from '../../utils/FormatUtils';
 
 export default class TracklistEntry extends Component {
 
   render() {
-    if (!this.props.track) {
+    if (!this.props) {
       return (
         <div></div>
       );
     }
     return (
       <div key={this.props.id} className={'tracklistEntry ' + (this.props.active === true ? 'active' : '')}>
-        <div className={'cell cover ' + (this.props.active === true ? 'active' : '')}><img src={apiEndPoint() + '/images/' + this.props.track.cover} /></div>
+        <div className={'cell cover ' + (this.props.active === true ? 'active' : '')}><img src={this.props.track.cover} /></div>
         {this.props.track.isLive &&
           <div className="cell cell-valign-middle">
             <span>13:10</span>
@@ -21,7 +20,7 @@ export default class TracklistEntry extends Component {
             <span>23:14</span>
           </div>
         }
-        <div className="cell cell-valign-middle">{this.props.track.title} <span>({this.props.track.version})</span></div>
+        <div className="cell cell-valign-middle">{this.props.track.title} <span>{this.props.track.version && '(' + this.props.track.version + ')'}</span></div>
         <div className="cell cell-valign-middle">
           {this.props.track.Producer.map((producer, index) =>
             <span key={index}>{producer.displayName}</span>

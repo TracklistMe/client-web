@@ -1,7 +1,6 @@
 import React, {Component, PropTypes } from 'react';
 import MainHeaderBackground from '../MainHeader/MainHeaderBackground';
 import {formatDate} from '../../utils/FormatUtils';
-import {apiEndPoint} from '../../helpers/ApiClient';
 
 export default class TracklistJumbotron extends Component {
   static propTypes = {
@@ -17,16 +16,17 @@ export default class TracklistJumbotron extends Component {
     }
     return (
       <div className="tracklistJumbotron">
-        <MainHeaderBackground image={apiEndPoint() + '/images/' + tracklist.header} />
+        <MainHeaderBackground image={tracklist.header} />
         <div className="headerContent">
           <div className="row trackJumbotronContainer">
             <div className="hidden-xs hidden-sm col-sub-xs-5 col-sub-sm-6 col-sub-md-6 col-sub-lg-5 overflowHidden">
-              <img className="cover" src={apiEndPoint() + '/images/' + tracklist.cover} />
+              <img className="cover" src={tracklist.cover} />
             </div>
             <div className="col-sub-xs-18 col-sub-sm-18 col-sub-md-12 col-sub-lg-13">
               <div className="row">
                 <div className="col-lg-6 text-left trackDescriptionSpace">
                   <h1>{tracklist.User.displayName}</h1>
+                  <h1>{tracklist.spotifyId} - {tracklist.spotifyOwner}</h1>
                   <h4>Stockholm, Sweden</h4>
                 </div>
                 <div className="col-lg-6 text-right">

@@ -24,15 +24,18 @@ export default class Tracklist extends Component
   componentDidMount() {
     // to do: remove second loading here for client-side navigation
     // to do: remove loading here for server-side rendered page
+    console.log(this.props.params);
     console.log('i got a props with param id ' + this.props.params.id);
     this.constructor.preload(this.context.store, this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('RECEIVING IDS: ');
+    console.log(nextProps);
+    console.log(parseInt(this.context.store.getState().tracklist.data.id, 10), parseInt(nextProps.params.id, 10));
     if (this.context.store.getState().tracklist &&
-      this.context.store.getState().tracklist.data &&
-      parseInt(this.context.store.getState().tracklist.data.id, 10) !== parseInt(nextProps.params.id, 10)) {
-      console.log('received correctly ID');
+        this.context.store.getState().tracklist.data &&
+        parseInt(this.context.store.getState().tracklist.data.id, 10) !== parseInt(nextProps.params.id, 10)) {
       this.constructor.preload(this.context.store, nextProps.params.id);
     }
   }
@@ -47,7 +50,8 @@ export default class Tracklist extends Component
   }
 
   render() {
-    console.log(this.props.tracklist);
+    console.log('trying to render');
+    console.log(this.props);
     if (!this.props.tracklist || !this.props.tracklist.Tracks) {
       return (<div>Loading Tracklist</div>);
     }
@@ -61,7 +65,7 @@ export default class Tracklist extends Component
                 <Headline title="Tracklist"/>
               </div>
                 {this.props.tracklist.Tracks.map((track, index) =>
-                  <TracklistEntry key={index} track={track} />
+                 <TracklistEntry key={index} track={track} />
                 )}
             </div>
           </div>

@@ -38,9 +38,9 @@ export function isLoaded(globalState) {
 }
 
 export function load(tracklistId) {
-  console.log('Requestin tracjlist ' + tracklistId);
+  console.log('Requestin tracklist ' + tracklistId);
   return {
-    promise: (client) => client.get('/tracklists/' + tracklistId),
+    promise: (client) => client.get('/spotifyTracklist/' + tracklistId),
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL]
   };
 }
